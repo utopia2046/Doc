@@ -78,6 +78,8 @@ Logic|\gets|$\gets$
 Logic|\implies|$\implies$
 Logic|\impliedby|$\impliedby$
 Logic|\iff|$\iff$
+Logic|\bigcap|$\bigcap$
+Logic|\bigcup|$\bigcup$
 Operator|\sum|$\sum$
 Operator|\prod|$\prod$
 Operator|\int|$\int$
