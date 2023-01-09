@@ -5,7 +5,7 @@
 ### Start Anaconda prompt
 
 ``` shell
-C:\Windows\System32\cmd.exe "/K" C:\ProgramData\Anaconda3\Scripts\activate.bat C:\ProgramData\Anaconda3
+%windir%\System32\cmd.exe "/K" C:\Users\jiew\Anaconda3\Scripts\activate.bat C:\Users\jiew\Anaconda3
 ```
 
 ### Start ipython
@@ -18,9 +18,9 @@ ipython.exe
 
 ``` python
 help(len)
-len?
-len??
-str.*find*?
+len?        # get function inline docString
+len??       # get function source code
+str.*find*? # find all functions with 'find' string
 # https://docs.python.org/3/library/inspect.html
 import inspect
 inspect.getdoc
@@ -70,7 +70,10 @@ inspect.getsource
 
 ## NumPy library
 
+<https://numpy.org/>
+
 ```python
+import numpy as np
 # generate matrix
 np.zeros(10, dtype=int)
 np.ones((3, 5), dtype=float)
@@ -81,7 +84,7 @@ np.linspace(0, 1, 5)  # array([0., 0.25, 0.5, 0.75, 1.])
 np.random.random((3, 4))
 np.random.normal(0, 1, (3, 4))
 np.random.randint(0, 10, (3, 4))
-np.empty(3)
+np.empty(3)           # create an uninitialized array
 # slice sub array
 x2 = x[:, ::2]        # all rows, every other column
 x3 = x[::-1, ::-1]    # start:end:step, upside-down and reversed in every row
@@ -89,35 +92,55 @@ x3 = x[::-1, ::-1]    # start:end:step, upside-down and reversed in every row
 grid = np.arange(1, 10).reshape((3, 3))
 ```
 
-> Notice that NumPy array slice DONT copy the array, it is just a sub-view. If you modify an element value, the value in slice will also change.
+> Notice that NumPy array slice DONT copy the array, it is just a sub-view. If you modify an element value, the value in slice will also change. If you want to get a copy of the data slice, you can use `copy()` method. Modifing the copied data won't change original data.
 
 ### UFuncs
 
-Since Python loops could be very slow due to dynamic type check and dispatching, it is recommended to use UFuncs as much as possible.
+Since Python loops could be very slow due to dynamic type check and dispatching, it is recommended to **use UFuncs as much as possible**.
 
 UFuncs:
 
-* Array arithmetic: +, -, *, /, **(power), //(floor division), % (mod), abs
-* Trigonometric functions: sin, cos, tan, arcsin, arccos, arctan
-* Exponents and logarithms: exp, exp2, power, log =ln(x), log2, log10, expm1 =exp(x)-1, log1p = log(1+x)
+* Array arithmetic: `+(add), -(subtract), -(negative), *(multiply), /(divide), **(power), //(floor_divide), % (mod), abs`
+* Trigonometric functions: `sin, cos, tan, arcsin, arccos, arctan`
+* Exponents and logarithms: `exp(e^x), exp2(2^x), power, log = ln(x), log2, log10, expm1 = exp(x)-1, log1p = log(1+x)`
 * Hyperbolic trig functions
-* Bitwise arithmetic: logical_and, logical_or, logical_xor, &, |, ^
-* Comparison operators: greater, greater_equal, less, less_equal, equal, not_equal, >, >=, <, <=, ==, !=
+* Bitwise arithmetic: `logical_and, logical_or, logical_xor, &, |, ^`
+* Comparison operators: `greater, greater_equal, less, less_equal, equal, not_equal, >, >=, <, <=, ==, !=`
 * Conversions from radians to degrees
 * Rounding and remainders
-* Other functions defined in scipy.special
-* Aggregates: reduce, accumulate
+* Other functions defined in scipy.special, ref: <https://docs.scipy.org>
+* Aggregates: `reduce, accumulate, sum, min, max, mean, prod, std, var, any, all`
 
 ``` python
 x = np.arange(1, 6)
-np.add.reduce(x)        # sum of each element
+np.add.reduce(x)        # sum of each element, same as np.sum(x)
 np.multiply.reduce(x)   # production of each element
 np.multiply.outer(x, x) # a 5x5 matrix of pair-wise production
 
 x = np.random.randn(10)
 y = np.random.randn(10)
-np.where(x > y, x, y)
+np.where(x > y, x, y)   # choose each element the bigger one between x and y
 ```
+
+``` python
+import pandas as pd
+data = pd.read_csv('president_heights.csv')
+data.head(5)
+heights = np.array(data['height(cm)']) # get data height column as np array
+heights.max()
+heights.min()
+heights.mean()
+# simple line chart with matplot
+%matplotlib inline
+import matplotlib.pyplot as plt
+plt.hist(heights)
+plt.title('Height Distribution of US Presidents')
+plt.xlable('height (xm)')
+plt.ylable('number')
+plt.show()
+```
+
+<https://matplotlib.org/stable/tutorials/introductory/pyplot.html>
 
 ### Common Statistic functions
 
@@ -133,7 +156,7 @@ np.where(x > y, x, y)
 When 2 array of different dimesion are in same arithmetic, NumPy is trying to extend the array size so that they could match the same bigger size. Rules are:
 
 1. If 2 arrays differ in their number of dimensions, the shape of the one with fewer dimensions is **padded** with ones on its leading (left) side;
-2. If the shap of 2 arrays does not match in any dimension, the array with shape equal to 1 in that dimension is stretched to match the other shape;
+2. If the shape of 2 arrays do not match in any dimension, the array with shape equal to 1 in that dimension is stretched to match the other shape;
 3. If in any dimension the sizes disagree and neither is equal to 1, an error is raised.
 
 ``` python
@@ -141,6 +164,16 @@ When 2 array of different dimesion are in same arithmetic, NumPy is trying to ex
 x = np.linspace(0, 5, 50)
 y = np.linspace(0, 5, 50)[:, np.newaxis]
 z = np.sin(x) ** 10 + np.cos(10 + y * x) * np.cos(x)
+%matplotlib inline
+import matplotlib.pyplot as plt
+plt.imshow(z, origin='lower', extent=[0,5,0,5])
+plt.show()
+
+#example: use broadcasting to normalize data
+x = np.random.random((10,3))
+x_mean = x.mean(0)   # calculate mean by axis 0
+x_centered = x - x_mean
+x_centered.mean(0)
 ```
 
 ### Use boolean arrays as mask
@@ -151,6 +184,12 @@ rainy = (inches > 0)    # rainy is a boolean array indicating if a day is a rain
 summery = (np.arange(365) - 172 < 90) & (np.arange(365) - 172 > 0) # 90 days after Jun 21st
 print("median precip on rainy days", np.median(inches[rainy]))
 print("maximum precip on summer rainy days", np.max(inches[rainy & summer]))
+
+# count with query
+np.count_nonzero(x < 6)
+np.sum((x > 5) & (x < 10))
+np.any(x > 10)
+np.all(x > 0, axis=1)
 ```
 
 ## Visualization
@@ -536,6 +575,13 @@ grouped.columns = ['_'.join(x) for x in grouped.columns.ravel()]
 # sort result
 grouped.sort_index()
 grouped.sort_values('mean_duration', ascending=False)
+
+# group by custom bin
+bins = [float('-inf'), 0, 1000, 3000, 5000, 10000, 30000, float('inf')]
+data['duration_group'] = pd.cut(data['duration'], bins)
+data.groupby('duration_group').count()
+data.groupby('duration_group').agg({'num_calls': 'sum'})
+
 ```
 
 > Notice:
