@@ -1,5 +1,40 @@
 # Python Data Science Handbook Reading Notes
 
+- [Python Data Science Handbook Reading Notes](#python-data-science-handbook-reading-notes)
+  - [IPython](#ipython)
+    - [Start Anaconda prompt](#start-anaconda-prompt)
+    - [Start ipython](#start-ipython)
+    - [Built-in help](#built-in-help)
+    - [Magic commands](#magic-commands)
+    - [In \& Out objects array](#in--out-objects-array)
+    - [Run a shell command](#run-a-shell-command)
+    - [Errors and debugging](#errors-and-debugging)
+  - [NumPy library](#numpy-library)
+    - [UFuncs](#ufuncs)
+    - [Common Statistic functions](#common-statistic-functions)
+    - [Broadcasting](#broadcasting)
+    - [Use boolean arrays as mask](#use-boolean-arrays-as-mask)
+    - [Bitwise Operators](#bitwise-operators)
+    - [Fancy Indexing](#fancy-indexing)
+    - [Sorting](#sorting)
+  - [Visualization](#visualization)
+    - [Plotly](#plotly)
+    - [Matplotlib](#matplotlib)
+      - [Line Styles \& Markers](#line-styles--markers)
+      - [Colors](#colors)
+      - [plot properties](#plot-properties)
+  - [Pandas](#pandas)
+    - [Pandas plot](#pandas-plot)
+    - [Pandas Data Aggregation](#pandas-data-aggregation)
+    - [Pivot table and crosstab](#pivot-table-and-crosstab)
+      - [A Full Example of Data Aggregation and Grouping in Pandas](#a-full-example-of-data-aggregation-and-grouping-in-pandas)
+    - [Reference](#reference)
+  - [Time Series](#time-series)
+    - [Datetime format string](#datetime-format-string)
+    - [Pandas TimeSeries](#pandas-timeseries)
+  - [Combining Datasets](#combining-datasets)
+
+
 ## IPython
 
 ### Start Anaconda prompt
@@ -81,9 +116,9 @@ np.full((2, 3), 3.14)
 np.eye(3)
 np.arange(0, 10, 2)   # array([0, 2, 4, 6, 8]), _[-1] = 8
 np.linspace(0, 1, 5)  # array([0., 0.25, 0.5, 0.75, 1.])
-np.random.random((3, 4))
-np.random.normal(0, 1, (3, 4))
-np.random.randint(0, 10, (3, 4))
+np.random.random((3, 4))         # uniformly distributed
+np.random.normal(0, 1, (3, 4))   # normally distributed
+np.random.randint(0, 10, (3, 4)) # randint(low, high=None, size=None, dtype=int)
 np.empty(3)           # create an uninitialized array
 # slice sub array
 x2 = x[:, ::2]        # all rows, every other column
@@ -93,6 +128,17 @@ grid = np.arange(1, 10).reshape((3, 3))
 ```
 
 > Notice that NumPy array slice DONT copy the array, it is just a sub-view. If you modify an element value, the value in slice will also change. If you want to get a copy of the data slice, you can use `copy()` method. Modifing the copied data won't change original data.
+
+``` python
+# concatenation functions
+np.concatenate((a1, a2, ...), axis=0, out=None, dtype=None, casting="same_kind")
+np.vstack(tup)
+np.hstack(tup)
+# split functions
+np.split(ary, indices_or_sections, axis=0)
+upper, lower = np.vsplit(ary, indices_or_sections)
+left, right = np.hsplit(ary, indices_or_sections)
+```
 
 ### UFuncs
 
@@ -124,8 +170,9 @@ np.where(x > y, x, y)   # choose each element the bigger one between x and y
 
 ``` python
 import pandas as pd
-data = pd.read_csv('president_heights.csv')
+data = pd.read_csv('data/president_heights.csv')
 data.head(5)
+data.describe()
 heights = np.array(data['height(cm)']) # get data height column as np array
 heights.max()
 heights.min()
@@ -161,15 +208,15 @@ When 2 array of different dimesion are in same arithmetic, NumPy is trying to ex
 
 ``` python
 # example: use broadcasting to compute the z = f(x, y) across the grid
-x = np.linspace(0, 5, 50)
-y = np.linspace(0, 5, 50)[:, np.newaxis]
+x = np.linspace(0, 5, 50)                 # x.shape is (50,)
+y = np.linspace(0, 5, 50)[:, np.newaxis]  # y.shape is (50, 1)
 z = np.sin(x) ** 10 + np.cos(10 + y * x) * np.cos(x)
 %matplotlib inline
 import matplotlib.pyplot as plt
 plt.imshow(z, origin='lower', extent=[0,5,0,5])
 plt.show()
 
-#example: use broadcasting to normalize data
+# example: use broadcasting to normalize data
 x = np.random.random((10,3))
 x_mean = x.mean(0)   # calculate mean by axis 0
 x_centered = x - x_mean
@@ -185,11 +232,52 @@ summery = (np.arange(365) - 172 < 90) & (np.arange(365) - 172 > 0) # 90 days aft
 print("median precip on rainy days", np.median(inches[rainy]))
 print("maximum precip on summer rainy days", np.max(inches[rainy & summer]))
 
-# count with query
+# count with query (boolean array, Comparison Operators as ufuncs)
 np.count_nonzero(x < 6)
 np.sum((x > 5) & (x < 10))
 np.any(x > 10)
 np.all(x > 0, axis=1)
+np.sum((inches > 0.5) & (inches < 1))
+np.sum(~( (inches <= 0.5) | (inches >= 1) )) # 0.5 < inches < 1
+```
+
+### Bitwise Operators
+
+Operator | Equivalent ufunc
+---------|-----------------
+`&`      | np.bitwise_and
+`|`      | np.bitwise_or
+`^`      | np.bitwise_xor
+`~`      | np.bitwise_not
+
+### Fancy Indexing
+
+Pass a single list or array of indices to obtain certain elements
+
+``` python
+ind = [3, 7, 4]
+x[ind]        # same as [x[3], x[7], x[2]]
+
+X = np.arange(12).reshape((3, 4))
+row = np.array([0, 1, 2])
+col = np.array([2, 1, 3])
+X[row, col]   # same as [X[0, 2], X[1, 1], X[2, 3]]
+
+# example: choose random subset
+mean = [0, 0]
+cov = [[1, 2],
+       [2, 5]]
+X = rand.multivariate_normal(mean, cov, 100) # X.shape is (100, 2)
+indices = np.random.choice(X.shape[0], 20, replace=False) # 20 random indeces with no repeat
+selection = X[indices]  # select 20 random points
+```
+
+### Sorting
+
+``` python
+arr = np.array(range(0,100))  # [0, 99]
+np.random.shuffle(arr)        # shuffle arr
+arr.sort()                    # re-order arr
 ```
 
 ## Visualization
@@ -334,24 +422,26 @@ character/color
 
 #### plot properties
 
-Property|Description
--|-
-alpha|float (0.0 transparent through 1.0 opaque)
-antialiased or aa|True/False
-color or c|any matplotlib color
-dashes|sequence of on/off ink in points
-figure|a Figure instance
-fillstyle|'full'/'left'/'right'/'bottom'/'top'/'none'
-label|object
-linestyle or ls|'solid'/'dashed', 'dashdot', 'dotted'/(offset, on-off-dash-seq)/'-'/'--'/'-.'/':'/'None'/' '/''
-linewidth or lw|float value in points
-marker|A valid marker style
-markersize or ms|float
-xdata|1D array
-ydata|1D array
+Property          | Description
+------------------|------------------------------------------------------------------------------------------------
+alpha             | float (0.0 transparent through 1.0 opaque)
+antialiased or aa | True/False
+color or c        | any matplotlib color
+dashes            | sequence of on/off ink in points
+figure            | a Figure instance
+fillstyle         | 'full'/'left'/'right'/'bottom'/'top'/'none'
+label             | object
+linestyle or ls   | 'solid'/'dashed', 'dashdot', 'dotted'/(offset, on-off-dash-seq)/'-'/'--'/'-.'/':'/'None'/' '/''
+linewidth or lw   | float value in points
+marker            | A valid marker style
+markersize or ms  | float
+xdata             | 1D array
+ydata             | 1D array
 
 > Reference:
 > <https://matplotlib.org/2.1.1/api/_as_gen/matplotlib.pyplot.plot.html>
+
+## Pandas
 
 ### Pandas plot
 
@@ -378,7 +468,7 @@ df.plot.bar      df.plot.box      df.plot.hexbin   df.plot.kde      df.plot.pie
 > * <https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html>
 > * <https://plot.ly/pandas/>
 
-## Data Aggregation
+### Pandas Data Aggregation
 
 ``` python
 import numpy as np
@@ -648,25 +738,25 @@ parse('2012-03-01T10:00:00.0000Z')
 
 <https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior>
 
-Directive|Meaning|Example
--|-|-
-%a|weekday abbreviated|Sun
-%A|weekday full name|Sunday
-%w|weeday as a decimal number, 0 for Sunday, etc.|0, .., 6
-%d|day of month with zero padding|01, .., 31
-%b|month abbreviated|Jan
-%B|month full name|January
-%m|month as zero padding decimal number|01, ..., 12
-%y|year as 2 digits|19
-%Y|year as 4 digits|2019
-%H|Hour (24-hour clock) as zero padding decimal number|00, .., 23
-%I|Hour (12-hour clock) as zero padding decimal number|01, .., 12
-%p|AM/PM|AM, PM
-%M|Minute as zero padding decimal number|00, .., 59
-%S|Second as zero padding decimal number|00, .., 59
-%f|Microsecond as zero padding decimal number|000000, .., 999999
-%z|UTC offset|+0000, -0800
-%Z|Timezone name|+0000, -0800
+Directive | Meaning                                             | Example
+----------|-----------------------------------------------------|-------------------
+%a        | weekday abbreviated                                 | Sun
+%A        | weekday full name                                   | Sunday
+%w        | weeday as a decimal number, 0 for Sunday, etc.      | 0, .., 6
+%d        | day of month with zero padding                      | 01, .., 31
+%b        | month abbreviated                                   | Jan
+%B        | month full name                                     | January
+%m        | month as zero padding decimal number                | 01, ..., 12
+%y        | year as 2 digits                                    | 19
+%Y        | year as 4 digits                                    | 2019
+%H        | Hour (24-hour clock) as zero padding decimal number | 00, .., 23
+%I        | Hour (12-hour clock) as zero padding decimal number | 01, .., 12
+%p        | AM/PM                                               | AM, PM
+%M        | Minute as zero padding decimal number               | 00, .., 59
+%S        | Second as zero padding decimal number               | 00, .., 59
+%f        | Microsecond as zero padding decimal number          | 000000, .., 999999
+%z        | UTC offset                                          | +0000, -0800
+%Z        | Timezone name                                       | +0000, -0800
 
 ### Pandas TimeSeries
 
@@ -684,15 +774,15 @@ See <https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#tim
 
 Common freq alias
 
-alias|meaning
--|-
-D|calendar day
-W|week
-M|month
-H|hour
-T,min|minutes
-S|seconds
-L,ms|milliseconds
+alias | meaning
+------|-------------
+D     | calendar day
+W     | week
+M     | month
+H     | hour
+T,min | minutes
+S     | seconds
+L,ms  | milliseconds
 
 ``` python
 # example to load time series data
