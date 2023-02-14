@@ -24,6 +24,9 @@
       - [Colors](#colors)
       - [plot properties](#plot-properties)
   - [Pandas](#pandas)
+    - [Pandas Series, DataFrame \& Index](#pandas-series-dataframe--index)
+    - [Multi-level Indexing](#multi-level-indexing)
+    - [Concat and Append](#concat-and-append)
     - [Pandas plot](#pandas-plot)
     - [Pandas Data Aggregation](#pandas-data-aggregation)
     - [Pivot table and crosstab](#pivot-table-and-crosstab)
@@ -442,6 +445,136 @@ ydata             | 1D array
 > <https://matplotlib.org/2.1.1/api/_as_gen/matplotlib.pyplot.plot.html>
 
 ## Pandas
+
+### Pandas Series, DataFrame & Index
+
+Pandas Series has an explicitly defined index associated with the values, you can think of a Pandas Series a bit like a specialization of a Python dictionary.
+
+DataFrame is an analog of a two-dimensional array with both flexible row indices and flexible column names.
+
+Index object can be thought of either as an **immutable** array or as an ordered set。
+
+``` python
+# create Pandas Series from Python dictionary
+data = pd.Series([0.25, 0.5, 0.75, 1.0], index=['a', 'b', 'c', 'd'])
+population_dict = {'California': 38332521,
+                   'Texas': 26448193,
+                   'New York': 19651127,
+                   'Florida': 19552860,
+                   'Illinois': 12882135}
+population = pd.Series(population_dict)
+
+area_dict = {'California': 423967,
+             'Texas': 695662,
+             'New York': 141297,
+             'Florida': 170312,
+             'Illinois': 149995}
+area = pd.Series(area_dict)
+
+# create DataFrame from 2 Series
+states = pd.DataFrame({'population': population,
+                       'area': area})
+states['density'] = states['population'] / states['area']
+states.density         # get one column
+states.loc['Texas']    # get one row
+data.loc[data.density > 100, ['pop', 'density']]  # get subset using fancy index and bitmask
+
+# DataFrame constructor signature
+pd.DataFrame(
+    data=None,
+    index: 'Axes | None' = None,
+    columns: 'Axes | None' = None,
+    dtype: 'Dtype | None' = None,
+    copy: 'bool | None' = None,
+)
+
+# Indeces support union, intersect, difference
+indA = pd.Index([1, 3, 5, 7, 9])
+indB = pd.Index([2, 3, 5, 7, 11])
+indA & indB  # intersection
+indA | indB  # union
+indA ^ indB  # symmetric difference
+
+# fill NaN value when index is missing
+A = pd.Series([2, 4, 6], index=[0, 1, 2])
+B = pd.Series([1, 3, 5], index=[1, 2, 3])
+A + B                   # missing indeces will be filled as NaN
+A.add(B, fill_value=0)  # fill missing indeces with 0
+```
+
+Python operators and their equivalent Pandas object methods:
+
+Python Operator | Pandas Method(s)
+----------------|---------------------------
+`+`             | add()
+`-`             | sub(), subtract()
+`*`             | mul(), multiply()
+`/`             | truediv(), div(), divide()
+`//`            | floordiv()
+`%`             | mod()
+`**`            | pow()
+
+NaN is specifically a floating-point value; there is no equivalent NaN value for integers, strings, or other types
+
+``` python
+# get max/min value of integer and float type
+# https://numpy.org/doc/stable/reference/generated/numpy.iinfo.html
+# https://numpy.org/doc/stable/reference/generated/numpy.finfo.html
+np.iinfo(np.int32).min
+np.iinfo(np.int32).max
+np.iinfo(np.int64).max    # 9223372036854775807
+np.finfo(np.float64).max  # 1.7976931348623157e+308
+np.finfo(np.double).max   # 1.7976931348623157e+308
+```
+
+Useful methods to handle missing values
+
+* `isnull()`: Generate a boolean mask indicating missing values
+* `notnull()`: Opposite of isnull()
+* `dropna()`: Return a filtered version of the data
+* `fillna()`: Return a copy of the data with missing values filled or imputed
+
+### Multi-level Indexing
+
+Just as we were able to use multi-indexing to represent two-dimensional data within a one-dimensional Series, we can also use it to represent data of three or more dimensions in a Series or DataFrame. Each extra level in a multi-index represents an extra dimension of data.
+
+``` python
+index = [('California', 2000), ('California', 2010),
+         ('New York', 2000), ('New York', 2010),
+         ('Texas', 2000), ('Texas', 2010)]
+index = pd.MultiIndex.from_tuples(index)
+populations = [33871648, 37253956,
+               18976457, 19378102,
+               20851820, 25145561]
+pop = pd.Series(populations, index=index)
+# pop = pop.reindex(index)
+pop[:, 2010]
+# unstack multi-level series to DataFrame
+pop_df = pop.unstack()
+# stack DataFrame to multi-level series
+pop_df.stack()
+
+# example: health data
+# hierarchical indices and columns
+index = pd.MultiIndex.from_product([[2013, 2014], [1, 2]],
+                                   names=['year', 'visit'])
+columns = pd.MultiIndex.from_product([['Bob', 'Guido', 'Sue'], ['HR', 'Temp']],
+                                     names=['subject', 'type'])
+# mock some data
+data = np.round(np.random.randn(4, 6), 1)
+data[:, ::2] *= 10
+data += 37
+# create the DataFrame and calculate average value by level
+health_data = pd.DataFrame(data, index=index, columns=columns)
+data_mean = health_data.mean(level='year')
+data_mean.mean(axis=1, level='type')
+```
+
+Reference: https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#swapping-levels-with-swaplevel
+
+### Concat and Append
+
+
 
 ### Pandas plot
 
