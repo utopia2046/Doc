@@ -17,25 +17,24 @@
     - [Bitwise Operators](#bitwise-operators)
     - [Fancy Indexing](#fancy-indexing)
     - [Sorting](#sorting)
+  - [Pandas](#pandas)
+    - [Pandas Series, DataFrame \& Index](#pandas-series-dataframe--index)
+    - [Multi-level Indexing](#multi-level-indexing)
+    - [Merging](#merging)
+    - [Aggregation](#aggregation)
+    - [Pivot table](#pivot-table)
+    - [Pandas String Operations](#pandas-string-operations)
+    - [Time Series](#time-series)
+      - [Datetime format string](#datetime-format-string)
+    - [Eval](#eval)
   - [Visualization](#visualization)
     - [Plotly](#plotly)
     - [Matplotlib](#matplotlib)
       - [Line Styles \& Markers](#line-styles--markers)
       - [Colors](#colors)
       - [plot properties](#plot-properties)
-  - [Pandas](#pandas)
-    - [Pandas Series, DataFrame \& Index](#pandas-series-dataframe--index)
-    - [Multi-level Indexing](#multi-level-indexing)
-    - [Concat and Append](#concat-and-append)
     - [Pandas plot](#pandas-plot)
-    - [Pandas Data Aggregation](#pandas-data-aggregation)
-    - [Pivot table and crosstab](#pivot-table-and-crosstab)
-      - [A Full Example of Data Aggregation and Grouping in Pandas](#a-full-example-of-data-aggregation-and-grouping-in-pandas)
-    - [Reference](#reference)
-  - [Time Series](#time-series)
-    - [Datetime format string](#datetime-format-string)
     - [Pandas TimeSeries](#pandas-timeseries)
-  - [Combining Datasets](#combining-datasets)
 
 
 ## IPython
@@ -283,167 +282,6 @@ np.random.shuffle(arr)        # shuffle arr
 arr.sort()                    # re-order arr
 ```
 
-## Visualization
-
-### Plotly
-
-* Business Intelligence
-
-  * Chart Studio
-  * Dashboards & Reporting
-  * Slide Decks
-
-* Data Science & Open Source
-
-  * Dash
-  * Plotly.py, Plotly.R, Plotly.js
-  * React
-
-* Platforms
-
-  * Plotly On-premise
-  * Plotly Cloud
-
-Data -> Layout -> Figure
-
-Offline Plots
-
-``` python
-# install plotly
-!pip install plotly --upgrade
-
-# import module
-import plotly
-plotly.__version__
-
-import plotly.plotly as py
-import plotly.offline as offline
-import plotly.graph_objs as go
-
-# offline plot
-offline.plot([{'x': [1, 3, 6],
-               'y': [3, 1, 5]}])
-offline.iplot([{'x': [1, 3, 6],
-               'y': [3, 1, 5]}])
-offline.iplot([{'x': [1, 3, 6]}])
-offline.iplot([{'y': [3, 1, 5]}])
-```
-
-<https://plot.ly/create/>
-
-Online Plots
-
-Sankey plot
-
-Matplotlib => Seaborn
-
-### Matplotlib
-
-``` python
-import numpy as np
-from numpy.random import randn
-import matplotlib.pyplot as plt
-
-x = np.arange(0, 360)
-y = np.sin( x * np.pi / 180.0)
-
-plt.plot(x, y)
-plt.xlim(0, 360)        # set x axis range
-plt.ylim(-1.0, 1.0)     # set y axis range
-plt.title("y = sin(x)") # set title
-plt.show()
-
-# create an empty figure and add subplots
-fig = plt.figure()
-ax1 = fig.add_subplot(2, 2, 1)
-ax2 = fig.add_subplot(2, 2, 2)
-_ = ax1.hist(randn(100), bins=20, color='b', alpha=0.3)
-ax2.scatter(np.arange(30), np.arange(30)+3*randn(30))
-ax3 = fig.add_subplot(2, 2, 3)
-plt.plot(randn(50).cumsum(), 'k--')
-plt.show()
-
-# set axis ticks & labels
-fig = plt.figure()
-ax = fig.add_subplot(1, 1, 1)
-ax.plot(randn(1000).cumsum(), 'k--', linewidth=0.5, label='one')
-ax.plot(randn(1000).cumsum(), 'b-', linewidth=0.3, label='two')
-ax.plot(randn(1000).cumsum(), 'g:', linewidth=1, label='three')
-ticks = ax.set_xticks(list(range(0, 1001, 250))) # [0, 250, 500, 750, 1000]
-# labels = ax.set_xticklabels(['one', 'two', 'three', 'four', 'five'], rotation=30, fontsize='small')
-ax.set_title('Random Walker')
-ax.set_xlabel('Stages')
-ax.legend(loc='best')
-fig.show()
-plt.savefig('sample.svg')
-plt.savefig('sample.png', dpi=400, bbox_inches='tight')
-```
-
-#### Line Styles & Markers
-
-character/description
-----------|----------------------
-'-'      /solid line style
-'--'     /dashed line style
-'-.'     /dash-dot line style
-':'      /dotted line style
-'.'      /point marker
-','      /pixel marker
-'o'      /circle marker
-'v'      /triangle_down marker
-'^'      /triangle_up marker
-'<'      /triangle_left marker
-'>'      /triangle_right marker
-'1'      /tri_down marker
-'2'      /tri_up marker
-'3'      /tri_left marker
-'4'      /tri_right marker
-'s'      /square marker
-'p'      /pentagon marker
-'*'      /star marker
-'h'      /hexagon1 marker
-'H'      /hexagon2 marker
-'+'      /plus marker
-'x'      /x marker
-'D'      /diamond marker
-'d'      /thin_diamond marker
-'\|'     /vline marker
-'_'      /hline marker
-
-#### Colors
-
-character/color
-----------|--------
-'b'      /blue
-'g'      /green
-'r'      /red
-'c'      /cyan
-'m'      /magenta
-'y'      /yellow
-'k'      /black
-'w'      /white
-
-#### plot properties
-
-Property          | Description
-------------------|------------------------------------------------------------------------------------------------
-alpha             | float (0.0 transparent through 1.0 opaque)
-antialiased or aa | True/False
-color or c        | any matplotlib color
-dashes            | sequence of on/off ink in points
-figure            | a Figure instance
-fillstyle         | 'full'/'left'/'right'/'bottom'/'top'/'none'
-label             | object
-linestyle or ls   | 'solid'/'dashed', 'dashdot', 'dotted'/(offset, on-off-dash-seq)/'-'/'--'/'-.'/':'/'None'/' '/''
-linewidth or lw   | float value in points
-marker            | A valid marker style
-markersize or ms  | float
-xdata             | 1D array
-ydata             | 1D array
-
-> Reference:
-> <https://matplotlib.org/2.1.1/api/_as_gen/matplotlib.pyplot.plot.html>
-
 ## Pandas
 
 ### Pandas Series, DataFrame & Index
@@ -572,92 +410,161 @@ data_mean.mean(axis=1, level='type')
 
 Reference: https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#swapping-levels-with-swaplevel
 
-### Concat and Append
+### Merging
 
+https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html
 
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.join.html#pandas.DataFrame.join
 
-### Pandas plot
+Common functions in Pandas to combine DataFrames are:
 
-df = pd.DataFrame()
+* concat()
+* append()
+* merge()
+* join()
 
 ``` python
-import pandas as pd
-df = pd.DataFrame
+# Pandas functions signature
+pandas.concat(objs, *, axis=0, join='outer', ignore_index=False, keys=None, levels=None, names=None, verify_integrity=False, sort=False, copy=True)[source]
 
-# build DataFrame from rows
-sales = [('Jones LLC', 150, 200, 50),
-('Alpha Co', 200, 210, 90),
-('Blue Inc', 140, 215, 95)]
-labels = ['account', 'Jan', 'Feb', 'Mar']
-df = pd.DataFrame.from_records(sales, columns=labels)
+pandas.merge(left, right, how='inner', on=None, left_on=None, right_on=None, left_index=False, right_index=False, sort=False, suffixes=('_x', '_y'), copy=True, indicator=False, validate=None)
 
-df.plot.<TAB>
-df.plot.area     df.plot.barh     df.plot.density  df.plot.hist     df.plot.line     df.plot.scatter
-df.plot.bar      df.plot.box      df.plot.hexbin   df.plot.kde      df.plot.pie
+DataFrame.append(other, ignore_index=False, verify_integrity=False, sort=False)
+
+DataFrame.join(other, on=None, how='left', lsuffix='', rsuffix='', sort=False, validate=None)
+
+DataFrame.merge(right, how='inner', on=None, left_on=None, right_on=None, left_index=False, right_index=False, sort=False, suffixes=('_x', '_y'), copy=True, indicator=False, validate=None)
+
+# Examples: join 2 DataFrame on specified key
+df1 = pd.DataFrame({'employee': ['Bob', 'Jake', 'Lisa', 'Sue', 'Aaa'],
+                    'group': ['Accounting', 'Engineering', 'Engineering', 'HR', '']})
+df2 = pd.DataFrame({'employee': ['Lisa', 'Bob', 'Jake', 'Sue'],
+                    'hire_date': [2004, 2008, 2012, 2014]})
+df3 = pd.DataFrame({'name': ['Bob', 'Jake', 'Lisa', 'Sue'],
+                    'salary': [70000, 80000, 120000, 90000]})
+
+# pandas is smart enough to find the mutual key 'employee' and join on it
+pd.merge(df1, df2)
+# specify join key explicitly
+pd.merge(df1, df2, on='employee', how='inner')
+pd.merge(df1, df3, left_on='employee', right_on='name', how='right').drop('name', axis=1)
+
+# check diff of 2 lists
+listA = ['a', 'b', 'c']
+listB = ['a', 'c', 'd']
+dfa = pd.DataFrame({'id': listA})
+dfb = pd.DataFrame({'id': listB})
+# find in merged list where _merge is not both
+pd.merge(dfa, dfb, indicator=True, how='outer').loc[lambda x : x['_merge']!='both']
+# equals to
+pd_merge = pd.merge(dfa, dfb, indicator=True, how='outer')
+pd_merge[pd_merge['_merge']!='both']
+# or you can use concat and drop_duplicates but it won't save which record is from where
+diff = pd.concat([dfa,dfb]).drop_duplicates(keep=False)
+
+# example: US states data
+pop = pd.read_csv('data/state-population.csv')
+areas = pd.read_csv('data/state-areas.csv')
+abbrevs = pd.read_csv('data/state-abbrevs.csv')
+
+# pop.head()
+  state/region     ages  year  population
+0           AL  under18  2012   1117489.0
+1           AL    total  2012   4817528.0
+2           AL  under18  2010   1130966.0
+3           AL    total  2010   4785570.0
+4           AL  under18  2011   1125763.0
+
+# areas.head()
+        state  area (sq. mi)
+0     Alabama          52423
+1      Alaska         656425
+2     Arizona         114006
+3    Arkansas          53182
+4  California         163707
+
+# abbrevs.head()
+        state abbreviation
+0     Alabama           AL
+1      Alaska           AK
+2     Arizona           AZ
+3    Arkansas           AR
+4  California           CA
+
+# merge population and abbrevs
+merged = pd.merge(pop, abbrevs, how='outer', left_on='state/region', right_on='abbreviation')
+merged = merged.drop('abbreviation', 1) # drop duplicate info
+merged.head()
+# check and fill missing values
+merged.isnull().any()
+merged[merged.population.isnull()]
+merged.loc[merged['state'].isnull(), 'state/region'].unique()
+merged.loc[merged['state/region'] == 'PR', 'state'] = 'Puerto Rico'
+merged.loc[merged['state/region'] == 'USA', 'state'] = 'United States'
+merged.isnull().any()
+# merge areas and drop total
+final = pd.merge(merged, areas, on='state', how='left')
+final.head()
+final.isnull().any()
+final['state'][final['area (sq. mi)'].isnull()].unique()
+final.dropna(inplace=True)
+final.head()
+# query data
+data2010 = final.query("year == 2010 & ages == 'total'")
+data2010.head()
+data2010.set_index('state', inplace=True)
+density = data2010['population'] / data2010['area (sq. mi)']
+density.sort_values(ascending=False, inplace=True)
+density.head()
 ```
 
-> Reference:
->
-> * <https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html>
-> * <https://plot.ly/pandas/>
+### Aggregation
 
-### Pandas Data Aggregation
+https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html
+
+Split-Apply-Combine
+aggregate, filter, transform, apply
+
+Common built-in Pandas aggregations for Series and Data Frame:
+
+Aggregation      | Description
+-----------------|--------------------------------
+count()          | Total number of items
+first(), last()  | First and last item
+mean(), median() | Mean and median
+min(), max()     | Minimum and maximum
+std(), var()     | Standard deviation and variance
+mad()            | Mean absolute deviation
+prod()           | Product of all items
+sum()            | Sum of all items
 
 ``` python
-import numpy as np
-import pandas as pd
-
-people = pd.DataFrame(np.random.randn(5, 5),
-    columns=['a', 'b', 'c', 'd', 'e'],
-    index=['Joe', 'Steve', 'Wes', 'Jim', 'Travis'])
-mapping = {'a':'red', 'b':'red', 'c':'blue', 'd':'blue', 'e':'red'}
-
-people.groupby(mapping, axis=1).sum()
-grouped = people.groupby(mapping, axis=1)
-grouped.describe()
+# example: seaborn planets dataset
+planets = pd.read_csv('data/planets.csv')
+planets.groupby('method')['orbital_period'].describe()
+# iterate through each groups
+for (method, group) in planets.groupby('method'):
+    print("{0:30s} shape={1}".format(method, group.shape))
+# more aggregate options via aggregate function
+planets.groupby('year').aggregate(['mean', np.median, max])
+planets[planets['year'] > 2000].groupby('year').count()
+decade = 10 * (planets['year'] // 10)
+decade = decade.astype(str) + 's'
+decade.name = 'decade'
+planets.groupby(['method', decade])['number'].sum().unstack().fillna(0)
+# more filter, transform, apply examples
+df.groupby("B").filter(lambda x: len(x) > 2, dropna=False)
+df.groupby('key').transform(lambda x: x - x.mean())
+planets.groupby('year').apply(lambda x: x.describe())
 ```
 
-### Pivot table and crosstab
+### Pivot table
+
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.pivot_table.html
 
 ``` python
-df = pd.DataFrame({"A": ["foo", "foo", "foo", "foo", "foo", "bar", "bar", "bar", "bar"],
-                   "B": ["one", "one", "one", "two", "two", "one", "one", "two", "two"],
-                   "C": ["small", "large", "large", "small", "small", "large", "small", "small", "large"],
-                   "D": [1, 2, 2, 3, 3, 4, 5, 6, 7],
-                   "E": [2, 4, 5, 5, 6, 6, 8, 9, 9]})
-
-table = pd.pivot_table(df, values='D', index=['A', 'B'], columns=['C'], aggfunc=np.sum, fill_value=0)
-# C        large  small
-# A   B
-# bar one    4.0    5.0
-#     two    7.0    6.0
-# foo one    4.0    1.0
-#     two    NaN    6.0
-
-table = pd.pivot_table(df, values=['D', 'E'], index=['A', 'C'], aggfunc={'D': np.mean, 'E': [min, max, np.mean]})
-
 # The definition of pandas.pivot_table function is:
-pandas.pivot_table(data, values=None, index=None, columns=None, aggfunc='mean', fill_value=None, margins=False, dropna=True, margins_name='All')[source]
-
-# crosstab is a easier vresion of pivot_table
-pd.crosstab(df.A, df.B, margins=True)
-
-# B    one  two  All
-# A
-# bar    2    2    4
-# foo    3    2    5
-# All    5    4    9
-
-pd.crosstab([df.A, df.B], df.C, margins=True)
-
-# C        large  small  All
-# A   B
-# bar one      1      1    2
-#     two      1      1    2
-# foo one      2      1    3
-#     two      0      2    2
-# All          4      5    9
-
+pandas.pivot_table(data, values=None, index=None, columns=None, aggfunc='mean', fill_value=None, margins=False, dropna=True, margins_name='All', observed=False, sort=True)
 ```
 
 Parameters
@@ -672,9 +579,18 @@ Parameters
 * `dropna` : boolean, default True, Do not include columns whose entries are all NaN
 * `margins_name` : string, default 'All', Name of the row / column that will contain the totals when margins is True.
 
-#### A Full Example of Data Aggregation and Grouping in Pandas
+``` python
+titanic = pd.read_csv('data/titanic.csv')
+# survice rate by sex and class
+titanic.groupby(['sex', 'class'])['survived'].aggregate('mean').unstack()
+# cut age in phrases
+age = pd.cut(titanic['age'], [0, 18, 60, 80])
+fare = pd.qcut(titanic['fare'], 3)
+titanic.pivot_table('survived', ['sex', age], [fare, 'class'])
+titanic.pivot_table('survived', ['sex', age], 'class')
+```
 
-Reference:
+Example:
 <https://www.shanelynn.ie/summarising-aggregation-and-grouping-data-in-python-pandas/>
 
 ``` python
@@ -811,7 +727,7 @@ data.groupby('duration_group').agg({'num_calls': 'sum'})
 > If you calculate more than one column of results, your result will be a `Dataframe`.
 > For a single column of results, the agg function, by default, will produce a `Series`.
 
-### Reference
+References
 
 1. Pandas `agg()` function is using a similar idea of MongoDB aggregation framework
 <http://docs.mongodb.org/manual/applications/aggregation/>
@@ -819,7 +735,37 @@ data.groupby('duration_group').agg({'num_calls': 'sum'})
 2. Pandas groupby user guide
 <http://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html>
 
-## Time Series
+### Pandas String Operations
+
+Nearly all Python's built-in string methods are mirrored by a Pandas vectorized string method.
+
+``` python
+monte = pd.Series(['Graham Chapman', 'John Cleese', 'Terry Gilliam',
+                   'Eric Idle', 'Terry Jones', 'Michael Palin'])
+monte.str.lower()
+# regular expression
+monte.str.extract('([A-Za-z]+)', expand=False)
+monte.str.findall(r'^[^AEIOU].*[^aeiou]$')
+```
+
+Miscellaneous methods
+
+Method          | Description
+----------------|------------------------------------------------------------------
+get()           | Index each element
+slice()         | Slice each element
+slice_replace() | Replace slice in each element with passed value
+cat()           | Concatenate strings
+repeat()        | Repeat values
+normalize()     | Return Unicode form of string
+pad()           | Add whitespace to left, right, or both sides of strings
+wrap()          | Split long strings into lines with length less than a given width
+join()          | Join strings in each element of the Series with passed separator
+get_dummies()   | extract dummy variables as a dataframe
+
+### Time Series
+
+https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html
 
 ``` python
 import numpy as np
@@ -865,9 +811,18 @@ from dateutil.parser import parse
 parse('2011-11-03')
 parse('2011-11-03 10:39:22 +0800')
 parse('2012-03-01T10:00:00.0000Z')
+
+# generate time range
+# signature
+pandas.date_range(start=None, end=None, periods=None, freq=None, tz=None, normalize=False, name=None, closed=_NoDefault.no_default, inclusive=None, **kwargs)
+# default freq is 1 day
+pd.date_range('2023-01-01', '2023-01-31')
+pd.period_range('2015-07', periods=8, freq='M')
+pd.timedelta_range(0, periods=10, freq='H')
+pd.timedelta_range(0, periods=9, freq="2H30T")
 ```
 
-### Datetime format string
+#### Datetime format string
 
 <https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior>
 
@@ -890,6 +845,218 @@ Directive | Meaning                                             | Example
 %f        | Microsecond as zero padding decimal number          | 000000, .., 999999
 %z        | UTC offset                                          | +0000, -0800
 %Z        | Timezone name                                       | +0000, -0800
+
+### Eval
+
+The `eval()` function in Pandas uses string expressions to efficiently compute operations using DataFrames.
+
+``` python
+# eval DataFrame operations
+df1, df2, df3, df4, df5 = (pd.DataFrame(rng.randint(0, 1000, (100, 3)))
+                           for i in range(5))
+result1 = -df1 * df2 / (df3 + df4) - df5
+result2 = pd.eval('-df1 * df2 / (df3 + df4) - df5')
+np.allclose(result1, result2)
+# result: True
+
+# eval column wise operations
+df = pd.DataFrame(rng.rand(1000, 3), columns=['A', 'B', 'C'])
+df.eval('D = (A - B) / C', inplace=True)
+
+# query
+result1 = df[(df.A < 0.5) & (df.B < 0.5)]
+result2 = pd.eval('df[(df.A < 0.5) & (df.B < 0.5)]')
+result3 = df.query('A < 0.5 and B < 0.5')
+np.allclose(result1, result2)
+```
+
+## Visualization
+
+### Plotly
+
+* Business Intelligence
+
+  * Chart Studio
+  * Dashboards & Reporting
+  * Slide Decks
+
+* Data Science & Open Source
+
+  * Dash
+  * Plotly.py, Plotly.R, Plotly.js
+  * React
+
+* Platforms
+
+  * Plotly On-premise
+  * Plotly Cloud
+
+Data -> Layout -> Figure
+
+Offline Plots
+
+``` python
+# install plotly
+!pip install plotly --upgrade
+
+# import module
+import plotly
+plotly.__version__
+
+import plotly.plotly as py
+import plotly.offline as offline
+import plotly.graph_objs as go
+
+# offline plot
+offline.plot([{'x': [1, 3, 6],
+               'y': [3, 1, 5]}])
+offline.iplot([{'x': [1, 3, 6],
+               'y': [3, 1, 5]}])
+offline.iplot([{'x': [1, 3, 6]}])
+offline.iplot([{'y': [3, 1, 5]}])
+```
+
+<https://plot.ly/create/>
+
+Online Plots
+
+Sankey plot
+
+Matplotlib => Seaborn
+
+### Matplotlib
+
+``` python
+import numpy as np
+from numpy.random import randn
+import seaborn as sns
+import matplotlib.pyplot as plt
+sns.set()
+
+x = np.arange(0, 360)
+y = np.sin( x * np.pi / 180.0)
+
+plt.plot(x, y)
+plt.xlim(0, 360)        # set x axis range
+plt.ylim(-1.0, 1.0)     # set y axis range
+plt.title("y = sin(x)") # set title
+plt.show()
+
+# create an empty figure and add subplots
+fig = plt.figure()
+ax1 = fig.add_subplot(2, 2, 1)
+ax2 = fig.add_subplot(2, 2, 2)
+_ = ax1.hist(randn(100), bins=20, color='b', alpha=0.3)
+ax2.scatter(np.arange(30), np.arange(30)+3*randn(30))
+ax3 = fig.add_subplot(2, 2, 3)
+plt.plot(randn(50).cumsum(), 'k--')
+plt.show()
+
+# set axis ticks & labels
+fig = plt.figure()
+ax = fig.add_subplot(1, 1, 1)
+ax.plot(randn(1000).cumsum(), 'k--', linewidth=0.5, label='one')
+ax.plot(randn(1000).cumsum(), 'b-', linewidth=0.3, label='two')
+ax.plot(randn(1000).cumsum(), 'g:', linewidth=1, label='three')
+ticks = ax.set_xticks(list(range(0, 1001, 250))) # [0, 250, 500, 750, 1000]
+# labels = ax.set_xticklabels(['one', 'two', 'three', 'four', 'five'], rotation=30, fontsize='small')
+ax.set_title('Random Walker')
+ax.set_xlabel('Stages')
+ax.legend(loc='best')
+fig.show()
+plt.savefig('sample.svg')
+plt.savefig('sample.png', dpi=400, bbox_inches='tight')
+```
+
+#### Line Styles & Markers
+
+character/description
+----------|----------------------
+'-'      /solid line style
+'--'     /dashed line style
+'-.'     /dash-dot line style
+':'      /dotted line style
+'.'      /point marker
+','      /pixel marker
+'o'      /circle marker
+'v'      /triangle_down marker
+'^'      /triangle_up marker
+'<'      /triangle_left marker
+'>'      /triangle_right marker
+'1'      /tri_down marker
+'2'      /tri_up marker
+'3'      /tri_left marker
+'4'      /tri_right marker
+'s'      /square marker
+'p'      /pentagon marker
+'*'      /star marker
+'h'      /hexagon1 marker
+'H'      /hexagon2 marker
+'+'      /plus marker
+'x'      /x marker
+'D'      /diamond marker
+'d'      /thin_diamond marker
+'\|'     /vline marker
+'_'      /hline marker
+
+#### Colors
+
+character/color
+----------|--------
+'b'      /blue
+'g'      /green
+'r'      /red
+'c'      /cyan
+'m'      /magenta
+'y'      /yellow
+'k'      /black
+'w'      /white
+
+#### plot properties
+
+Property          | Description
+------------------|------------------------------------------------------------------------------------------------
+alpha             | float (0.0 transparent through 1.0 opaque)
+antialiased or aa | True/False
+color or c        | any matplotlib color
+dashes            | sequence of on/off ink in points
+figure            | a Figure instance
+fillstyle         | 'full'/'left'/'right'/'bottom'/'top'/'none'
+label             | object
+linestyle or ls   | 'solid'/'dashed', 'dashdot', 'dotted'/(offset, on-off-dash-seq)/'-'/'--'/'-.'/':'/'None'/' '/''
+linewidth or lw   | float value in points
+marker            | A valid marker style
+markersize or ms  | float
+xdata             | 1D array
+ydata             | 1D array
+
+> Reference:
+> <https://matplotlib.org/2.1.1/api/_as_gen/matplotlib.pyplot.plot.html>
+
+### Pandas plot
+
+df = pd.DataFrame()
+
+``` python
+import pandas as pd
+df = pd.DataFrame
+
+# build DataFrame from rows
+sales = [('Jones LLC', 150, 200, 50),
+('Alpha Co', 200, 210, 90),
+('Blue Inc', 140, 215, 95)]
+labels = ['account', 'Jan', 'Feb', 'Mar']
+df = pd.DataFrame.from_records(sales, columns=labels)
+
+df.plot.<TAB>
+df.plot.area     df.plot.barh     df.plot.density  df.plot.hist     df.plot.line     df.plot.scatter
+df.plot.bar      df.plot.box      df.plot.hexbin   df.plot.kde      df.plot.pie
+```
+
+> Reference:
+>
+> * <https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html>
+> * <https://plot.ly/pandas/>
 
 ### Pandas TimeSeries
 
@@ -995,40 +1162,3 @@ Pandas DataFrame plot parameters
 Examples
 <https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html>
 
-## Combining Datasets
-
-Common functions in Pandas to combine DataFrames are:
-
-* concat()
-* append()
-* merge()
-* join()
-
-``` python
-# join 2 DataFrame on specified key
-df1 = pd.DataFrame({'employee': ['Bob', 'Jake', 'Lisa', 'Sue', 'Aaa'],
-                    'group': ['Accounting', 'Engineering', 'Engineering', 'HR', '']})
-df2 = pd.DataFrame({'employee': ['Lisa', 'Bob', 'Jake', 'Sue'],
-                    'hire_date': [2004, 2008, 2012, 2014]})
-df3 = pd.DataFrame({'name': ['Bob', 'Jake', 'Lisa', 'Sue'],
-                    'salary': [70000, 80000, 120000, 90000]})
-
-# pandas is smart enough to find the mutual key 'employee' and join on it
-pd.merge(df1, df2)
-# specify join key explicitly
-pd.merge(df1, df2, on='employee', how='inner')
-pd.merge(df1, df3, left_on='employee', right_on='name', how='right').drop('name', axis=1)
-
-# check diff of 2 lists
-listA = ['a', 'b', 'c']
-listB = ['a', 'c', 'd']
-dfa = pd.DataFrame({'id': listA})
-dfb = pd.DataFrame({'id': listB})
-# find in merged list where _merge is not both
-pd.merge(dfa, dfb, indicator=True, how='outer').loc[lambda x : x['_merge']!='both']
-# equals to
-pd_merge = pd.merge(dfa, dfb, indicator=True, how='outer')
-pd_merge[pd_merge['_merge']!='both']
-# or you can use concat and drop_duplicates but it won't save which record is from where
-diff = pd.concat([dfa,dfb]).drop_duplicates(keep=False)
-```
