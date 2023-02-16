@@ -25,17 +25,18 @@
     - [Pivot table](#pivot-table)
     - [Pandas String Operations](#pandas-string-operations)
     - [Time Series](#time-series)
-      - [Datetime format string](#datetime-format-string)
     - [Eval](#eval)
   - [Visualization](#visualization)
-    - [Plotly](#plotly)
     - [Matplotlib](#matplotlib)
       - [Line Styles \& Markers](#line-styles--markers)
       - [Colors](#colors)
-      - [plot properties](#plot-properties)
+      - [Plot properties](#plot-properties)
+      - [Common pyplot functions](#common-pyplot-functions)
+      - [Common graphics types](#common-graphics-types)
+      - [Set style](#set-style)
+      - [3D plot](#3d-plot)
     - [Pandas plot](#pandas-plot)
-    - [Pandas TimeSeries](#pandas-timeseries)
-
+    - [Plotly](#plotly)
 
 ## IPython
 
@@ -86,8 +87,8 @@ inspect.getsource
 
 ### In & Out objects array
 
-* `In` and `Out` are built-in object arrays for history
-* Previously output could be accessed using `_`, `__`, `___`
+- `In` and `Out` are built-in object arrays for history
+- Previously output could be accessed using `_`, `__`, `___`
 
 ### Run a shell command
 
@@ -148,16 +149,16 @@ Since Python loops could be very slow due to dynamic type check and dispatching,
 
 UFuncs:
 
-* Array arithmetic: `+(add), -(subtract), -(negative), *(multiply), /(divide), **(power), //(floor_divide), % (mod), abs`
-* Trigonometric functions: `sin, cos, tan, arcsin, arccos, arctan`
-* Exponents and logarithms: `exp(e^x), exp2(2^x), power, log = ln(x), log2, log10, expm1 = exp(x)-1, log1p = log(1+x)`
-* Hyperbolic trig functions
-* Bitwise arithmetic: `logical_and, logical_or, logical_xor, &, |, ^`
-* Comparison operators: `greater, greater_equal, less, less_equal, equal, not_equal, >, >=, <, <=, ==, !=`
-* Conversions from radians to degrees
-* Rounding and remainders
-* Other functions defined in scipy.special, ref: <https://docs.scipy.org>
-* Aggregates: `reduce, accumulate, sum, min, max, mean, prod, std, var, any, all`
+- Array arithmetic: `+(add), -(subtract), -(negative), *(multiply), /(divide), **(power), //(floor_divide), % (mod), abs`
+- Trigonometric functions: `sin, cos, tan, arcsin, arccos, arctan`
+- Exponents and logarithms: `exp(e^x), exp2(2^x), power, log = ln(x), log2, log10, expm1 = exp(x)-1, log1p = log(1+x)`
+- Hyperbolic trig functions
+- Bitwise arithmetic: `logical_and, logical_or, logical_xor, &, |, ^`
+- Comparison operators: `greater, greater_equal, less, less_equal, equal, not_equal, >, >=, <, <=, ==, !=`
+- Conversions from radians to degrees
+- Rounding and remainders
+- Other functions defined in scipy.special, ref: <https://docs.scipy.org>
+- Aggregates: `reduce, accumulate, sum, min, max, mean, prod, std, var, any, all`
 
 ``` python
 x = np.arange(1, 6)
@@ -193,12 +194,12 @@ plt.show()
 
 ### Common Statistic functions
 
-* sum, prod
-* min, max: optional parameter to specify which dimension, e.g. x.min(axis=0)
-* argmin, argmax: index of min/max
-* mean, std, var, median, percentile
-* any, all: evaluate whether any/all elements are true
-* unique(x), intersect1d(x, y), union1d(x, y), in1d(x, y), setdiff1d(x, y), setxor1d(x, y): basic set operations
+- sum, prod
+- min, max: optional parameter to specify which dimension, e.g. x.min(axis=0)
+- argmin, argmax: index of min/max
+- mean, std, var, median, percentile
+- any, all: evaluate whether any/all elements are true
+- unique(x), intersect1d(x, y), union1d(x, y), in1d(x, y), setdiff1d(x, y), setxor1d(x, y): basic set operations
 
 ### Broadcasting
 
@@ -367,10 +368,10 @@ np.finfo(np.double).max   # 1.7976931348623157e+308
 
 Useful methods to handle missing values
 
-* `isnull()`: Generate a boolean mask indicating missing values
-* `notnull()`: Opposite of isnull()
-* `dropna()`: Return a filtered version of the data
-* `fillna()`: Return a copy of the data with missing values filled or imputed
+- `isnull()`: Generate a boolean mask indicating missing values
+- `notnull()`: Opposite of isnull()
+- `dropna()`: Return a filtered version of the data
+- `fillna()`: Return a copy of the data with missing values filled or imputed
 
 ### Multi-level Indexing
 
@@ -408,20 +409,20 @@ data_mean = health_data.mean(level='year')
 data_mean.mean(axis=1, level='type')
 ```
 
-Reference: https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#swapping-levels-with-swaplevel
+Reference: <https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#swapping-levels-with-swaplevel>
 
 ### Merging
 
-https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html
+<https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html>
 
-https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.join.html#pandas.DataFrame.join
+<https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.join.html#pandas.DataFrame.join>
 
 Common functions in Pandas to combine DataFrames are:
 
-* concat()
-* append()
-* merge()
-* join()
+- concat()
+- append()
+- merge()
+- join()
 
 ``` python
 # Pandas functions signature
@@ -520,7 +521,7 @@ density.head()
 
 ### Aggregation
 
-https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html
+<https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html>
 
 Split-Apply-Combine
 aggregate, filter, transform, apply
@@ -560,7 +561,7 @@ planets.groupby('year').apply(lambda x: x.describe())
 
 ### Pivot table
 
-https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.pivot_table.html
+<https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.pivot_table.html>
 
 ``` python
 # The definition of pandas.pivot_table function is:
@@ -569,15 +570,15 @@ pandas.pivot_table(data, values=None, index=None, columns=None, aggfunc='mean', 
 
 Parameters
 
-* `data` : DataFrame
-* `values` : column to aggregate, optional
-* `index` : column, Grouper, array, or list of the previous
-* `columns` : column, Grouper, array, or list of the previous
-* `aggfunc` : function, list of functions, dict, default numpy.mean
-* `fill_value` : scalar, default None, Value to replace missing values with
-* `margins` : boolean, default False, Add all row / columns (e.g. for subtotal / grand totals)
-* `dropna` : boolean, default True, Do not include columns whose entries are all NaN
-* `margins_name` : string, default 'All', Name of the row / column that will contain the totals when margins is True.
+- `data` : DataFrame
+- `values` : column to aggregate, optional
+- `index` : column, Grouper, array, or list of the previous
+- `columns` : column, Grouper, array, or list of the previous
+- `aggfunc` : function, list of functions, dict, default numpy.mean
+- `fill_value` : scalar, default None, Value to replace missing values with
+- `margins` : boolean, default False, Add all row / columns (e.g. for subtotal / grand totals)
+- `dropna` : boolean, default True, Do not include columns whose entries are all NaN
+- `margins_name` : string, default 'All', Name of the row / column that will contain the totals when margins is True.
 
 ``` python
 titanic = pd.read_csv('data/titanic.csv')
@@ -765,7 +766,7 @@ get_dummies()   | extract dummy variables as a dataframe
 
 ### Time Series
 
-https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html
+<https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html>
 
 ``` python
 import numpy as np
@@ -822,7 +823,7 @@ pd.timedelta_range(0, periods=10, freq='H')
 pd.timedelta_range(0, periods=9, freq="2H30T")
 ```
 
-#### Datetime format string
+Datetime format string
 
 <https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior>
 
@@ -845,220 +846,6 @@ Directive | Meaning                                             | Example
 %f        | Microsecond as zero padding decimal number          | 000000, .., 999999
 %z        | UTC offset                                          | +0000, -0800
 %Z        | Timezone name                                       | +0000, -0800
-
-### Eval
-
-The `eval()` function in Pandas uses string expressions to efficiently compute operations using DataFrames.
-
-``` python
-# eval DataFrame operations
-df1, df2, df3, df4, df5 = (pd.DataFrame(rng.randint(0, 1000, (100, 3)))
-                           for i in range(5))
-result1 = -df1 * df2 / (df3 + df4) - df5
-result2 = pd.eval('-df1 * df2 / (df3 + df4) - df5')
-np.allclose(result1, result2)
-# result: True
-
-# eval column wise operations
-df = pd.DataFrame(rng.rand(1000, 3), columns=['A', 'B', 'C'])
-df.eval('D = (A - B) / C', inplace=True)
-
-# query
-result1 = df[(df.A < 0.5) & (df.B < 0.5)]
-result2 = pd.eval('df[(df.A < 0.5) & (df.B < 0.5)]')
-result3 = df.query('A < 0.5 and B < 0.5')
-np.allclose(result1, result2)
-```
-
-## Visualization
-
-### Plotly
-
-* Business Intelligence
-
-  * Chart Studio
-  * Dashboards & Reporting
-  * Slide Decks
-
-* Data Science & Open Source
-
-  * Dash
-  * Plotly.py, Plotly.R, Plotly.js
-  * React
-
-* Platforms
-
-  * Plotly On-premise
-  * Plotly Cloud
-
-Data -> Layout -> Figure
-
-Offline Plots
-
-``` python
-# install plotly
-!pip install plotly --upgrade
-
-# import module
-import plotly
-plotly.__version__
-
-import plotly.plotly as py
-import plotly.offline as offline
-import plotly.graph_objs as go
-
-# offline plot
-offline.plot([{'x': [1, 3, 6],
-               'y': [3, 1, 5]}])
-offline.iplot([{'x': [1, 3, 6],
-               'y': [3, 1, 5]}])
-offline.iplot([{'x': [1, 3, 6]}])
-offline.iplot([{'y': [3, 1, 5]}])
-```
-
-<https://plot.ly/create/>
-
-Online Plots
-
-Sankey plot
-
-Matplotlib => Seaborn
-
-### Matplotlib
-
-``` python
-import numpy as np
-from numpy.random import randn
-import seaborn as sns
-import matplotlib.pyplot as plt
-sns.set()
-
-x = np.arange(0, 360)
-y = np.sin( x * np.pi / 180.0)
-
-plt.plot(x, y)
-plt.xlim(0, 360)        # set x axis range
-plt.ylim(-1.0, 1.0)     # set y axis range
-plt.title("y = sin(x)") # set title
-plt.show()
-
-# create an empty figure and add subplots
-fig = plt.figure()
-ax1 = fig.add_subplot(2, 2, 1)
-ax2 = fig.add_subplot(2, 2, 2)
-_ = ax1.hist(randn(100), bins=20, color='b', alpha=0.3)
-ax2.scatter(np.arange(30), np.arange(30)+3*randn(30))
-ax3 = fig.add_subplot(2, 2, 3)
-plt.plot(randn(50).cumsum(), 'k--')
-plt.show()
-
-# set axis ticks & labels
-fig = plt.figure()
-ax = fig.add_subplot(1, 1, 1)
-ax.plot(randn(1000).cumsum(), 'k--', linewidth=0.5, label='one')
-ax.plot(randn(1000).cumsum(), 'b-', linewidth=0.3, label='two')
-ax.plot(randn(1000).cumsum(), 'g:', linewidth=1, label='three')
-ticks = ax.set_xticks(list(range(0, 1001, 250))) # [0, 250, 500, 750, 1000]
-# labels = ax.set_xticklabels(['one', 'two', 'three', 'four', 'five'], rotation=30, fontsize='small')
-ax.set_title('Random Walker')
-ax.set_xlabel('Stages')
-ax.legend(loc='best')
-fig.show()
-plt.savefig('sample.svg')
-plt.savefig('sample.png', dpi=400, bbox_inches='tight')
-```
-
-#### Line Styles & Markers
-
-character/description
-----------|----------------------
-'-'      /solid line style
-'--'     /dashed line style
-'-.'     /dash-dot line style
-':'      /dotted line style
-'.'      /point marker
-','      /pixel marker
-'o'      /circle marker
-'v'      /triangle_down marker
-'^'      /triangle_up marker
-'<'      /triangle_left marker
-'>'      /triangle_right marker
-'1'      /tri_down marker
-'2'      /tri_up marker
-'3'      /tri_left marker
-'4'      /tri_right marker
-'s'      /square marker
-'p'      /pentagon marker
-'*'      /star marker
-'h'      /hexagon1 marker
-'H'      /hexagon2 marker
-'+'      /plus marker
-'x'      /x marker
-'D'      /diamond marker
-'d'      /thin_diamond marker
-'\|'     /vline marker
-'_'      /hline marker
-
-#### Colors
-
-character/color
-----------|--------
-'b'      /blue
-'g'      /green
-'r'      /red
-'c'      /cyan
-'m'      /magenta
-'y'      /yellow
-'k'      /black
-'w'      /white
-
-#### plot properties
-
-Property          | Description
-------------------|------------------------------------------------------------------------------------------------
-alpha             | float (0.0 transparent through 1.0 opaque)
-antialiased or aa | True/False
-color or c        | any matplotlib color
-dashes            | sequence of on/off ink in points
-figure            | a Figure instance
-fillstyle         | 'full'/'left'/'right'/'bottom'/'top'/'none'
-label             | object
-linestyle or ls   | 'solid'/'dashed', 'dashdot', 'dotted'/(offset, on-off-dash-seq)/'-'/'--'/'-.'/':'/'None'/' '/''
-linewidth or lw   | float value in points
-marker            | A valid marker style
-markersize or ms  | float
-xdata             | 1D array
-ydata             | 1D array
-
-> Reference:
-> <https://matplotlib.org/2.1.1/api/_as_gen/matplotlib.pyplot.plot.html>
-
-### Pandas plot
-
-df = pd.DataFrame()
-
-``` python
-import pandas as pd
-df = pd.DataFrame
-
-# build DataFrame from rows
-sales = [('Jones LLC', 150, 200, 50),
-('Alpha Co', 200, 210, 90),
-('Blue Inc', 140, 215, 95)]
-labels = ['account', 'Jan', 'Feb', 'Mar']
-df = pd.DataFrame.from_records(sales, columns=labels)
-
-df.plot.<TAB>
-df.plot.area     df.plot.barh     df.plot.density  df.plot.hist     df.plot.line     df.plot.scatter
-df.plot.bar      df.plot.box      df.plot.hexbin   df.plot.kde      df.plot.pie
-```
-
-> Reference:
->
-> * <https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html>
-> * <https://plot.ly/pandas/>
-
-### Pandas TimeSeries
 
 ``` python
 #pd.date_range(datetime.now(), periods=10, freq='10S')
@@ -1085,7 +872,7 @@ S     | seconds
 L,ms  | milliseconds
 
 ``` python
-# example to load time series data
+# example to load time series data and visualize
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -1150,6 +937,273 @@ df[['pred_total', 'pred_pos']].plot(ax=ax)
 plt.show()
 ```
 
+### Eval
+
+The `eval()` function in Pandas uses string expressions to efficiently compute operations using DataFrames.
+
+``` python
+# eval DataFrame operations
+df1, df2, df3, df4, df5 = (pd.DataFrame(rng.randint(0, 1000, (100, 3)))
+                           for i in range(5))
+result1 = -df1 * df2 / (df3 + df4) - df5
+result2 = pd.eval('-df1 * df2 / (df3 + df4) - df5')
+np.allclose(result1, result2)
+# result: True
+
+# eval column wise operations
+df = pd.DataFrame(rng.rand(1000, 3), columns=['A', 'B', 'C'])
+df.eval('D = (A - B) / C', inplace=True)
+
+# query
+result1 = df[(df.A < 0.5) & (df.B < 0.5)]
+result2 = pd.eval('df[(df.A < 0.5) & (df.B < 0.5)]')
+result3 = df.query('A < 0.5 and B < 0.5')
+np.allclose(result1, result2)
+```
+
+## Visualization
+
+### Matplotlib
+
+<https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html>
+
+``` python
+import numpy as np
+from numpy.random import randn
+import seaborn as sns
+import matplotlib.pyplot as plt
+sns.set()
+
+# in IPython, run magic command to set backend so that no need to run plt.show()
+%matplotlib
+
+# in Jupyter, set backend as inline
+%matplotlib inline
+
+x = np.arange(0, 360)
+y = np.sin( x * np.pi / 180.0)
+
+fig = plt.figure()
+plt.plot(x, y)
+plt.xlim(0, 360)        # set x axis range
+plt.ylim(-1.0, 1.0)     # set y axis range
+plt.title("y = sin(x)") # set title
+fig.savefig('sin.png')  # supported formats: png, jpg, svg, pdf, tif, etc.
+
+fig = plt.figure()
+ax1 = fig.add_subplot(2, 2, 1)  # create subplot
+ax2 = fig.add_subplot(2, 2, 2)
+_ = ax1.hist(randn(100), bins=20, color='b', alpha=0.3)
+ax2.scatter(np.arange(30), np.arange(30)+3*randn(30))
+ax3 = fig.add_subplot(2, 2, 3)
+plt.plot(randn(50).cumsum(), 'k--')
+
+# set axis ticks & labels
+fig = plt.figure()
+ax = fig.add_subplot(1, 1, 1)
+ax.plot(randn(1000).cumsum(), 'k--', linewidth=0.5, label='one')
+ax.plot(randn(1000).cumsum(), 'b-', linewidth=0.3, label='two')
+ax.plot(randn(1000).cumsum(), 'g:', linewidth=1, label='three')
+ticks = ax.set_xticks(list(range(0, 1001, 250))) # [0, 250, 500, 750, 1000]
+# labels = ax.set_xticklabels(['one', 'two', 'three', 'four', 'five'], rotation=30, fontsize='small')
+ax.set_title('Random Walker')
+ax.set_xlabel('Stages')
+ax.legend(loc='best')
+plt.savefig('sample.svg')
+plt.savefig('sample.png', dpi=400, bbox_inches='tight')
+```
+
+#### Line Styles & Markers
+
+character|description
+---------|----------------------
+'-'      |solid line style
+'--'     |dashed line style
+'-.'     |dash-dot line style
+':'      |dotted line style
+'.'      |point marker
+','      |pixel marker
+'o'      |circle marker
+'v'      |triangle_down marker
+'^'      |triangle_up marker
+'<'      |triangle_left marker
+'>'      |triangle_right marker
+'1'      |tri_down marker
+'2'      |tri_up marker
+'3'      |tri_left marker
+'4'      |tri_right marker
+'s'      |square marker
+'p'      |pentagon marker
+'*'      |star marker
+'h'      |hexagon1 marker
+'H'      |hexagon2 marker
+'+'      |plus marker
+'x'      |x marker
+'D'      |diamond marker
+'d'      |thin_diamond marker
+'\|'     |vline marker
+'_'      |hline marker
+
+#### Colors
+
+character|color
+---------|--------
+'b'      |blue
+'g'      |green
+'r'      |red
+'c'      |cyan
+'m'      |magenta
+'y'      |yellow
+'k'      |black
+'w'      |white
+
+#### Plot properties
+
+Property          | Description
+------------------|------------------------------------------------------------------------------------------------
+alpha             | float (0.0 transparent through 1.0 opaque)
+antialiased or aa | True/False
+color or c        | any matplotlib color
+dashes            | sequence of on/off ink in points
+figure            | a Figure instance
+fillstyle         | 'full'/'left'/'right'/'bottom'/'top'/'none'
+label             | object
+linestyle or ls   | 'solid'/'dashed', 'dashdot', 'dotted'/(offset, on-off-dash-seq)/'-'/'--'/'-.'/':'/'None'/' '/''
+linewidth or lw   | float value in points
+marker            | A valid marker style
+markersize or ms  | float
+xdata             | 1D array
+ydata             | 1D array
+
+<https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html>
+
+#### Common pyplot functions
+
+plot Function Name| ax Function Name | Description
+-|-|-
+xlim, ylim|set_xlim, set_ylim|Set axes limits
+axis|-|Customize axis
+xlabel, ylabel|set_xlabel, set_ylabel|Set axes label
+title|set_title|Plot title
+legend|-|Show legend
+colorbar|-|Color legend
+errorbar, fill-between||Show error in bar or area
+vlines, hlines|Set vertical or horizontal guide lines
+ax.text|Annotation text
+plt.arrow,plt.annotate|Annotation line
+
+#### Common graphics types
+
+Function|Descriptions
+-|-
+plt.plot, plt.scatter|Scatter plot
+plt.bar, plt.barh|Bar plot
+plt.pie|notorious pie chart
+plt.stackplot|stack area plot
+plt.boxplot|With error boxes
+plt.violinplot|Centered bar chart
+plt.hist|Histogram
+np.histogram2d+plt.hist2d+plt.colorbar|Show 3D data in 2D using color as 3rd axis
+plt.hexbin+plt.colorbar|3rd dimension in color
+plt.imshow+plt.colorbar|3rd dimension in color
+np.meshgrid+plt.contour+plt.colorbar|3rd dimension in color
+
+Examples:
+<https://matplotlib.org/stable/gallery/images_contours_and_fields/index.html>
+
+``` python
+# Show California cities, geolocation as X and Y, city area as dor size, population in color
+cities = pd.read_csv('data/california_cities.csv')
+
+# Extract the data we're interested in
+lat, lon = cities['latd'], cities['longd']
+population, area = cities['population_total'], cities['area_total_km2']
+
+# Scatter the points, using size and color but no label
+plt.scatter(lon, lat, label=None,
+            c=np.log10(population), cmap='viridis',
+            s=area, linewidth=0, alpha=0.5)
+plt.axis(aspect='equal')
+plt.xlabel('longitude')
+plt.ylabel('latitude')
+plt.colorbar(label='log$_{10}$(population)')
+plt.clim(3, 7)
+
+# Here we create a legend:
+# we'll plot empty lists with the desired size and label
+for area in [100, 300, 500]:
+    plt.scatter([], [], c='k', alpha=0.3, s=area,
+                label=str(area) + ' km$^2$')
+plt.legend(scatterpoints=1, frameon=False, labelspacing=1, title='City Area')
+
+plt.title('California Cities: Area and Population');
+```
+
+#### Set style
+
+``` python
+def hist_and_lines():
+    np.random.seed(0)
+    fig, ax = plt.subplots(1, 2, figsize=(11, 4))
+    ax[0].hist(np.random.randn(1000))
+    for i in range(3):
+        ax[1].plot(np.random.rand(10))
+    ax[1].legend(['a', 'b', 'c'], loc='lower left')
+
+# render histogram and line with custom style
+with plt.style.context('fivethirtyeight'):
+    hist_and_lines()
+```
+
+Style list:
+
+- fivethirtyeight
+- ggplot
+- bmh
+- dark_background
+- grayscle
+
+Using Seaborn
+
+``` python
+import seaborn as sns
+sns.set()
+
+sns.kdeplot(data, shade=True)
+sns.distplot(data['x'])
+sns.distplot(data['y'])
+
+with sns.axes_style('white'):
+    sns.jointplot("x", "y", data, kind='hex')
+
+# Visualizing the multidimensional relationships among the samples
+sns.pairplot(iris, hue='species', size=2.5)
+
+# Joint plot with automatic kernel density estimation and regression
+sns.jointplot("total_bill", "tip", data=tips, kind='reg');
+
+# Time series in bars
+with sns.axes_style('white'):
+    g = sns.factorplot("year", data=planets, aspect=2,
+                       kind="count", color='steelblue')
+```
+
+#### 3D plot
+
+``` python
+ax.plot3D          # 3D line
+ax.scatter3D       # 3D scatter points
+ax.contour3D       # 3D mesh
+ax.plot_wireframe  # 3D wireframe
+ax.plot_surface    # 3D surface
+ax.view_init     # adjust view pont
+# Show geographical data using BaseMap module
+from mpl_toolkits.basemap import Basemap
+```
+
+Matplot Gallery
+<http://matplotlib.org/gallery.html>
+
 Matplot figure
 <https://matplotlib.org/api/_as_gen/matplotlib.pyplot.figure.html>
 
@@ -1162,3 +1216,75 @@ Pandas DataFrame plot parameters
 Examples
 <https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html>
 
+### Pandas plot
+
+df = pd.DataFrame()
+
+``` python
+import pandas as pd
+df = pd.DataFrame
+
+# build DataFrame from rows
+sales = [('Jones LLC', 150, 200, 50),
+('Alpha Co', 200, 210, 90),
+('Blue Inc', 140, 215, 95)]
+labels = ['account', 'Jan', 'Feb', 'Mar']
+df = pd.DataFrame.from_records(sales, columns=labels)
+
+df.plot.<TAB>
+df.plot.area     df.plot.barh     df.plot.density  df.plot.hist     df.plot.line     df.plot.scatter
+df.plot.bar      df.plot.box      df.plot.hexbin   df.plot.kde      df.plot.pie
+```
+
+> Reference:
+>
+> - <https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html>
+> - <https://plot.ly/pandas/>
+
+### Plotly
+
+<https://plotly.com/python/basic-charts/>
+<https://www.geeksforgeeks.org/python-plotly-tutorial/>
+<https://plot.ly/create/>
+
+``` python
+# install plotly
+!pip install plotly --upgrade
+
+# import module
+import plotly
+
+import plotly.plotly as py
+import plotly.offline as offline
+import plotly.graph_objs as go
+
+# offline plot
+offline.plot([{'x': [1, 3, 6],
+               'y': [3, 1, 5]}])
+offline.iplot([{'x': [1, 3, 6],
+               'y': [3, 1, 5]}])
+offline.iplot([{'x': [1, 3, 6]}])
+offline.iplot([{'y': [3, 1, 5]}])
+
+# use plotly express
+import plotly.express as px
+
+# Creating the Line Figure instance
+fig = px.line(x=[1, 2, 3], y=[1, 2, 3])
+fig.show()
+
+# Bar
+fig = px.bar(df, x="sepal_width", y="sepal_length")
+# Histogram
+fig = px.histogram(df, x="sepal_length", y="petal_width")
+# Scatter
+fig = px.scatter(df, x="species", y="petal_width")
+# Pie
+fig = px.pie(df, values="total_bill", names="day")
+# plotting the box chart
+fig = px.box(df, x="day", y="total_bill")
+# plotting the violin chart
+fig = px.violin(df, x="day", y="total_bill")
+# Gantt
+fig = ff.create_gantt(df)
+```
