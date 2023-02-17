@@ -93,5 +93,28 @@ References:
 * https://openbase.com/python/jupyterthemes/documentation
 * https://github.com/dunovank/jupyter-themes/blob/master/README.md#monospace-fonts-code-cells
 
-##
+## Trouble shooting
 
+``` console
+kex_exchange_identification: Connection closed by remote host
+Connection closed by 20.205.243.166 port 22
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+```
+
+Solution:
+
+1. Regenerate a new key.
+2. Change SSH port.
+
+Create {user}/.ssh/config file with following content
+
+``` config
+Host github.com
+Hostname ssh.github.com
+Port 443
+```
+
+Reference: <https://blog.csdn.net/Eric_q8666/article/details/127179501>
