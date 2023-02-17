@@ -36,7 +36,10 @@
       - [Set style](#set-style)
       - [3D plot](#3d-plot)
     - [Pandas plot](#pandas-plot)
+    - [Bokeh](#bokeh)
     - [Plotly](#plotly)
+  - [Machine Learning](#machine-learning)
+    - [Scikit-Learn](#scikit-learn)
 
 ## IPython
 
@@ -1241,6 +1244,37 @@ df.plot.bar      df.plot.box      df.plot.hexbin   df.plot.kde      df.plot.pie
 > - <https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html>
 > - <https://plot.ly/pandas/>
 
+### Bokeh
+
+<https://docs.bokeh.org/en/latest/docs/gallery.html>
+<https://blog.csdn.net/weixin_38037405/article/details/121498202>
+
+``` python
+!pip install pandas-Bokeh
+
+import pandas as pd
+from bokeh.plotting import figure
+from bokeh.io import show
+
+# is_masc is a one-hot encoded dataframe of responses to the question:
+# "Do you identify as masculine?"
+
+#Dataframe Prep
+counts = is_masc.sum()
+resps = is_masc.columns
+
+#Bokeh
+p2 = figure(title='Do You View Yourself As Masculine?',
+          x_axis_label='Response',
+          y_axis_label='Count',
+          x_range=list(resps))
+p2.vbar(x=resps, top=counts, width=0.6, fill_color='red', line_color='black')
+show(p2)
+
+#Pandas
+counts.plot(kind='bar')
+```
+
 ### Plotly
 
 <https://plotly.com/python/basic-charts/>
@@ -1288,3 +1322,119 @@ fig = px.violin(df, x="day", y="total_bill")
 # Gantt
 fig = ff.create_gantt(df)
 ```
+
+## Machine Learning
+
+Categories
+
+- Supervised learning: Models that can predict labels based on labeled training data
+  - Classification: Models that predict labels as two or more discrete categories
+  - Regression: Models that predict continuous labels
+- Unsupervised learning: Models that identify structure in unlabeled data
+  - Clustering: Models that detect and identify distinct groups in the data
+  - Dimensionality reduction: Models that detect and identify lower-dimensional  structure in higher-dimensional data
+- Semi-supervised learning
+
+Common Estimator Training Steps
+
+1. Choose a class of model by importing the appropriate estimator class from Scikit-Learn.
+2. Choose model **hyperparameters** by instantiating this class with desired values.
+3. Arrange data into a **features matrix** and **target vector** following the discussion above.
+4. Fit the model to your data by calling the `fit()` method of the model instance.
+5. Apply the Model to new data:
+    - For supervised learning, often we predict labels for unknown data using the predict() method.
+    - For unsupervised learning, we often transform or infer properties of the data using the transform() or predict() method.
+
+### Scikit-Learn
+
+``` python
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.set()
+%matplotlib
+
+# Linear Regression
+rng = np.random.RandomState(42)
+x = 10 * rng.rand(50)
+y = 2 * x - 1 + rng.randn(50)
+plt.scatter(x, y)
+# choose model
+from sklearn.linear_model import LinearRegression
+model = LinearRegression(fit_intercept=True)
+X = x[:, np.newaxis]  # reshape feature matrix
+# fit
+model.fit(X, y)
+model.coef_           # array([1.94667186])
+model.intercept_      # -0.5553164627339857
+# apply model to new data
+xfit = np.linspace(-1, 11)
+Xfit = xfit[:, np.newaxis]
+yfit = model.predict(Xfit)
+plt.scatter(x, y)
+plt.plot(xfit, yfit)
+
+# Classification
+iris = pd.read_csv('data/iris.csv')
+iris.head(5)
+sns.pairplot(iris, hue='species', height=1.5)
+X_iris = iris.drop('species', axis=1)   # X_iris.shape (150, 4)
+y_iris = iris['species']                # y_iris.shape (150,)
+# split training set and testing set
+from sklearn.model_selection import train_test_split
+Xtrain, Xtest, ytrain, ytest = train_test_split(X_iris, y_iris, random_state=1)
+# fit model
+from sklearn.naive_bayes import GaussianNB # 1. choose model class
+model = GaussianNB()                       # 2. instantiate model
+model.fit(Xtrain, ytrain)                  # 3. fit model to data
+y_model = model.predict(Xtest)             # 4. predict on new data
+# evaluate
+from sklearn.metrics import accuracy_score
+accuracy_score(ytest, y_model)
+
+# Unsupervised Learning: reducing dimensionality
+from sklearn.decomposition import PCA  # 1. Choose the model class
+model = PCA(n_components=2)            # 2. Instantiate the model with hyperparameters
+model.fit(X_iris)                      # 3. Fit to data. Notice y is not specified!
+X_2D = model.transform(X_iris)         # 4. Transform the data to two dimensions
+iris['PCA1'] = X_2D[:, 0]
+iris['PCA2'] = X_2D[:, 1]
+sns.lmplot("PCA1", "PCA2", hue='species', data=iris, fit_reg=False)
+
+# Unsupervised Learning: Clustering
+from sklearn.mixture import GaussianMixture   # 1. Choose the model class
+model = GaussianMixture(n_components=3, covariance_type='full')  # 2. Instantiate model
+model.fit(X_iris)                    # 3. Fit to data. Notice y is not specified!
+y_gmm = model.predict(X_iris)        # 4. Determine cluster labels
+iris['cluster'] = y_gmm
+sns.lmplot("PCA1", "PCA2", data=iris, hue='species', col='cluster', fit_reg=False)
+
+# dimension reducing using IsOmap
+from sklearn.manifold import Isomap
+iso = Isomap(n_components=2)
+iso.fit(digits.data)
+data_projected = iso.transform(digits.data)
+
+# use confussion matrix to debug model prediction errors
+from sklearn.metrics import confusion_matrix
+mat = confusion_matrix(ytest, y_model)
+sns.heatmap(mat, square=True, annot=True, cbar=False)
+plt.xlabel('predicted value')
+plt.ylabel('true value')
+
+# show mislabeled images
+fig, axes = plt.subplots(10, 10, figsize=(8, 8),
+                         subplot_kw={'xticks':[], 'yticks':[]},
+                         gridspec_kw=dict(hspace=0.1, wspace=0.1))
+test_images = Xtest.reshape(-1, 8, 8)
+for i, ax in enumerate(axes.flat):
+    ax.imshow(test_images[i], cmap='binary', interpolation='nearest')
+    ax.text(0.05, 0.05, str(y_model[i]),
+            transform=ax.transAxes,
+            color='green' if (ytest[i] == y_model[i]) else 'red')
+```
+
+References:
+
+- <https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html>
