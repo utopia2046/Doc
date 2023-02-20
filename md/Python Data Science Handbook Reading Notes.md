@@ -40,6 +40,7 @@
     - [Plotly](#plotly)
   - [Machine Learning](#machine-learning)
     - [Scikit-Learn](#scikit-learn)
+    - [Cross Validation \& Model Selection](#cross-validation--model-selection)
 
 ## IPython
 
@@ -1386,11 +1387,16 @@ from sklearn.model_selection import train_test_split
 Xtrain, Xtest, ytrain, ytest = train_test_split(X_iris, y_iris, random_state=1)
 # fit model
 from sklearn.naive_bayes import GaussianNB # 1. choose model class
-model = GaussianNB()                       # 2. instantiate model
 model.fit(Xtrain, ytrain)                  # 3. fit model to data
 y_model = model.predict(Xtest)             # 4. predict on new data
 # evaluate
 from sklearn.metrics import accuracy_score
+accuracy_score(ytest, y_model)
+# try other model & report fit + test
+from sklearn.neighbors import KNeighborsClassifier
+model = KNeighborsClassifier(n_neighbors=1)
+model.fit(Xtrain, ytrain)
+y_model = model.predict(Xtest)
 accuracy_score(ytest, y_model)
 
 # Unsupervised Learning: reducing dimensionality
@@ -1438,3 +1444,26 @@ for i, ax in enumerate(axes.flat):
 References:
 
 - <https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html>
+
+### Cross Validation & Model Selection
+
+sklearn.model_selection.train_test_split(*arrays, test_size=None, train_size=None, random_state=None, shuffle=True, stratify=None)
+
+References:
+
+- <https://scikit-learn.org/stable/modules/cross_validation.html>
+- <https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html>
+
+Scikit-Learn implements a number of useful cross-validation schemes that are useful in particular situations; these are implemented via iterators in the cross_validation module. For example, we might wish to go to the extreme case in which our number of folds is equal to the number of data points: that is, we train on all points but one in each trial. This type of cross-validation is known as leave-one-out cross validation, and can be used as follows:
+
+``` python
+from sklearn.cross_validation import LeaveOneOut
+scores = cross_val_score(model, X, y, cv=LeaveOneOut(len(X)))
+```
+
+Model choosing & hyper parameters tuning:
+
+- For some intermediate value, the validation curve has a maximum. This level of complexity indicates a suitable trade-off between bias and variance.
+- The convergence to a particular score as the number of training samples grows. Once you have enough points that a particular model has converged, adding more training data will not help you. The only way to increase model performance in this case is to use another (often more complex) model.
+
+Scikit-Learn provides automated tools to do hyperparameter tuning in the grid search module. <https://scikit-learn.org/stable/modules/grid_search.html>
