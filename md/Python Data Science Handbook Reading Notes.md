@@ -41,6 +41,7 @@
   - [Machine Learning](#machine-learning)
     - [Scikit-Learn](#scikit-learn)
     - [Cross Validation \& Model Selection](#cross-validation--model-selection)
+    - [Feature Engineering](#feature-engineering)
 
 ## IPython
 
@@ -1467,3 +1468,50 @@ Model choosing & hyper parameters tuning:
 - The convergence to a particular score as the number of training samples grows. Once you have enough points that a particular model has converged, adding more training data will not help you. The only way to increase model performance in this case is to use another (often more complex) model.
 
 Scikit-Learn provides automated tools to do hyperparameter tuning in the grid search module. <https://scikit-learn.org/stable/modules/grid_search.html>
+
+### Feature Engineering
+
+Turn categorical features into sparse dict vectors.
+
+``` python
+from sklearn.feature_extraction import DictVectorizer
+vec = DictVectorizer(sparse=True, dtype=int)
+vec.fit_transform(data)
+```
+
+Convert text to a set of representative numerical values. For example, encoding data by word counts, or by TF-IDF (term frequency-inverse document frequency).
+
+``` python
+from sklearn.feature_extraction.text import CountVectorizer
+vec = CountVectorizer()
+X = vec.fit_transform(sample)
+# The result is a sparse matrix recording the number of times each word appears
+from sklearn.feature_extraction.text import TfidfVectorizer
+vec = TfidfVectorizer()
+X = vec.fit_transform(sample)
+pd.DataFrame(X.toarray(), columns=vec.get_feature_names())
+# Result is a sparse matrix recording each word's frequency
+```
+
+Transform images using Scikit-Image package <https://scikit-image.org>.
+
+Add polynomial features
+
+``` python
+from sklearn.preprocessing import PolynomialFeatures
+poly = PolynomialFeatures(degree=3, include_bias=False)
+X2 = poly.fit_transform(X)  # X2 includes 3 columns [X, X^2, X^3]
+```
+
+Imputation of missing values, using the mean, median, or most frequent value by Scikit-Learn Imputer class.
+
+``` python
+from sklearn.preprocessing import Imputer
+imp = Imputer(strategy='mean')
+X2 = imp.fit_transform(X)
+# combine imputation, adding polynomial features and linear regression into pipeline
+from sklearn.pipeline import make_pipeline
+model = make_pipeline(Imputer(strategy='mean'),
+                      PolynomialFeatures(degree=2),
+                      LinearRegression())
+```
