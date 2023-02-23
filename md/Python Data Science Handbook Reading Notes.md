@@ -42,6 +42,8 @@
     - [Scikit-Learn](#scikit-learn)
     - [Cross Validation \& Model Selection](#cross-validation--model-selection)
     - [Feature Engineering](#feature-engineering)
+    - [Naive Bayes Classification](#naive-bayes-classification)
+    - [Linear Regression](#linear-regression)
 
 ## IPython
 
@@ -1514,4 +1516,101 @@ from sklearn.pipeline import make_pipeline
 model = make_pipeline(Imputer(strategy='mean'),
                       PolynomialFeatures(degree=2),
                       LinearRegression())
+```
+
+### Naive Bayes Classification
+
+Naive Bayes classifiers tend to perform especially well in one of the following situations:
+
+- When the naive assumptions actually match the data (very rare in practice)
+- For very well-separated categories, when model complexity is less important
+- For very high-dimensional data, when model complexity is less important
+
+``` python
+# Example: Text classification
+%matplotlib inline
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns; sns.set()
+
+# Download offline data from http://qwone.com/~jason/20Newsgroups/20news-bydate.tar.gz
+# Reference: https://blog.csdn.net/weixin_43656359/article/details/103758027
+from sklearn.datasets import fetch_20newsgroups
+data = fetch_20newsgroups()
+
+# create train & test set
+categories = ['talk.religion.misc', 'soc.religion.christian',
+              'sci.space', 'comp.graphics']
+train = fetch_20newsgroups(subset='train', categories=categories)
+test = fetch_20newsgroups(subset='test', categories=categories)
+
+# create multinomial naive Bayes classifier with TF-IDF vectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.pipeline import make_pipeline
+
+model = make_pipeline(TfidfVectorizer(), MultinomialNB())
+model.fit(train.data, train.target)
+labels = model.predict(test.data)
+
+# evaluate
+from sklearn.metrics import confusion_matrix
+mat = confusion_matrix(test.target, labels)
+sns.heatmap(mat.T, square=True, annot=True, fmt='d', cbar=False,
+            xticklabels=train.target_names, yticklabels=train.target_names)
+plt.xlabel('true label')
+plt.ylabel('predicted label')
+```
+
+### Linear Regression
+
+Define a custom transformer with Gaussian basis functions.
+
+``` python
+from sklearn.base import BaseEstimator, TransformerMixin
+
+class GaussianFeatures(BaseEstimator, TransformerMixin):
+    """Uniformly spaced Gaussian features for one-dimensional input"""
+
+    def __init__(self, N, width_factor=2.0):
+        self.N = N
+        self.width_factor = width_factor
+
+    @staticmethod
+    def _gauss_basis(x, y, width, axis=None):
+        arg = (x - y) / width
+        return np.exp(-0.5 * np.sum(arg ** 2, axis))
+
+    def fit(self, X, y=None):
+        # create N centers spread along the data range
+        self.centers_ = np.linspace(X.min(), X.max(), self.N)
+        self.width_ = self.width_factor * (self.centers_[1] - self.centers_[0])
+        return self
+
+    def transform(self, X):
+        return self._gauss_basis(X[:, :, np.newaxis], self.centers_,
+                                 self.width_, axis=1)
+
+# create a linear regression model with 20 basis Gaussian features
+gauss_model = make_pipeline(GaussianFeatures(20),
+                            LinearRegression())
+gauss_model.fit(x[:, np.newaxis], y)
+yfit = gauss_model.predict(xfit[:, np.newaxis])
+# plot data points and regression line
+plt.scatter(x, y)
+plt.plot(xfit, yfit)
+plt.xlim(0, 10)
+```
+
+To avoid overfitting, we could limit model complexity by penalizing large values of the model parameters. Such a penalty is known as regularization. For example:
+
+``` python
+# Ridge regression (𝐿2 Regularization)
+from sklearn.linear_model import Ridge
+model = make_pipeline(GaussianFeatures(30), Ridge(alpha=0.1))
+basis_plot(model, title='Ridge Regression')
+# Lasso regression (𝐿1 regularization)
+from sklearn.linear_model import Lasso
+model = make_pipeline(GaussianFeatures(30), Lasso(alpha=0.001))
+basis_plot(model, title='Lasso Regression')
 ```
