@@ -44,6 +44,7 @@
     - [Feature Engineering](#feature-engineering)
     - [Naive Bayes Classification](#naive-bayes-classification)
     - [Linear Regression](#linear-regression)
+    - [Support Vector Machine](#support-vector-machine)
 
 ## IPython
 
@@ -1613,4 +1614,86 @@ basis_plot(model, title='Ridge Regression')
 from sklearn.linear_model import Lasso
 model = make_pipeline(GaussianFeatures(30), Lasso(alpha=0.001))
 basis_plot(model, title='Lasso Regression')
+```
+
+### Support Vector Machine
+
+``` python
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats
+import seaborn as sns; sns.set()
+
+# create SVM with linear kernal
+from sklearn.svm import SVC # "Support vector classifier"
+model = SVC(kernel='linear', C=1E10)
+model.fit(X, y)
+
+# Plot with interactive widget
+from ipywidgets import interact, fixed
+interact(plot_svm, N=[10, 200], ax=fixed(None))
+
+# create SVM with RBF (radial basis function) kernel
+clf = SVC(kernel='rbf', C=1E6)
+clf.fit(X, y)
+
+# The hardness of the margin is controlled by tuning parameter 𝐶
+# For very large 𝐶, the margin is hard, and points cannot lie in it.
+# For smaller 𝐶, the margin is softer, and can grow to encompass some points.
+
+# example: face recognition
+from sklearn.datasets import fetch_lfw_people
+faces = fetch_lfw_people(min_faces_per_person=60)
+
+# plot some faces
+fig, ax = plt.subplots(3, 5)
+for i, axi in enumerate(ax.flat):
+    axi.imshow(faces.images[i], cmap='bone')
+    axi.set(xticks=[], yticks=[],
+            xlabel=faces.target_names[faces.target[i]])
+
+# create model
+from sklearn.decomposition import RandomizedPCA # Use PCA feature extraction
+from sklearn.pipeline import make_pipeline
+pca = RandomizedPCA(n_components=150, whiten=True, random_state=42)
+svc = SVC(kernel='rbf', class_weight='balanced')
+model = make_pipeline(pca, svc)
+
+# split train/test set
+from sklearn.cross_validation import train_test_split
+Xtrain, Xtest, ytrain, ytest = train_test_split(faces.data, faces.target,
+                                                random_state=42)
+
+# use grid search cross-validation to explore combinations of parameters
+# C (which controls the margin hardness) and
+# gamma (which controls the size of the radial basis function kernel)
+from sklearn.grid_search import GridSearchCV
+param_grid = {'svc__C': [1, 5, 10, 50],
+              'svc__gamma': [0.0001, 0.0005, 0.001, 0.005]}
+grid = GridSearchCV(model, param_grid)
+
+%time grid.fit(Xtrain, ytrain)
+print(grid.best_params_)
+
+# take a look at a few of the test images along with their predicted values
+fig, ax = plt.subplots(4, 6)
+for i, axi in enumerate(ax.flat):
+    axi.imshow(Xtest[i].reshape(62, 47), cmap='bone')
+    axi.set(xticks=[], yticks=[])
+    axi.set_ylabel(faces.target_names[yfit[i]].split()[-1],
+                   color='black' if yfit[i] == ytest[i] else 'red')
+fig.suptitle('Predicted Names; Incorrect Labels in Red', size=14)
+
+# evaluate model using classification report
+from sklearn.metrics import classification_report
+print(classification_report(ytest, yfit,
+                            target_names=faces.target_names))
+# plot confusion matrix
+from sklearn.metrics import confusion_matrix
+mat = confusion_matrix(ytest, yfit)
+sns.heatmap(mat.T, square=True, annot=True, fmt='d', cbar=False,
+            xticklabels=faces.target_names,
+            yticklabels=faces.target_names)
+plt.xlabel('true label')
+plt.ylabel('predicted label')
 ```
