@@ -45,6 +45,8 @@
     - [Naive Bayes Classification](#naive-bayes-classification)
     - [Linear Regression](#linear-regression)
     - [Support Vector Machine](#support-vector-machine)
+    - [Decision Tree \& Random Forest](#decision-tree--random-forest)
+    - [Principal Component Analysis](#principal-component-analysis)
 
 ## IPython
 
@@ -1697,3 +1699,80 @@ sns.heatmap(mat.T, square=True, annot=True, fmt='d', cbar=False,
 plt.xlabel('true label')
 plt.ylabel('predicted label')
 ```
+
+### Decision Tree & Random Forest
+
+Over-fitting turns out to be a general property of decision trees. To fix this issue, multiple overfitting estimators can be combined to reduce the effect of this overfitting. This ensemble method is called **bagging**.
+
+``` python
+# Create a decision tree model and fit to given data
+from sklearn.tree import DecisionTreeClassifier
+tree = DecisionTreeClassifier().fit(X, y)
+# Bagging decision trees
+from sklearn.ensemble import BaggingClassifier
+tree = DecisionTreeClassifier()
+#  randomized the data by fitting each estimator with a random subset of 80% of the training points
+bag = BaggingClassifier(tree, n_estimators=100, max_samples=0.8,
+                        random_state=1)
+bag.fit(X, y)
+# randomization automatically
+from sklearn.ensemble import RandomForestClassifier
+model = RandomForestClassifier(n_estimators=100, random_state=0)
+
+# Random Forest Regression
+from sklearn.ensemble import RandomForestRegressor
+forest = RandomForestRegressor(200)
+forest.fit(x[:, None], y)
+yfit = forest.predict(xfit[:, None])
+# non-parametric random forest model is flexible enough to fit the multi-period data
+# without us needing to specifying a multi-period model
+
+# Random Forest Classification
+model = RandomForestClassifier(n_estimators=1000)
+model.fit(Xtrain, ytrain)
+ypred = model.predict(Xtest)
+# show report
+from sklearn import metrics
+print(metrics.classification_report(ypred, ytest))
+from sklearn.metrics import confusion_matrix
+mat = confusion_matrix(ytest, ypred)
+sns.heatmap(mat.T, square=True, annot=True, fmt='d', cbar=False)
+```
+
+The multiple trees allow for a probabilistic classification: a majority vote among estimators gives an estimate of the probability (accessed in Scikit-Learn with the predict_proba() method).
+
+A primary disadvantage of random forests is that the results are not easily interpretable.
+
+### Principal Component Analysis
+
+Using PCA for dimensionality reduction involves zeroing out one or more of the smallest principal components, resulting in a lower-dimensional projection of the data that preserves the maximal data variance.
+
+PCA can be thought of as a process of choosing optimal basis functions, such that adding together just the first few of them is enough to suitably reconstruct the bulk of the elements in the dataset.
+
+A vital part of using PCA in practice is the ability to estimate how many components are needed to describe the data. This can be determined by looking at the cumulative explained variance ratio as a function of the number of components.
+
+``` python
+from sklearn.decomposition import PCA
+pca = PCA(n_components=1)
+pca.fit(X)
+# The transformed data has been reduced to a single dimension.
+X_pca = pca.transform(X)
+
+# example: Use PCA to reduce image dimension
+pca = PCA().fit(digits.data)
+# plot cumulative explained variance ratio
+plt.plot(np.cumsum(pca.explained_variance_ratio_))
+plt.xlabel('number of components')
+plt.ylabel('cumulative explained variance')
+
+# PCA as Noise Filtering
+noisy = np.random.normal(digits.data, 4)  # add random noise to digit data
+# train a PCA on the noisy data, requesting that the projection preserve 80% of the variance
+pca = PCA(0.80).fit(noisy)
+pca.n_components_ # 37
+# use the inverse of the transform to reconstruct the filtered digits
+components = pca.transform(noisy)
+filtered = pca.inverse_transform(components)
+```
+
+PCA's main weakness is that it tends to be highly affected by outliers in the data. For this reason, many robust variants of PCA have been developed, for example,  RandomizedPCA and SparsePCA, both also in the sklearn.decomposition submodule.
