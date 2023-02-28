@@ -47,6 +47,8 @@
     - [Support Vector Machine](#support-vector-machine)
     - [Decision Tree \& Random Forest](#decision-tree--random-forest)
     - [Principal Component Analysis](#principal-component-analysis)
+    - [Manifold Learning](#manifold-learning)
+    - [k-Means Clustering](#k-means-clustering)
 
 ## IPython
 
@@ -1776,3 +1778,193 @@ filtered = pca.inverse_transform(components)
 ```
 
 PCA's main weakness is that it tends to be highly affected by outliers in the data. For this reason, many robust variants of PCA have been developed, for example,  RandomizedPCA and SparsePCA, both also in the sklearn.decomposition submodule.
+
+### Manifold Learning
+
+Manifold learning is a class of unsupervised estimators that seeks to describe datasets as low-dimensional manifolds embedded in high-dimensional spaces.
+
+- multidimensional scaling (MDS)
+- locally linear embedding (LLE)
+- isometric mapping (IsoMap)
+
+``` python
+# create data in the shape of the word "HELLO"
+def make_hello(N=1000, rseed=42):
+    # Make a plot with "HELLO" text; save as PNG
+    fig, ax = plt.subplots(figsize=(4, 1))
+    fig.subplots_adjust(left=0, right=1, bottom=0, top=1)
+    ax.axis('off')
+    ax.text(0.5, 0.4, 'HELLO', va='center', ha='center', weight='bold', size=85)
+    fig.savefig('hello.png')
+    plt.close(fig)
+
+    # Open this PNG and draw random points from it
+    from matplotlib.image import imread
+    data = imread('hello.png')[::-1, :, 0].T
+    rng = np.random.RandomState(rseed)
+    X = rng.rand(4 * N, 2)
+    i, j = (X * data.shape).astype(int).T
+    mask = (data[i, j] < 1)
+    X = X[mask]
+    X[:, 0] *= (data.shape[0] / data.shape[1])
+    X = X[:N]
+    return X[np.argsort(X[:, 0])]
+
+# create 1000 dots "HELLO" shape data and plot it in colors
+X = make_hello(1000)
+colorize = dict(c=X[:, 0], cmap=plt.cm.get_cmap('rainbow', 5))
+plt.scatter(X[:, 0], X[:, 1], **colorize)
+plt.axis('equal')
+
+# rotate and shift X to create X2, the HELLO shape remains
+def rotate(X, angle):
+    theta = np.deg2rad(angle)
+    R = [[np.cos(theta), np.sin(theta)],
+         [-np.sin(theta), np.cos(theta)]]
+    return np.dot(X, R)
+
+X2 = rotate(X, 20) + 5
+plt.scatter(X2[:, 0], X2[:, 1], **colorize)
+plt.axis('equal')
+
+# The fundamental value is the distance between each point and the other points in the dataset.
+# calculate pairwise distance for original data
+from sklearn.metrics import pairwise_distances
+D = pairwise_distances(X)
+plt.imshow(D, zorder=2, cmap='Blues', interpolation='nearest')
+plt.colorbar()
+# calculate pairwise distances for X2, the 2 matrices are similar
+D2 = pairwise_distances(X2)
+np.allclose(D, D2)
+
+# Multidimensional scaling algorithm aims to:
+# given a distance matrix between points,
+# it recovers a 𝐷-dimensional coordinate representation of the data
+from sklearn.manifold import MDS
+model = MDS(n_components=2, dissimilarity='precomputed', random_state=1)
+out = model.fit_transform(D)
+plt.scatter(out[:, 0], out[:, 1], **colorize)
+plt.axis('equal')
+
+# project data into three dimensions
+def random_projection(X, dimension=3, rseed=42):
+    assert dimension >= X.shape[1]
+    rng = np.random.RandomState(rseed)
+    C = rng.randn(dimension, dimension)
+    e, V = np.linalg.eigh(np.dot(C, C.T))
+    return np.dot(X, V[:X.shape[1]])
+
+X3 = random_projection(X, 3)
+X3.shape # (1000, 3)
+
+# plot 3D data X3
+from mpl_toolkits import mplot3d
+ax = plt.axes(projection='3d')
+ax.scatter3D(X3[:, 0], X3[:, 1], X3[:, 2],
+             **colorize)
+ax.view_init(azim=70, elev=50)
+
+# fit MDS model to 3D data
+model = MDS(n_components=2, random_state=1)
+out3 = model.fit_transform(X3)
+plt.scatter(out3[:, 0], out3[:, 1], **colorize)
+plt.axis('equal')
+```
+
+MDS breaks down when the embedding is nonlinear.
+
+Locally linear embedding (LLE): rather than preserving all distances, it instead tries to preserve only the distances between neighboring points.
+
+The only clear advantage of manifold learning methods over PCA is their ability to preserve nonlinear relationships in the data; for that reason it could be used to explore data only after first exploring them with PCA.
+
+``` python
+# Example: Isomap on Faces
+from sklearn.datasets import fetch_lfw_people
+faces = fetch_lfw_people(min_faces_per_person=30)
+faces.data.shape # (2370, 2914) 2370 images, each with 2914 pixels
+# compute a PCA, and examine the explained variance ratio
+from sklearn.decomposition import RandomizedPCA
+model = RandomizedPCA(100).fit(faces.data)
+plt.plot(np.cumsum(model.explained_variance_ratio_))
+plt.xlabel('n components')
+plt.ylabel('cumulative variance')
+# nearly 100 components are required to preserve 90% of the variance
+# compute an Isomap embedding on these faces
+from sklearn.manifold import Isomap
+model = Isomap(n_components=2)
+proj = model.fit_transform(faces.data)
+proj.shape # (2310, 2)
+#  the first two Isomap dimensions seem to describe global image features:
+# the overall darkness or lightness of the image from left to right,
+# and the general orientation of the face from bottom to top
+```
+
+### k-Means Clustering
+
+The k-means algorithm searches for a pre-determined number of clusters within an unlabeled multidimensional dataset.
+
+``` python
+from sklearn.cluster import KMeans
+kmeans = KMeans(n_clusters=4)
+kmeans.fit(X)
+y_kmeans = kmeans.predict(X)
+```
+
+The boundaries between k-means clusters will always be linear. For more complicated boundaries, we could used a kernel transformation to project the data into a higher dimension where a linear separation is possible.
+
+``` python
+from sklearn.cluster import SpectralClustering
+model = SpectralClustering(n_clusters=2, affinity='nearest_neighbors',
+                           assign_labels='kmeans')
+labels = model.fit_predict(X)
+plt.scatter(X[:, 0], X[:, 1], c=labels,
+            s=50, cmap='viridis')
+```
+
+Example: use the t-distributed stochastic neighbor embedding (t-SNE) algorithm to pre-process the data before performing k-means. t-SNE is a nonlinear embedding algorithm that is particularly adept at preserving points within clusters.
+
+``` python
+from sklearn.manifold import TSNE
+
+# Project the data: this step will take several seconds
+tsne = TSNE(n_components=2, init='random', random_state=0)
+digits_proj = tsne.fit_transform(digits.data)
+
+# Compute the clusters
+kmeans = KMeans(n_clusters=10, random_state=0)
+clusters = kmeans.fit_predict(digits_proj)
+
+# Permute the labels
+labels = np.zeros_like(clusters)
+for i in range(10):
+    mask = (clusters == i)
+    labels[mask] = mode(digits.target[mask])[0]
+
+# Compute the accuracy
+accuracy_score(digits.target, labels) # 0.91930996104618812
+```
+
+Example: Use clustering with mini-batch in image color compression.
+
+``` python
+from sklearn.datasets import load_sample_image
+china = load_sample_image("china.jpg")
+ax = plt.axes(xticks=[], yticks=[])
+ax.imshow(china) # china.shape (427, 640, 3)
+data = china / 255.0 # use 0...1 scale
+data = data.reshape(427 * 640, 3) # data.shape (273280, 3)
+# use mini batch k means to reduce color space to 16 colors
+from sklearn.cluster import MiniBatchKMeans
+kmeans = MiniBatchKMeans(16)
+kmeans.fit(data)
+new_colors = kmeans.cluster_centers_[kmeans.predict(data)]
+# paint image with new color
+china_recolored = new_colors.reshape(china.shape)
+fig, ax = plt.subplots(1, 2, figsize=(16, 6),
+                       subplot_kw=dict(xticks=[], yticks=[]))
+fig.subplots_adjust(wspace=0.05)
+ax[0].imshow(china)
+ax[0].set_title('Original Image', size=16)
+ax[1].imshow(china_recolored)
+ax[1].set_title('16-color Image', size=16)
+```
