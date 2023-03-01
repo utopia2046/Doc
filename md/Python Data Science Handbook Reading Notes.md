@@ -49,6 +49,7 @@
     - [Principal Component Analysis](#principal-component-analysis)
     - [Manifold Learning](#manifold-learning)
     - [k-Means Clustering](#k-means-clustering)
+    - [Gaussian Mixture Models](#gaussian-mixture-models)
 
 ## IPython
 
@@ -1968,3 +1969,34 @@ ax[0].set_title('Original Image', size=16)
 ax[1].imshow(china_recolored)
 ax[1].set_title('16-color Image', size=16)
 ```
+
+### Gaussian Mixture Models
+
+GMM contains a probabilistic model under the hood, it is also possible to find probabilistic cluster assignments.
+
+``` python
+from sklearn.mixture import GMM
+gmm = GMM(n_components=4).fit(X)
+labels = gmm.predict(X)
+# probs is a matrix of size [n_samples, n_clusters]
+# which measures the probability that any point belongs to the given cluster
+probs = gmm.predict_proba(X)
+size = 50 * probs.max(1) ** 2  # square emphasizes differences
+plt.scatter(X[:, 0], X[:, 1], c=labels, cmap='viridis', s=size)
+```
+
+GMM is convenient as a density estimator.
+
+``` python
+# example: estimate best components number
+n_components = np.arange(1, 21)
+models = [GMM(n, covariance_type='full', random_state=0).fit(Xmoon)
+          for n in n_components]
+
+plt.plot(n_components, [m.bic(Xmoon) for m in models], label='BIC')
+plt.plot(n_components, [m.aic(Xmoon) for m in models], label='AIC')
+plt.legend(loc='best')
+plt.xlabel('n_components')
+```
+
+The optimal number of clusters is the value that minimizes the AIC (Akaike information criterion) or BIC (Bayesian information criterion).
