@@ -50,6 +50,7 @@
     - [Manifold Learning](#manifold-learning)
     - [k-Means Clustering](#k-means-clustering)
     - [Gaussian Mixture Models](#gaussian-mixture-models)
+    - [Kernel Density Estimation](#kernel-density-estimation)
 
 ## IPython
 
@@ -2000,3 +2001,87 @@ plt.xlabel('n_components')
 ```
 
 The optimal number of clusters is the value that minimizes the AIC (Akaike information criterion) or BIC (Bayesian information criterion).
+
+### Kernel Density Estimation
+
+Kernel density estimation (KDE) uses a mixture consisting of one Gaussian component per point, resulting in an essentially logical extreme non-parametric estimator of density.
+
+``` python
+from sklearn.neighbors import KernelDensity
+# instantiate and fit the KDE model
+kde = KernelDensity(bandwidth=1.0, kernel='gaussian')
+kde.fit(x[:, None])
+# score_samples returns the log of the probability density
+logprob = kde.score_samples(x_d[:, None])
+# plot probability density
+plt.fill_between(x_d, np.exp(logprob), alpha=0.5)
+plt.plot(x, np.full_like(x, -0.01), '|k', markeredgewidth=1)
+
+# find best hyper-parameter bandwidth using Grid Search Cross Validation
+from sklearn.grid_search import GridSearchCV
+from sklearn.cross_validation import LeaveOneOut
+bandwidths = 10 ** np.linspace(-1, 1, 100)
+grid = GridSearchCV(KernelDensity(kernel='gaussian'),
+                    {'bandwidth': bandwidths},
+                    cv=LeaveOneOut(len(x)))
+grid.fit(x[:, None])
+grid.best_params_   # {'bandwidth': 1.1233240329780276}
+```
+
+Example: Not-So-Naive Bayes
+
+``` python
+from sklearn.base import BaseEstimator, ClassifierMixin
+
+class KDEClassifier(BaseEstimator, ClassifierMixin):
+    """Bayesian generative classification based on KDE
+
+    Parameters
+    ----------
+    bandwidth : float
+        the kernel bandwidth within each class
+    kernel : str
+        the kernel name, passed to KernelDensity
+    """
+    def __init__(self, bandwidth=1.0, kernel='gaussian'):
+        self.bandwidth = bandwidth
+        self.kernel = kernel
+
+    def fit(self, X, y):
+        self.classes_ = np.sort(np.unique(y))
+        training_sets = [X[y == yi] for yi in self.classes_]
+        self.models_ = [KernelDensity(bandwidth=self.bandwidth,
+                                      kernel=self.kernel).fit(Xi)
+                        for Xi in training_sets]
+        self.logpriors_ = [np.log(Xi.shape[0] / X.shape[0])
+                           for Xi in training_sets]
+        return self
+
+    def predict_proba(self, X):
+        logprobs = np.array([model.score_samples(X)
+                             for model in self.models_]).T
+        result = np.exp(logprobs + self.logpriors_)
+        return result / result.sum(1, keepdims=True)
+
+    def predict(self, X):
+        return self.classes_[np.argmax(self.predict_proba(X), 1)]
+
+# Use this estimator to classify handwritten digits
+from sklearn.datasets import load_digits
+from sklearn.grid_search import GridSearchCV
+
+digits = load_digits()
+
+# calculate bandwidth score using GridSearchCV
+bandwidths = 10 ** np.linspace(0, 2, 100)
+grid = GridSearchCV(KDEClassifier(), {'bandwidth': bandwidths})
+grid.fit(digits.data, digits.target)
+scores = [val.mean_validation_score for val in grid.grid_scores_]
+# plot cross validation curve
+plt.semilogx(bandwidths, scores)
+plt.xlabel('bandwidth')
+plt.ylabel('accuracy')
+plt.title('KDE Model Performance')
+print(grid.best_params_)               # {'bandwidth': 7.0548023107186433}
+print('accuracy =', grid.best_score_)  # accuracy = 0.966611018364
+```
