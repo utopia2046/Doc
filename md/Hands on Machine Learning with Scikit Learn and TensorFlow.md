@@ -5,6 +5,8 @@
     - [Categories](#categories)
     - [Main Challenges](#main-challenges)
     - [No Free Lunch (NFL) Theorem](#no-free-lunch-nfl-theorem)
+    - [Online Datasets](#online-datasets)
+    - [Example: Housing Price Regression](#example-housing-price-regression)
   - [Classification](#classification)
   - [Regression](#regression)
   - [Support Vector Machines](#support-vector-machines)
@@ -82,6 +84,58 @@
 If you make absolutely no assumption about the data, then there is no reason to prefer one model over any other. [^DW1996]
 
 [^DW1996] The Lack of A Priori Distinctions Between Learning Algorithms, D. Wolperts (1996)
+
+### Online Datasets
+
+- [UC Irvine Machine Learning Repository](http://archive.ics.uci.edu/ml/)
+- [Kaggle Dataset](https://www.kaggle.com/datasets)
+- [AWS Open Data](https://registry.opendata.aws/)
+- [Data Portal](http://dataportals.org/)
+- [Open Data Monitor](http://opendatamonitor.eu/)
+- [Nasdaq Data Link](https://data.nasdaq.com/)
+
+### Example: Housing Price Regression
+
+``` python
+# fetch and load data
+%run script/handsonml-houseprice.py
+fetch_housing_data()
+housing = load_housing_data()
+
+# check housing data
+housing.head()
+housing.info()
+housing.describe()
+
+# check what categories exist and how many districts belong to each category for ocean_proximity column
+housing["ocean_proximity"].value_counts()
+
+# plot histogram for each column (feature)
+%matplotlib
+import matplotlib.pyplot as plt
+housing.hist(bins=50, figsize=(20,15))
+
+# split train and test set
+train_set, test_set = split_train_test(housing, 0.2)
+# or use scikit-learn function to split train test set
+from sklearn.model_selection import train_test_split
+train_set, test_set = train_test_split(housing, test_size=0.2, random_state=42)
+# split median income to 5 categories
+housing["income_cat"] = pd.cut(housing["median_income"],
+                               bins=[0., 1.5, 3.0, 4.5, 6., np.inf],
+                               labels=[1, 2, 3, 4, 5])
+# use stratified shuffle splot to make sure train/test set have same distribution on income_cat
+from sklearn.model_selection import StratifiedShuffleSplit
+split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
+for train_index, test_index in split.split(housing, housing["income_cat"]):
+    strat_train_set = housing.loc[train_index]
+    strat_test_set = housing.loc[test_index]
+
+```
+
+<!---
+TBD below:
+-->
 
 ## Classification
 
