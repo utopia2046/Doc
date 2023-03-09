@@ -207,11 +207,33 @@ Tips: Show all properties of an object in IPython
 2. dir(obj)  # show all attributes and methods, including inherited ones
 3. help(obj) # show help document
 
+## Classification
+
+``` python
+# load MNIST dataset
+mnist = load_mnist_dataset()
+X, y = mnist.data, mnist.target
+# seperate train & test set
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(mnist.data, mnist.target,
+    train_size=60000, test_size=10000, random_state=42)
+
+# Binary classifier
+y_train_5 = (y_train == '5') # True for all 5s, False for all other digits.
+y_test_5 = (y_test == '5')
+from sklearn.linear_model import SGDClassifier
+sgd_clf = SGDClassifier(max_iter=5, tol=-np.infty, random_state=42)
+sgd_clf.fit(X_train, y_train_5)
+sgd_clf.predict(X_test[:10])
+# evaluate
+from sklearn.model_selection import cross_val_score
+cross_val_score(sgd_clf, X_train, y_train_5, cv=3, scoring="accuracy") # [0.96095, 0.96775, 0.9201]
+
+```
+
 <!---
 TBD below:
 -->
-
-## Classification
 
 ## Regression
 
