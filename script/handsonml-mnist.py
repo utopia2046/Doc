@@ -73,3 +73,84 @@ class Never5Classifier(BaseEstimator):
 never_5_clf = Never5Classifier()
 cross_val_score(never_5_clf, X_train, y_train_5, cv=3, scoring="accuracy") # [0.909, 0.90715, 0.9128]
 """
+
+# calculate confussion matrix, precision, recall rate, and f1 score
+"""
+from sklearn.model_selection import cross_val_predict
+y_train_pred = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3)
+from sklearn.metrics import confusion_matrix
+confusion_matrix(y_train_5, y_train_pred)
+from sklearn.metrics import precision_score, recall_score
+precision_score(y_train_5, y_train_pred)
+recall_score(y_train_5, y_train_pred)
+from sklearn.metrics import f1_score
+f1_score(y_train_5, y_train_pred)
+"""
+
+# plot precision/recall rate curve
+def plot_precision_recall_vs_threshold(precisions, recalls, thresholds):
+    plt.plot(thresholds, precisions[:-1], "b--", label="Precision", linewidth=2)
+    plt.plot(thresholds, recalls[:-1], "g-", label="Recall", linewidth=2)
+    plt.xlabel("Threshold", fontsize=16)
+    plt.legend(loc="upper left", fontsize=16)
+    plt.ylim([0, 1])
+
+"""
+from sklearn.metrics import precision_recall_curve
+precisions, recalls, thresholds = precision_recall_curve(y_train_5, y_scores)
+plt.figure(figsize=(8, 4))
+plot_precision_recall_vs_threshold(precisions, recalls, thresholds)
+plt.xlim([-700000, 700000])
+"""
+
+# plot confusion matrix
+def plot_confusion_matrix(matrix):
+    """If you prefer color and a colorbar"""
+    fig = plt.figure(figsize=(8,8))
+    ax = fig.add_subplot(111)
+    cax = ax.matshow(matrix)
+    fig.colorbar(cax)
+
+"""
+plt.matshow(conf_mx, cmap=plt.cm.gray)
+
+row_sums = conf_mx.sum(axis=1, keepdims=True)
+norm_conf_mx = conf_mx / row_sums
+np.fill_diagonal(norm_conf_mx, 0)
+plt.matshow(norm_conf_mx, cmap=plt.cm.gray)
+
+# check 3 & 5
+cl_a, cl_b = 3, 5
+X_aa = X_train[(y_train == cl_a) & (y_train_pred == cl_a)]
+X_ab = X_train[(y_train == cl_a) & (y_train_pred == cl_b)]
+X_ba = X_train[(y_train == cl_b) & (y_train_pred == cl_a)]
+X_bb = X_train[(y_train == cl_b) & (y_train_pred == cl_b)]
+
+plt.figure(figsize=(8,8))
+plt.subplot(221); plot_digits(X_aa[:25], images_per_row=5)
+plt.subplot(222); plot_digits(X_ab[:25], images_per_row=5)
+plt.subplot(223); plot_digits(X_ba[:25], images_per_row=5)
+plt.subplot(224); plot_digits(X_bb[:25], images_per_row=5)
+"""
+
+def add_random_noise(X_train, X_test):
+    noise = np.random.randint(0, 100, (len(X_train), 784))
+    X_train_mod = X_train + noise
+    noise = np.random.randint(0, 100, (len(X_test), 784))
+    X_test_mod = X_test + noise
+    y_train_mod = X_train
+    y_test_mod = X_test
+    return X_train_mod, X_test_mod, y_train_mod, y_test_mod
+
+# Multioutput classification
+"""
+X_train_mod, X_test_mod, y_train_mod, y_test_mod = add_random_noise(X_train, X_test)
+
+some_index = 5500
+plt.subplot(121); plot_digit(X_test_mod[some_index])
+plt.subplot(122); plot_digit(y_test_mod[some_index])
+
+knn_clf.fit(X_train_mod, y_train_mod)
+clean_digit = knn_clf.predict([X_test_mod[some_index]])
+plot_digit(clean_digit)
+"""

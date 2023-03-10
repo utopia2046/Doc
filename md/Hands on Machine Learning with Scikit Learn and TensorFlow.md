@@ -217,6 +217,8 @@ X, y = mnist.data, mnist.target
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(mnist.data, mnist.target,
     train_size=60000, test_size=10000, random_state=42)
+y_train_n = np.array(list(map(lambda y: int(y), y_train)))
+y_test_n = np.array(list(map(lambda y: int(y), y_test)))
 
 # Binary classifier
 y_train_5 = (y_train == '5') # True for all 5s, False for all other digits.
@@ -229,6 +231,45 @@ sgd_clf.predict(X_test[:10])
 from sklearn.model_selection import cross_val_score
 cross_val_score(sgd_clf, X_train, y_train_5, cv=3, scoring="accuracy") # [0.96095, 0.96775, 0.9201]
 
+# Multiple classifier
+sgd_clf.fit(X_train, y_train)
+sgd_clf.predict(X_test[:10])
+cross_val_score(sgd_clf, X_train, y_train, cv=3, scoring="accuracy")
+
+# Normalize X to get better cross validation score
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train.astype(np.float64))
+cross_val_score(sgd_clf, X_train_scaled, y_train, cv=3, scoring="accuracy")
+
+# Random Forest classifier
+from sklearn.ensemble import RandomForestClassifier
+forest_clf = RandomForestClassifier(random_state=42)
+forest_clf.fit(X_train, y_train)
+forest_clf.predict(X_test[:10])
+cross_val_score(forest_clf, X_train, y_train, cv=3, scoring="accuracy")
+cross_val_score(forest_clf, X_train_scaled, y_train, cv=3, scoring="accuracy")
+
+# Error analysis
+y_train_pred = cross_val_predict(sgd_clf, X_train_scaled, y_train, cv=3)
+conf_mx = confusion_matrix(y_train, y_train_pred)
+
+# Multiple label classifier
+y_train_large = (y_train_n >= 7)
+y_train_odd = (y_train_n % 2 == 1)
+y_multilabel = np.c_[y_train_large, y_train_odd]
+from sklearn.neighbors import KNeighborsClassifier
+knn_clf = KNeighborsClassifier()
+knn_clf.fit(X_train, y_multilabel)
+knn_clf.predict(X_test[:5])
+y_train_knn_pred = cross_val_predict(knn_clf, X_train, y_multilabel, cv=3, n_jobs=-1)
+f1_score(y_multilabel, y_train_knn_pred, average="macro")
+
+# Multioutput classification
+X_train_mod, X_test_mod, y_train_mod, y_test_mod = add_random_noise(X_train, X_test)
+knn_clf.fit(X_train_mod, y_train_mod)
+clean_digit = knn_clf.predict([X_test_mod[some_index]])
+plot_digit(clean_digit)
 ```
 
 <!---
