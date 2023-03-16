@@ -9,6 +9,10 @@
     - [Example: Housing Price Regression](#example-housing-price-regression)
   - [Classification](#classification)
   - [Regression](#regression)
+    - [Polynomial regression](#polynomial-regression)
+    - [Bias/Variance trade-off](#biasvariance-trade-off)
+    - [Regularized models](#regularized-models)
+    - [Logistic Regression](#logistic-regression)
   - [Support Vector Machines](#support-vector-machines)
   - [Decision Trees](#decision-trees)
   - [Ensemble Learning and Random Forests](#ensemble-learning-and-random-forests)
@@ -283,11 +287,81 @@ Batch GD|Slow|No|Fast|2|Yes|n/a
 Stochastic GD|Fast|Yes|Fast|≥2|Yes|SGDRegressor
 Mini-batch GD|Fast|Yes|Fast|≥2|Yes|n/a
 
+### Polynomial regression
+
+``` python
+from sklearn.preprocessing import PolynomialFeatures
+poly_features = PolynomialFeatures(degree=2, include_bias=False)
+X_poly = poly_features.fit_transform(X) # X_Poly is [X, X^2]
+
+lin_reg = LinearRegression()
+lin_reg.fit(X_poly, y)
+```
+
+Use learning curve (MSE on training set and validation set) to dignose model:
+
+- Under-fitting: Both curves have reached a plateau; they are close and fairly high;
+- Over-fitting: Error on the training data is much lower; gap between the curves (model performs significantly better on the training data than on the validation data)
+
+### Bias/Variance trade-off
+
+A model's generalization error can be expressed as the sum of three very different errors:
+
+1. Bias: This part of the generalization error is due to wrong assumptions, such as assuming that the data is linear when it is actually quadratic. A high-bias model is most likely to underfit the training data.
+2. Variance: This part is due to the model's excessive sensitivity to small variations in the training data. A model with many degrees of freedom (such as a high-degree polynomial model) is likely to have high variance, and thus to overfit the training.
+data.
+3. Irreducible error: This part is due to the noisiness of the data itself. The only way to reduce this part of the error is to clean up the data (e.g., fix the data sources, such as broken sensors, or detect and remove outliers).
+
+### Regularized models
+
+``` python
+# Ridge regression
+from sklearn.linear_model import Ridge
+ridge_reg = Ridge(alpha=1, solver="cholesky")
+ridge_reg.fit(X, y)
+# Lasso regression
+from sklearn.linear_model import Lasso
+lasso_reg = Lasso(alpha=0.1)
+lasso_reg.fit(X, y)
+# ElasticNet
+from sklearn.linear_model import ElasticNet
+#l1_ratrio is mix rate, r=0 equals ridge regression, r=1 is lasso
+elastic_net = ElasticNet(alpha=0.1, l1_ratio=0.5)
+elastic_net.fit(X, y)
+```
+
+### Logistic Regression
+
+``` python
+from sklearn import datasets
+iris = datasets.load_iris()
+X = iris["data"][:, 3:]  # petal width
+y = (iris["target"] == 2).astype(np.int)  # 1 if Iris-Virginica, else 0
+
+from sklearn.linear_model import LogisticRegression
+log_reg = LogisticRegression(solver="liblinear")
+log_reg.fit(X, y)
+
+# use petal length + petal width to predict if is virginica
+X = iris["data"][:, (2, 3)]  # petal length, petal width
+y = (iris["target"] == 2).astype(np.int)
+
+log_reg = LogisticRegression(solver="liblinear", C=10**10)
+log_reg.fit(X, y)
+
+# use softmax for multi-class classification
+X = iris["data"][:, (2, 3)]  # petal length, petal width
+y = iris["target"]
+
+softmax_reg = LogisticRegression(multi_class="multinomial",solver="lbfgs", C=10)
+softmax_reg.fit(X, y)
+```
+
+## Support Vector Machines
+
 <!---
 TBD below:
 -->
-
-## Support Vector Machines
 
 ## Decision Trees
 
