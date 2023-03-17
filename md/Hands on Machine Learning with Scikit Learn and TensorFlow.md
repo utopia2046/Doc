@@ -359,6 +359,50 @@ softmax_reg.fit(X, y)
 
 ## Support Vector Machines
 
+``` python
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import LinearSVC
+
+# linear kernel with soft margin
+svm_clf = Pipeline([
+        ("scaler", StandardScaler()),
+        ("linear_svc", LinearSVC(C=1, loss="hinge")), # smaller C, larger soft margin, generalize better
+    ])
+svm_clf.fit(X, y)
+
+# add polynomial features
+poly_kernel_svm_clf = Pipeline([
+        ("scaler", StandardScaler()),
+        ("svm_clf", SVC(kernel="poly", degree=3, coef0=1, C=5)) # use grid search to find best degree, coef0 & C
+    ])
+polynomial_svm_clf.fit(X, y)
+
+# with RBF kernel
+rbf_kernel_svm_clf = Pipeline([
+        ("scaler", StandardScaler()),
+        ("svm_clf", SVC(kernel="rbf", gamma=5, C=0.001))
+    ])
+rbf_kernel_svm_clf.fit(X, y)
+```
+
+Some kernels are specialized for specific data structures. String kernels are sometimes used when classifying text documents or DNA sequences (e.g., using the string subsequence kernel or kernels based on the Levenshtein distance).
+
+Rules for choosing kernel:
+
+- Always try the linear kernel first (remember that LinearSVC is much faster than SVC(kernel="linear")), especially if the training set is very large or if it
+has plenty of features.
+- If the training set is not too large, you should try the Gaussian RBF kernel as well; it works well in most cases.
+- If you have spare time and computing power, you can also experiment with a few other kernels using cross-validation and grid search, especially if there are kernels specialized for your training set's data structure.
+
+Comparison of Scikit-Learn classes for SVM classification
+
+Class|Time complexity|Out-of-core support|Scaling required|Kernel trick
+-|-|-|-|-
+LinearSVC|O(m * n)|No|Yes|No
+SGDClassifier|O(m * n)|Yes|Yes|No
+SVC|O(m² × n) to O(m³ * n)|No|Yes|Yes
+
 <!---
 TBD below:
 -->
