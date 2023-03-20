@@ -403,11 +403,26 @@ LinearSVC|O(m * n)|No|Yes|No
 SGDClassifier|O(m * n)|Yes|Yes|No
 SVC|O(m² × n) to O(m³ * n)|No|Yes|Yes
 
+``` python
+# Support Vector Regression
+from sklearn.svm import LinearSVR
+
+svm_reg = LinearSVR(epsilon=1.5) # bigger epsilon, wider gap
+svm_reg.fit(X, y)
+
+# non-linear core
+svm_poly_reg1 = SVR(kernel="poly", degree=2, C=100, epsilon=0.1, gamma="auto")
+svm_poly_reg2 = SVR(kernel="poly", degree=2, C=0.01, epsilon=0.1, gamma="auto")
+svm_poly_reg1.fit(X, y)
+svm_poly_reg2.fit(X, y)
+# bigger C, lesser regulation
+```
+
+## Decision Trees
+
 <!---
 TBD below:
 -->
-
-## Decision Trees
 
 ## Ensemble Learning and Random Forests
 
