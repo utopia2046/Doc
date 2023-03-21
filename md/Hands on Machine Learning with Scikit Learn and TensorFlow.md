@@ -420,11 +420,31 @@ svm_poly_reg2.fit(X, y)
 
 ## Decision Trees
 
+``` python
+from sklearn.tree import DecisionTreeClassifier
+tree_clf = DecisionTreeClassifier(max_depth=2)
+tree_clf.fit(X, y)
+tree_clf.predict([[5, 1.5]])
+```
+
+Each node has an 'impurity' property (gini), a node is "pure" (gini=0) if all training instances it applies to belong to the same class. By default, the Gini impurity measure is used, but you can select the entropy impurity measure instead by setting the criterion hyperparameter to "entropy".
+
+``` python
+# Decision Tree Regressor
+from sklearn.tree import DecisionTreeRegressor
+
+tree_reg = DecisionTreeRegressor(max_depth=2)
+tree_reg.fit(X, y)
+```
+
+- Pro: simple to understand and interpret
+- Con: very sensitive to small variations in the training data
+
+## Ensemble Learning and Random Forests
+
 <!---
 TBD below:
 -->
-
-## Ensemble Learning and Random Forests
 
 ## Dimensionality Reduction
 
