@@ -16,6 +16,9 @@
   - [Support Vector Machines](#support-vector-machines)
   - [Decision Trees](#decision-trees)
   - [Ensemble Learning and Random Forests](#ensemble-learning-and-random-forests)
+    - [Voting](#voting)
+    - [Bagging and Pasting](#bagging-and-pasting)
+    - [Random Forest](#random-forest)
   - [Dimensionality Reduction](#dimensionality-reduction)
   - [Neural Networks and Deep Learning](#neural-networks-and-deep-learning)
   - [Convolutional Neural Networks](#convolutional-neural-networks)
@@ -441,6 +444,57 @@ tree_reg.fit(X, y)
 - Con: very sensitive to small variations in the training data
 
 ## Ensemble Learning and Random Forests
+
+### Voting
+
+Ensemble methods work best when the predictors are as independent from one another as possible. One way to get diverse classifiers is to train them using very different algorithms. This increases the chance that they will make very different types of errors, improving the ensemble's accuracy.
+
+``` python
+# Voting Classifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import VotingClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+
+log_clf = LogisticRegression(solver="liblinear")
+rnd_clf = RandomForestClassifier(n_estimators=10)
+svm_clf = SVC(gamma="auto", probability=True)
+
+voting_clf = VotingClassifier(
+    estimators=[('lr', log_clf), ('rf', rnd_clf), ('svc', svm_clf)],
+    voting='soft')
+voting_clf.fit(X_train, y_train)
+```
+
+### Bagging and Pasting
+
+Bagging & pasting use the same training algorithm for every predictor, but to train them on different random subsets of the training set. When sampling is performed with replacement, this method is called bagging1 (short for bootstrap aggregating). When sampling is performed without replacement, it is called pasting.
+
+``` python
+from sklearn.ensemble import BaggingClassifier
+from sklearn.tree import DecisionTreeClassifier
+
+bag_clf = BaggingClassifier(
+    DecisionTreeClassifier(),
+    n_estimators=500, max_samples=100, # 500 classifiers, each trained uses 100 samples
+    bootstrap=True, # Bagging: bootstrap=True, Pasting: bootstrap=False
+    n_jobs=-1) # n_jobs, number of CPU cores to use for training, -1 means all cores
+    #
+bag_clf.fit(X_train, y_train)
+y_pred = bag_clf.predict(X_test)
+
+# Out-Of-Bag (OOB) evaluation
+bag_clf = BaggingClassifier(
+    DecisionTreeClassifier(splitter="random", max_leaf_nodes=16),
+    n_estimators=500, max_samples=1.0, bootstrap=True, n_jobs=-1,
+    oob_score=True) # use each classifier's oob samples for evalation
+bag_clf.fit(X_train, y_train)
+bag_clf.oob_score_
+```
+
+The BaggingClassifier class supports sampling the features as well. This is controlled by two hyperparameters: `max_features` and `bootstrap_features`.
+
+### Random Forest
 
 <!---
 TBD below:
