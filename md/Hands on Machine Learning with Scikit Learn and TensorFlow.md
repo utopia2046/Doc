@@ -19,6 +19,8 @@
     - [Voting](#voting)
     - [Bagging and Pasting](#bagging-and-pasting)
     - [Random Forest](#random-forest)
+    - [Boosting](#boosting)
+    - [Stacking](#stacking)
   - [Dimensionality Reduction](#dimensionality-reduction)
   - [Neural Networks and Deep Learning](#neural-networks-and-deep-learning)
   - [Convolutional Neural Networks](#convolutional-neural-networks)
@@ -126,14 +128,14 @@ housing.hist(bins=50, figsize=(20,15))
 train_set, test_set = split_train_test(housing, 0.2)
 # or use scikit-learn function to split train test set
 from sklearn.model_selection import train_test_split
-train_set, test_set = train_test_split(housing, test_size=0.2, random_state=42)
+train_set, test_set = train_test_split(housing, test_size=0.2)
 # split median income to 5 categories
 housing["income_cat"] = pd.cut(housing["median_income"],
                                bins=[0., 1.5, 3.0, 4.5, 6., np.inf],
                                labels=[1, 2, 3, 4, 5])
 # use stratified shuffle splot to make sure train/test set have same distribution on income_cat
 from sklearn.model_selection import StratifiedShuffleSplit
-split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
+split = StratifiedShuffleSplit(n_splits=1, test_size=0.2)
 for train_index, test_index in split.split(housing, housing["income_cat"]):
     strat_train_set = housing.loc[train_index]
     strat_test_set = housing.loc[test_index]
@@ -176,7 +178,7 @@ housing_prepared = full_pipeline.fit_transform(data)
 
 # fit random forest
 from sklearn.ensemble import RandomForestRegressor
-forest_reg = RandomForestRegressor(n_estimators=10, random_state=42)
+forest_reg = RandomForestRegressor(n_estimators=10)
 forest_reg.fit(housing_prepared, housing_labels)
 housing_predictions = forest_reg.predict(housing_prepared)
 forest_mse = mean_squared_error(housing_labels, housing_predictions)
@@ -223,7 +225,7 @@ X, y = mnist.data, mnist.target
 # seperate train & test set
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(mnist.data, mnist.target,
-    train_size=60000, test_size=10000, random_state=42)
+    train_size=60000, test_size=10000)
 y_train_n = np.array(list(map(lambda y: int(y), y_train)))
 y_test_n = np.array(list(map(lambda y: int(y), y_test)))
 
@@ -231,7 +233,7 @@ y_test_n = np.array(list(map(lambda y: int(y), y_test)))
 y_train_5 = (y_train == '5') # True for all 5s, False for all other digits.
 y_test_5 = (y_test == '5')
 from sklearn.linear_model import SGDClassifier
-sgd_clf = SGDClassifier(max_iter=5, tol=-np.infty, random_state=42)
+sgd_clf = SGDClassifier(max_iter=5, tol=-np.infty)
 sgd_clf.fit(X_train, y_train_5)
 sgd_clf.predict(X_test[:10])
 # evaluate
@@ -496,11 +498,55 @@ The BaggingClassifier class supports sampling the features as well. This is cont
 
 ### Random Forest
 
+``` python
+from sklearn.ensemble import RandomForestClassifier
+
+rnd_clf = RandomForestClassifier(n_estimators=500, max_leaf_nodes=16, n_jobs=-1)
+rnd_clf.fit(X_train, y_train)
+
+y_pred_rf = rnd_clf.predict(X_test)
+
+# Extremely Randomized Trees
+from sklearn.ensemble import ExtraTreesClassifier
+
+ert_clf = ExtraTreesClassifier(n_estimators=500, max_leaf_nodes=16, n_jobs=-1)
+ert_clf.fit(X_train, y_train)
+```
+
+On a signle Decision Tree, important features are likely to appear closer to the root of the tree, while unimportant features will often appear closer to the leaves (or not at all). We can check each features importance using `feature_importances_` property.
+
+### Boosting
+
+- AdaBoost (Adaptive Boosting): For each iteration, a predictor's weight is adjusted by its accuracy on training set (more accurate, higher weight), an instance's weight is lifted if it is mis-classified. The algorithm stops when the desired number of predictors is reached, or when a perfect predictor is found.
+- Gradient Boosting: Fit the new predictor to the *residual errors* made by the previous predictor.
+
+``` python
+# AdaBoost
+from sklearn.ensemble import AdaBoostClassifier
+
+ada_clf = AdaBoostClassifier(
+    DecisionTreeClassifier(max_depth=1), n_estimators=200,
+    algorithm="SAMME.R", learning_rate=0.5)
+ada_clf.fit(X_train, y_train)
+
+# Gradient Boosting
+from sklearn.ensemble import GradientBoostingRegressor
+
+gbrt = GradientBoostingRegressor(max_depth=2, n_estimators=3, learning_rate=1.0)
+gbrt.fit(X, y)
+```
+
+### Stacking
+
+Use hold out set to train blender, use blender instead of simple voting.
+
+Open source implementation [brew](https://github.com/viisar/brew)
+
+## Dimensionality Reduction
+
 <!---
 TBD below:
 -->
-
-## Dimensionality Reduction
 
 ## Neural Networks and Deep Learning
 
