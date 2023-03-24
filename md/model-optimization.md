@@ -32,7 +32,7 @@ Parameters that don't affect model too much:
 * TensorFlow
 * MxNet
 * PyTorch ✓
-* sklearn's MLP
+* sklearn's NLP
 
 ### Tune Neural Nets
 
@@ -64,14 +64,15 @@ Parameters that reduce overfitting:
 * Regularizion parameters (C, alpha, lambda, ...)
 
 ### Tips
+
 * Don't spend too much time tuning hyperparameters (Only if you don't have any more ideas or you have spare computational resources)
 * Be patient (It can take thousands of rounds for GBDT or neural nets to fit)
 * Average everything
-  - Over random seed
-  - Or over small deviations from optimal parameters (e.g. average max_depth=4,5,6 for an optimal 5)
+  * Over random seed
+  * Or over small deviations from optimal parameters (e.g. average max_depth=4,5,6 for an optimal 5)
 
 ### References
 
-* http://fastml.com/optimizing-hyperparams-with-hyperopt/
-* https://www.analyticsvidhya.com/blog/2016/02/complete-guide-parameter-tuning-gradient-boosting-gbm-python/
-* http://scikit-learn.org/stable/modules/grid_search.html
+* <http://fastml.com/optimizing-hyperparams-with-hyperopt/>
+* <https://www.analyticsvidhya.com/blog/2016/02/complete-guide-parameter-tuning-gradient-boosting-gbm-python/>
+* <http://scikit-learn.org/stable/modules/grid_search.html>
