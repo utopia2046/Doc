@@ -65,6 +65,12 @@ yarn install
 
 ## Boost PIP Install using Domestic Servers
 
+- [阿里云](http://mirrors.aliyun.com/pypi/simple/)
+- [豆瓣](http://pypi.douban.com/simple/)
+- [清华大学](https://pypi.tuna.tsinghua.edu.cn/simple/)
+- [中国科技大学](https://pypi.mirrors.ustc.edu.cn/simple/)
+- [中国科学技术大学](http://pypi.mirrors.ustc.edu.cn/simple/)
+
 ``` console
 pip install -i https://pypi.douban.com/simple/ <package-name>
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple <package-name>
@@ -73,16 +79,52 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple <package-name>
 Or update local PIP ini
 
 - %APPDATA%\pip\pip.ini
-- %HOME%\pip\pip.ini
+- %HOMEPATH%\pip\pip.ini
 
 ``` pip.ini
 [global]
 timeout = 60
-index-url = http://pypi.douban.com\simple
+index-url = https://pypi.douban.com/simple
 trusted-host = pypi.douban.com
 ```
 
 Ref: <https://blog.csdn.net/QLeelq/article/details/121197098>
+
+## Install PyTorch using Conda
+
+<https://pytorch.org/>
+
+``` console
+conda update -n base -c defaults conda
+conda install pytorch torchvision torchaudio cpuonly -c pytorch
+```
+
+Or download package from <https://download.pytorch.org/whl/torch_stable.html>
+and use `pip install <package_name>.whl`
+
+Check package version after install
+
+``` python
+import torch
+print(torch.__version__)
+# 2.0.0
+import torchvision
+print(torchvision.__version__)
+# 0.15.0
+```
+
+Import PyTorch in Jupyter Notebook
+
+``` console
+conda install ipykernel
+python -m ipykernel instal --name pytorch --display-name "PyTorch for Deep Learning"
+jupyter notebook --generate-config
+```
+
+Ref:
+
+- <https://blog.csdn.net/m0_52571323/article/details/110222966>
+- <https://blog.csdn.net/qq_38140292/article/details/114157146>
 
 ## Create Python Virtual Environment
 

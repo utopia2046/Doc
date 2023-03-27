@@ -78,3 +78,20 @@ In-context learning
 - zero-shot, instruction only, no example
 - one-shot, instruction with one example
 - few-shot, instruction with few examples
+
+Training Frameworks
+
+- [PyTorch](https://pytorch.org)
+- [TensorFlow](https://www.tensorflow.org)
+- [PaddlePaddle](https://www.paddlepaddle.org.cn)
+- [MindSpore](https://mindspore.cn)
+- [OneFlow](https://oneflow.ai)
+- [DeepSpeed](https://github.com/microsoft/DeepSpeed)
+
+Deploy Frameworks
+
+- TensorFlow Serving
+- ONNX Runtime
+- OpenVINO
+- TensorRT
+- TorchScript
