@@ -544,6 +544,18 @@ Open source implementation [brew](https://github.com/viisar/brew)
 
 ## Dimensionality Reduction
 
+Curse of dimensionality: High dimensional datasets are at risk of being very sparse: most training instances are likely to be far away from each other. The more dimensions the training set has, the greater the risk of overfitting it.
+
+- Projection: project every training instance perpendicularly onto lower dimension subspace
+- Manifold Learning: a 2D manifold is a 2D shape that can be bent and twisted in a higher-dimensional space. More generally, a d-dimensional manifold is a part of an n-dimensional space (where d < n) that locally resembles a d-dimensional hyperplane.
+
+Manifold hypothesis: most real-world high-dimensional datasets lie close to a much lower-dimensional manifold.
+
+Reduce dimensionality before training:
+
+1. definitely speed up training;
+2. may not always lead to a better or simpler solution; it all depends on the dataset.
+
 <!---
 TBD below:
 -->
