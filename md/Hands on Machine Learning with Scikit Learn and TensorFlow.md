@@ -22,6 +22,8 @@
     - [Boosting](#boosting)
     - [Stacking](#stacking)
   - [Dimensionality Reduction](#dimensionality-reduction)
+    - [Principal Component Analysis (PCA)](#principal-component-analysis-pca)
+    - [Manifold](#manifold)
   - [Neural Networks and Deep Learning](#neural-networks-and-deep-learning)
   - [Convolutional Neural Networks](#convolutional-neural-networks)
   - [Recurrent Neural Networks](#recurrent-neural-networks)
@@ -197,7 +199,7 @@ param_grid = [
     # then try 6 (2×3) combinations with bootstrap set as False
     {'bootstrap': [False], 'n_estimators': [3, 10], 'max_features': [2, 3, 4]},
   ]
-forest_reg = RandomForestRegressor(random_state=42)
+forest_reg = RandomForestRegressor()
 # train across 5 folds, that's a total of (12+6)*5=90 rounds of training
 grid_search = GridSearchCV(forest_reg, param_grid, cv=5,
                            scoring='neg_mean_squared_error', return_train_score=True)
@@ -253,7 +255,7 @@ cross_val_score(sgd_clf, X_train_scaled, y_train, cv=3, scoring="accuracy")
 
 # Random Forest classifier
 from sklearn.ensemble import RandomForestClassifier
-forest_clf = RandomForestClassifier(random_state=42)
+forest_clf = RandomForestClassifier()
 forest_clf.fit(X_train, y_train)
 forest_clf.predict(X_test[:10])
 cross_val_score(forest_clf, X_train, y_train, cv=3, scoring="accuracy")
@@ -556,11 +558,97 @@ Reduce dimensionality before training:
 1. definitely speed up training;
 2. may not always lead to a better or simpler solution; it all depends on the dataset.
 
+### Principal Component Analysis (PCA)
+
+``` python
+# use Numpy SVD (Singular Value Decomposition) function to calculate PCA
+X_centered = X - X.mean(axis=0) # don't forget to center the data first
+U, s, Vt = np.linalg.svd(X_centered)
+# X decomposed into dot production of 3 matrices
+# X = U · Σ · VT, VT contains all the principal components
+c1 = Vt.T[:, 0]  # first principle component
+c2 = Vt.T[:, 1]  # second PC
+# projects X onto first two principal components plane
+W2 = Vt.T[:,:2]
+X2D_svd = X_centered.dot(W2)
+
+# use scikit learn PCA class
+from sklearn.decomposition import PCA
+
+pca = PCA(n_components = 0.95) # auto select min components to reserve 95% variance
+X2D_pca = pca.fit_transform(X)
+
+# get PCA components & explained variance ratio
+pca.components_
+pca.explained_variance_ratio_
+# recover 3D points
+X3D_inv = pca.inverse_transform(X2D_pca)
+
+# Use incremental PCA when whole dataset is big
+from sklearn.decomposition import IncrementalPCA
+n_batches = 100
+inc_pca = IncrementalPCA(n_components = 154)
+for X_batch in np.array_split(X_mnist, n_batches):
+    inc_pca.partial_fit(X_batch)
+X_mnist_reduced = inc_pca.transform(X_mnist)
+
+# randomized PCA (much faster)
+rnd_pca = PCA(n_components = 154, svd_solver = 'randomized')
+X_reduced = rnd_pca.fit_transform(X_mnist)
+
+# use RBF kernel PCA
+from sklearn.decomposition import KernelPCA
+rbf_pca = KernelPCA(n_components = 2, kernel = 'rbf', gamma = 0.04)
+X_reduced = rbf_pca.fit_transform(X)
+# other kernels
+lin_pca = KernelPCA(n_components = 2, kernel = "linear", fit_inverse_transform = True)
+rbf_pca = KernelPCA(n_components = 2, kernel = "rbf", gamma = 0.0433, fit_inverse_transform = True)
+sig_pca = KernelPCA(n_components = 2, kernel = "sigmoid", gamma = 0.001, coef0 = 1, fit_inverse_transform = True)
+```
+
+### Manifold
+
+Locally Linear Embedding (LLE) first measures how each training instance linearly relates to its closest neighbors (c.n.), and then looks for a low-dimensional representation of the training set where these local relationships are best preserved.
+
+``` python
+# create swiss roll data set
+from sklearn.datasets import make_swiss_roll
+X, t = make_swiss_roll(n_samples = 1000, noise = 0.2)
+
+# LLE: Locally Linear Embedding
+from sklearn.manifold import LocallyLinearEmbedding
+lle = LocallyLinearEmbedding(n_components = 2, n_neighbors = 10)
+X_reduced = lle.fit_transform(X)
+
+# MDS: Multidimensional Scaling
+from sklearn.manifold import MDS
+mds = MDS(n_components = 2)
+X_reduced_mds = mds.fit_transform(X)
+
+# Isomap: preserve geodesic distances between instances
+from sklearn.manifold import Isomap
+isomap = Isomap(n_components = 2)
+X_reduced_isomap = isomap.fit_transform(X)
+
+# t-Distributed Stochastic Neighbor Embedding
+from sklearn.manifold import TSNE
+tsne = TSNE(n_components = 2)
+X_reduced_tsne = tsne.fit_transform(X)
+
+# Linear Discriminant Analysis
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+lda = LinearDiscriminantAnalysis(n_components = 2)
+X_mnist = mnist["data"]
+y_mnist = mnist["target"]
+lda.fit(X_mnist, y_mnist)
+X_reduced_lda = lda.transform(X_mnist)
+```
+
+## Neural Networks and Deep Learning
+
 <!---
 TBD below:
 -->
-
-## Neural Networks and Deep Learning
 
 ## Convolutional Neural Networks
 
