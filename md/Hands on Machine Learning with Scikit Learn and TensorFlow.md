@@ -646,6 +646,39 @@ X_reduced_lda = lda.transform(X_mnist)
 
 ## Neural Networks and Deep Learning
 
+``` python
+# tensorflow 1.0
+import tensorflow as tf
+x = tf.Variable(3, name="x")
+y = tf.Variable(4, name="y")
+f = x*x*y + y + 2
+
+sess = tf.Session()
+sess.run(x.initializer)
+sess.run(y.initializer)
+result = sess.run(f)
+
+print(result)
+
+# run v1.0 style code under 2.0
+import tensorflow.compat.v1 as tf
+tf.disable_eager_execution()
+tf.disable_v2_behavior()
+
+# tensorflow 2.0
+import tensorflow as tf
+x = tf.constant(3)
+y = tf.constant(4)
+f = x*x*y + y + 2
+print('x = {0}, y = {1}, f={2}'.format(x, y, f))
+```
+
+Ref:
+
+- <https://tensorflow.google.cn/guide/migrate/migrate_tf2?hl=zh-cn>
+- <https://blog.csdn.net/lxj1435359352/article/details/111350201>
+- <https://tensorflow.google.cn/guide/upgrade?hl=zh-CN>
+
 <!---
 TBD below:
 -->

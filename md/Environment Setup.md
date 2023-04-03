@@ -117,7 +117,7 @@ Import PyTorch in Jupyter Notebook
 
 ``` console
 conda install ipykernel
-python -m ipykernel instal --name pytorch --display-name "PyTorch for Deep Learning"
+python -m ipykernel install --name pytorch --display-name "PyTorch for Deep Learning"
 jupyter notebook --generate-config
 ```
 
@@ -150,6 +150,47 @@ rmvirtualenv
 
 Ref: <https://zhuanlan.zhihu.com/p/338424040>
 
+## Install TensorFlow in Virtual Environment
+
+using pip
+
+``` console
+virtualenv –system-site-packages -p python3 tensorflow
+source tensorflow/bin/activate
+pip install –upgrade tensorflow
+```
+
+using conda
+
+``` console
+conda create -n TensorFlow python=3.9
+conda info --envs
+conda activate TensorFlow
+conda install tensorflow
+```
+
+validate installation
+
+``` python
+import tensorflow as tf
+tf.__version__
+hello = tf.constant('Hello tensorfolw')
+sess = tf.Session()
+print(sess.run(hello))
+```
+
+add virtualenv in jupyter kernel
+
+``` console
+ipython kernel install --user --name=TensorFlow
+```
+
+Ref:
+
+- <https://blog.csdn.net/weixin_42555080/article/details/100704078>
+- <https://blog.csdn.net/kevindree/article/details/88627830>
+- <https://queirozf.com/entries/jupyter-kernels-how-to-add-change-remove>
+
 ## Run Py file in Jupyter & IPython
 
 ``` ipython
@@ -180,10 +221,10 @@ jtplot.style()
 
 References:
 
-* <https://blog.csdn.net/Apple_xiaoli/article/details/104533008>
-* <https://cloud.tencent.com/developer/article/1440422>
-* <https://openbase.com/python/jupyterthemes/documentation>
-* <https://github.com/dunovank/jupyter-themes/blob/master/README.md#monospace-fonts-code-cells>
+- <https://blog.csdn.net/Apple_xiaoli/article/details/104533008>
+- <https://cloud.tencent.com/developer/article/1440422>
+- <https://openbase.com/python/jupyterthemes/documentation>
+- <https://github.com/dunovank/jupyter-themes/blob/master/README.md#monospace-fonts-code-cells>
 
 ## Trouble shooting
 
