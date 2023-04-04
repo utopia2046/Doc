@@ -25,6 +25,10 @@
     - [Principal Component Analysis (PCA)](#principal-component-analysis-pca)
     - [Manifold](#manifold)
   - [Neural Networks and Deep Learning](#neural-networks-and-deep-learning)
+    - [Up and Running with TensorFlow](#up-and-running-with-tensorflow)
+      - [Linear Regression](#linear-regression)
+      - [Save and load Model](#save-and-load-model)
+      - [Visualize the Graphs](#visualize-the-graphs)
   - [Convolutional Neural Networks](#convolutional-neural-networks)
   - [Recurrent Neural Networks](#recurrent-neural-networks)
   - [Autoencoders](#autoencoders)
@@ -646,6 +650,8 @@ X_reduced_lda = lda.transform(X_mnist)
 
 ## Neural Networks and Deep Learning
 
+### Up and Running with TensorFlow
+
 ``` python
 # tensorflow 1.0
 import tensorflow as tf
@@ -679,9 +685,50 @@ Ref:
 - <https://blog.csdn.net/lxj1435359352/article/details/111350201>
 - <https://tensorflow.google.cn/guide/upgrade?hl=zh-CN>
 
+#### Linear Regression
+
+``` python
+# build model with 2 hidden layers (64 neurons each with relu activation) and 1 output layer
+def build_model():
+  model = keras.Sequential([
+    layers.Dense(64, activation='relu', input_shape=[len(train_dataset.keys())]),
+    layers.Dense(64, activation='relu'),
+    layers.Dense(1)
+  ])
+
+  optimizer = tf.keras.optimizers.RMSprop(0.001)
+
+  model.compile(loss='mse',
+                optimizer=optimizer,
+                metrics=['mae', 'mse'])
+  return model
+
+model = build_model()
+model.summary()
+
+# set early stop callback
+early_stop = keras.callbacks.EarlyStopping(monitor='val_loss', patience=10)
+
+# train model
+history = model.fit(normed_train_data, train_labels, epochs=EPOCHS,
+                    validation_split = 0.2, verbose=0, callbacks=[early_stop, PrintDot()])
+
+# evaluation
+loss, mae, mse = model.evaluate(normed_test_data, test_labels, verbose=2)
+
+# prediction
+test_predictions = model.predict(normed_test_data).flatten()
+```
+
+Ref: <https://tensorflow.google.cn/tutorials/keras/regression?hl=zh-cn>
+
 <!---
 TBD below:
 -->
+
+#### Save and load Model
+
+#### Visualize the Graphs
 
 ## Convolutional Neural Networks
 
