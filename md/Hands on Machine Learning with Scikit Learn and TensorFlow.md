@@ -26,9 +26,12 @@
     - [Manifold](#manifold)
   - [Neural Networks and Deep Learning](#neural-networks-and-deep-learning)
     - [Up and Running with TensorFlow](#up-and-running-with-tensorflow)
-      - [Linear Regression](#linear-regression)
+      - [Regression Example using TensorFlow](#regression-example-using-tensorflow)
       - [Save and load Model](#save-and-load-model)
       - [Visualize the Graphs](#visualize-the-graphs)
+  - [Introduction to Artificial Neural Networks](#introduction-to-artificial-neural-networks)
+  - [Training Deep Neural Nets](#training-deep-neural-nets)
+  - [Distributing TensorFlow Across Devices and Servers](#distributing-tensorflow-across-devices-and-servers)
   - [Convolutional Neural Networks](#convolutional-neural-networks)
   - [Recurrent Neural Networks](#recurrent-neural-networks)
   - [Autoencoders](#autoencoders)
@@ -685,7 +688,7 @@ Ref:
 - <https://blog.csdn.net/lxj1435359352/article/details/111350201>
 - <https://tensorflow.google.cn/guide/upgrade?hl=zh-CN>
 
-#### Linear Regression
+#### Regression Example using TensorFlow
 
 ``` python
 # build model with 2 hidden layers (64 neurons each with relu activation) and 1 output layer
@@ -722,13 +725,115 @@ test_predictions = model.predict(normed_test_data).flatten()
 
 Ref: <https://tensorflow.google.cn/tutorials/keras/regression?hl=zh-cn>
 
+#### Save and load Model
+
+``` python
+def create_model():
+  model = tf.keras.Sequential([
+    keras.layers.Dense(512, activation='relu', input_shape=(784,)),
+    keras.layers.Dropout(0.2),
+    keras.layers.Dense(10)
+  ])
+
+  model.compile(optimizer='adam',
+                loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+                metrics=[tf.keras.metrics.SparseCategoricalAccuracy()])
+
+  return model
+
+# Create a basic model instance
+model = create_model()
+
+# Use checkpoints to save during training
+checkpoint_path = "training_1/cp.ckpt"
+checkpoint_dir = os.path.dirname(checkpoint_path)
+
+# Create a callback that saves the model's weights
+cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path,
+                                                 save_weights_only=True,
+                                                 verbose=1)
+
+# Train the model with the new callback
+model.fit(train_images,
+          train_labels,
+          epochs=10,
+          validation_data=(test_images, test_labels),
+          callbacks=[cp_callback])  # Pass callback to training
+
+# create a new model with same structure
+model = create_model()
+
+# Loads the weights
+model.load_weights(checkpoint_path)
+
+# Manually save and load weights
+model.save_weights('./checkpoints/my_checkpoint')
+model = create_model()
+model.load_weights('./checkpoints/my_checkpoint')
+
+# Save the entire model as a SavedModel.
+model.save('saved_model/my_model')
+
+# Reload the model without accessing original create_model() method
+new_model = tf.keras.models.load_model('saved_model/my_model')
+
+# Check its architecture
+new_model.summary()
+
+# Save the entire model to a HDF5 file.
+# The '.h5' extension indicates that the model should be saved to HDF5.
+model.save('my_model.h5')
+```
+
+HDF5 和 SavedModel 之间的主要区别在于，HDF5 使用对象配置来保存模型架构，而 SavedModel 则保存执行计算图。因此，SavedModel 能够在不需要原始代码的情况下保存自定义对象，如子类模型和自定义层。
+
+Ref: <https://tensorflow.google.cn/tutorials/keras/save_and_load?hl=zh-cn>
+
+#### Visualize the Graphs
+
+``` python
+# Load the TensorBoard notebook extension
+%load_ext tensorboard
+
+model = create_model()
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+
+log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
+
+model.fit(x=x_train,
+          y=y_train,
+          epochs=5,
+          validation_data=(x_test, y_test),
+          callbacks=[tensorboard_callback])
+
+# Launch TensorBoard
+%tensorboard --logdir logs/fit
+
+# Upload to TensorBoard.dev
+!tensorboard dev upload \
+  --logdir logs/fit \
+  --name "(optional) My latest experiment" \
+  --description "(optional) Simple comparison of several hyperparameters" \
+  --one_shot
+```
+
+Ref:
+
+- <https://tensorflow.google.cn/guide/intro_to_graphs?hl=zh-cn>
+- <https://tensorflow.google.cn/tensorboard?hl=zh-cn>
+
 <!---
 TBD below:
 -->
 
-#### Save and load Model
+## Introduction to Artificial Neural Networks
 
-#### Visualize the Graphs
+## Training Deep Neural Nets
+
+## Distributing TensorFlow Across Devices and Servers
 
 ## Convolutional Neural Networks
 
