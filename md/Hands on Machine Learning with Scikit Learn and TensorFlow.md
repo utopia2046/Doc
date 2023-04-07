@@ -30,6 +30,7 @@
       - [Save and load Model](#save-and-load-model)
       - [Visualize the Graphs](#visualize-the-graphs)
   - [Introduction to Artificial Neural Networks](#introduction-to-artificial-neural-networks)
+    - [Hyper-parameter Fine-tuning](#hyper-parameter-fine-tuning)
   - [Training Deep Neural Nets](#training-deep-neural-nets)
   - [Distributing TensorFlow Across Devices and Servers](#distributing-tensorflow-across-devices-and-servers)
   - [Convolutional Neural Networks](#convolutional-neural-networks)
@@ -294,12 +295,12 @@ plot_digit(clean_digit)
 
 Comparison of algorithms for Linear Regression
 
-Algorithm|Large m|Out-of-core support|Large n|Hyperparams|Scaling required|Scikit-Learn
--|-|-|-|-|-|-
-Normal Equation|Fast|No|Slow|0|No|LinearRegression
-Batch GD|Slow|No|Fast|2|Yes|n/a
-Stochastic GD|Fast|Yes|Fast|≥2|Yes|SGDRegressor
-Mini-batch GD|Fast|Yes|Fast|≥2|Yes|n/a
+Algorithm       | Large m | Out-of-core support | Large n | Hyperparams | Scaling required | Scikit-Learn
+----------------|---------|---------------------|---------|-------------|------------------|-----------------
+Normal Equation | Fast    | No                  | Slow    | 0           | No               | LinearRegression
+Batch GD        | Slow    | No                  | Fast    | 2           | Yes              | n/a
+Stochastic GD   | Fast    | Yes                 | Fast    | ≥2          | Yes              | SGDRegressor
+Mini-batch GD   | Fast    | Yes                 | Fast    | ≥2          | Yes              | n/a
 
 ### Polynomial regression
 
@@ -411,11 +412,11 @@ has plenty of features.
 
 Comparison of Scikit-Learn classes for SVM classification
 
-Class|Time complexity|Out-of-core support|Scaling required|Kernel trick
--|-|-|-|-
-LinearSVC|O(m * n)|No|Yes|No
-SGDClassifier|O(m * n)|Yes|Yes|No
-SVC|O(m² × n) to O(m³ * n)|No|Yes|Yes
+Class         | Time complexity        | Out-of-core support | Scaling required | Kernel trick
+--------------|------------------------|---------------------|------------------|-------------
+LinearSVC     | O(m * n)               | No                  | Yes              | No
+SGDClassifier | O(m * n)               | Yes                 | Yes              | No
+SVC           | O(m² × n) to O(m³ * n) | No                  | Yes              | Yes
 
 ``` python
 # Support Vector Regression
@@ -825,13 +826,79 @@ Ref:
 - <https://tensorflow.google.cn/guide/intro_to_graphs?hl=zh-cn>
 - <https://tensorflow.google.cn/tensorboard?hl=zh-cn>
 
+## Introduction to Artificial Neural Networks
+
+Ref:
+
+- <https://tensorflow.google.cn/api_docs/python/tf/estimator/DNNClassifier>
+- <https://tensorflow.google.cn/guide/migrate/canned_estimators?hl=zh-cn>
+- <https://tensorflow.google.cn/guide/keras/rnn?hl=zh-cn>
+
+Estimators are not recommended for new code. Estimators run v1.Session-style code which is more difficult to write correctly, and can behave unexpectedly, especially when combined with TF 2 code.
+
+Estimators Migration
+
+TensorFlow 1                                                   | TensorFlow 2
+---------------------------------------------------------------|--------------------------------------------
+tf.estimator.LinearEstimator, Classifier, Regressor            | Keras tf.compat.v1.keras.models.LinearModel
+tf.estimator.DNNEstimator, Classifier, Regressor               | 自定义 Keras DNN ModelKeras
+tf.estimator.DNNLinearCombinedEstimator, Classifier, Regressor | tf.compat.v1.keras.models.WideDeepModel
+tf.estimator.BoostedTreesEstimato, Classifier, Regressor       | tfdf.keras.GradientBoostedTreesModel
+
+``` python
+# v1
+estimator = tf.estimator.DNNClassifier(
+    feature_columns=[sparse_feature_a_emb, sparse_feature_b_emb],
+    hidden_units=[1024, 512, 256],
+    optimizer=tf.train.ProximalAdagradOptimizer(
+      learning_rate=0.1,
+      l1_regularization_strength=0.001
+    ))
+# v2
+dnn_model = tf.keras.models.Sequential([
+    tf.keras.layers.Dense(1024, activation='relu'),
+    tf.keras.layers.Dense(512, activation='relu'),
+    tf.keras.layers.Dense(256, activation='relu'),
+    tf.keras.layers.Dense(10, activation='softmax')
+])
+
+```
+
+### Hyper-parameter Fine-tuning
+
+Combination of hyperparameters:
+
+- number of layers
+- number of neurons per layer
+- type of activation function to use in each layer
+- weight initialization logic
+
+Tools:
+
+- Random Search
+- [Oscar](http://oscar.calldesk.ai/)
+
+Tips:
+
+1. Number of hidden layers:
+    - an MLP with just one hidden layer can model even the most complex functions provided it has enough neurons.
+    - deep networks have a much higher parameter efficiency than shallow ones: they can model complex functions using exponentially fewer neurons than shallow nets, making them much faster to train.
+    - it is much more common to reuse parts of a pretrained state-of-the-art network that performs a similar task.
+Training will be a lot faster and require much less data
+2. Number of Neurons per Hidden Layer
+    - number of neurons in the input and output layers is determined by the type of input and output your task requires.
+    - for the hidden layers, a common practice is to size them to form a funnel, with fewer and fewer neurons at each layer—the rationale being that many low-level features can coalesce into far fewer high-level features.
+    - pick a model with more layers and neurons than you actually need, then use early stopping to prevent it from overfitting (and other regularization techniques, especially dropout).
+3. Activation Functions
+    - In most cases you can use the ReLU activation function in the hidden layers (or one of its variants).
+    - For the output layer, the softmax activation function is generally a good choice for classification tasks (when the classes are mutually exclusive).
+    - For regression tasks, you can simply use no activation function at all.
+
+## Training Deep Neural Nets
+
 <!---
 TBD below:
 -->
-
-## Introduction to Artificial Neural Networks
-
-## Training Deep Neural Nets
 
 ## Distributing TensorFlow Across Devices and Servers
 
