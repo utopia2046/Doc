@@ -32,6 +32,12 @@
   - [Introduction to Artificial Neural Networks](#introduction-to-artificial-neural-networks)
     - [Hyper-parameter Fine-tuning](#hyper-parameter-fine-tuning)
   - [Training Deep Neural Nets](#training-deep-neural-nets)
+    - [Vanishing/Exploding Gradients Problem](#vanishingexploding-gradients-problem)
+      - [Initialization](#initialization)
+      - [Activation Functions](#activation-functions)
+      - [Batch Normalization](#batch-normalization)
+      - [Gradient Clipping](#gradient-clipping)
+    - [Reusing Pretrained Layers (transfer learning)](#reusing-pretrained-layers-transfer-learning)
   - [Distributing TensorFlow Across Devices and Servers](#distributing-tensorflow-across-devices-and-servers)
   - [Convolutional Neural Networks](#convolutional-neural-networks)
   - [Recurrent Neural Networks](#recurrent-neural-networks)
@@ -895,6 +901,155 @@ Training will be a lot faster and require much less data
     - For regression tasks, you can simply use no activation function at all.
 
 ## Training Deep Neural Nets
+
+### Vanishing/Exploding Gradients Problem
+
+- Vanishing gradients problem: lower layer connection weights virtually unchanged.
+- Exploding gradients problem: many layers get insanely large weight updates and the algorithm diverges.
+
+#### Initialization
+
+Understanding the Difficulty of Training Deep Feedforward Neural Networks, by Xavier Glorot & Yoshua Bengio.
+
+- Weights initialization: Xavier initialization (when using logistic activation function)
+- ReLU activation function and its variants.
+
+``` python
+# https://keras.io/zh/initializers/
+keras.initializers.RandomNormal(mean=0.0, stddev=0.05, seed=None)
+keras.initializers.RandomUniform(minval=-0.05, maxval=0.05, seed=None)
+keras.initializers.TruncatedNormal(mean=0.0, stddev=0.05, seed=None)
+keras.initializers.VarianceScaling(scale=1.0, mode='fan_in', distribution='normal', seed=None)
+keras.initializers.lecun_normal(seed=None)
+keras.initializers.lecun_uniform(seed=None)
+keras.initializers.glorot_normal(seed=None)
+keras.initializers.glorot_uniform(seed=None)
+keras.initializers.he_normal(seed=None)
+keras.initializers.he_uniform(seed=None)
+```
+
+#### Activation Functions
+
+Activation function | Uniform distribution [-r,r]                          | Normal distribution
+--------------------|------------------------------------------------------|----------------------------------------------------------
+Logistic            | $r=\sqrt{\cfrac{6}{n_{inputs}+n_{outputs}}}$         | $\sigma=\sqrt{\cfrac{2}{n_{inputs}+n_{outputs}}}$
+Hyperbolic tangent  | $r=4\sqrt{\cfrac{6}{n_{inputs}+n_{outputs}}}$        | $\sigma=4\sqrt{\cfrac{2}{n_{inputs}+n_{outputs}}}$
+ReLU (and variants) | $r=\sqrt{2}\sqrt{\cfrac{6}{n_{inputs}+n_{outputs}}}$ | $\sigma=\sqrt{2}\sqrt{\cfrac{2}{n_{inputs}+n_{outputs}}}$
+
+Dying ReLUs: during training, some neurons effectively die, meaning
+they stop outputting anything other than 0.
+
+- ReLU: $R(z)=max(0, z)$
+- Leaky ReLU: $R(z)=max(\alpha z, z)$ ($\alpha$ is usually 0.01)
+- PReLU (Parameterized ReLU): $\alpha$ as a hyperparameter
+- ELU (Exponential Linear Unit):
+  $ELU_{\alpha}(z) = \begin{cases}
+    \alpha (exp(z)=1) &\text{if } z < 0 \\
+    z &\text{if } x \ge 0
+  \end{cases}$
+
+Ref: <https://zhuanlan.zhihu.com/p/172254089>
+
+``` python
+# specify activation function when adding model layer
+from keras.layers import Activation, Dense
+model.add(Dense(64, activation='tanh'))
+# Predefined activation functions in TensorFlow
+# https://keras.io/zh/activations/
+keras.activations.softmax(x, axis=-1)
+keras.activations.elu(x, alpha=1.0)
+keras.activations.selu(x)
+keras.activations.softplus(x)
+keras.activations.softsign(x)
+keras.activations.relu(x, alpha=0.0, max_value=None, threshold=0.0)
+keras.activations.tanh(x)
+sigmoid(x)
+hard_sigmoid(x)
+keras.activations.exponential(x)
+keras.activations.linear(x)
+# https://keras.io/zh/layers/advanced-activations/
+keras.layers.LeakyReLU(alpha=0.3)
+keras.layers.PReLU(alpha_initializer='zeros', alpha_regularizer=None, alpha_constraint=None, shared_axes=None)
+keras.layers.ELU(alpha=1.0)
+keras.layers.ThresholdedReLU(theta=1.0)
+keras.layers.Softmax(axis=-1)
+keras.layers.ReLU(max_value=None, negative_slope=0.0, threshold=0.0)
+```
+
+#### Batch Normalization
+
+The technique consists of adding an operation in the model just before the activation
+function of each layer, simply zero-centering and normalizing the inputs, then scaling and shifting the result using two new parameters per layer (one for scaling, the other for shifting). In other words, this operation lets the model learn the optimal scale and mean of the inputs for each layer.
+
+``` python
+tf.layers.batch_normalization(
+    inputs, axis=-1, momentum=0.99, epsilon=0.001, center=True, scale=True,
+    beta_initializer=tf.zeros_initializer(),
+    gamma_initializer=tf.ones_initializer(),
+    moving_mean_initializer=tf.zeros_initializer(),
+    moving_variance_initializer=tf.ones_initializer(), beta_regularizer=None,
+    gamma_regularizer=None, beta_constraint=None, gamma_constraint=None,
+    training=False, trainable=True, name=None, reuse=None, renorm=False,
+    renorm_clipping=None, renorm_momentum=0.99, fused=None, virtual_batch_size=None,
+    adjustment=None
+)
+```
+
+Ref:
+
+- <https://zhuanlan.zhihu.com/p/360842139>
+- <https://www.zhihu.com/question/53133249/answer/177584985>
+
+#### Gradient Clipping
+
+``` python
+from keras import optimizers
+sgd = optimizers.SGD(lr=0.01, clipnorm=1.)
+```
+
+Ref:
+
+- <https://zhuanlan.zhihu.com/p/112904260>
+- <https://cloud.tencent.com/developer/article/1572036>
+
+### Reusing Pretrained Layers (transfer learning)
+
+``` python
+# load model with same structure
+model.save("my_model")
+reconstructed_model = keras.models.load_model("my_model")
+
+# Saving & loading only the model's weights values
+# Copy weights from functional_model to subclassed_model.
+subclassed_model.set_weights(functional_model.get_weights())
+
+# Example: load weights from pretrained model
+def create_functional_model():
+    inputs = keras.Input(shape=(784,), name="digits")
+    x = keras.layers.Dense(64, activation="relu", name="dense_1")(inputs)
+    x = keras.layers.Dense(64, activation="relu", name="dense_2")(x)
+    outputs = keras.layers.Dense(10, name="predictions")(x)
+    return keras.Model(inputs=inputs, outputs=outputs, name="3_layer_mlp")
+
+functional_model = create_functional_model()
+functional_model.save_weights("pretrained_weights.h5")
+
+# In a separate program:
+pretrained_model = create_functional_model()
+pretrained_model.load_weights("pretrained_weights.h5")
+
+# Create a new model by extracting layers from the original model:
+extracted_layers = pretrained_model.layers[:-1]
+extracted_layers.append(keras.layers.Dense(5, name="dense_3"))
+model = keras.Sequential(extracted_layers)
+model.summary()
+```
+
+Ref: <https://tensorflow.google.cn/guide/keras/save_and_serialize>
+
+- [TensorFlow Model Garden](https://github.com/tensorflow/models)
+- [PyTorch Vision Pretrained Models](https://pytorch.org/vision/stable/models.html)
+- [PyTorch Github](https://github.com/pytorch/vision/tree/main/torchvision/models)
 
 <!---
 TBD below:
