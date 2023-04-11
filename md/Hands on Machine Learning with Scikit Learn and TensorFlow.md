@@ -38,6 +38,9 @@
       - [Batch Normalization](#batch-normalization)
       - [Gradient Clipping](#gradient-clipping)
     - [Reusing Pretrained Layers (transfer learning)](#reusing-pretrained-layers-transfer-learning)
+    - [Faster Optimizers (Than SGD)](#faster-optimizers-than-sgd)
+    - [Avoiding Overfitting Through Regularization](#avoiding-overfitting-through-regularization)
+    - [Practical Guidelines](#practical-guidelines)
   - [Distributing TensorFlow Across Devices and Servers](#distributing-tensorflow-across-devices-and-servers)
   - [Convolutional Neural Networks](#convolutional-neural-networks)
   - [Recurrent Neural Networks](#recurrent-neural-networks)
@@ -1043,19 +1046,140 @@ extracted_layers = pretrained_model.layers[:-1]
 extracted_layers.append(keras.layers.Dense(5, name="dense_3"))
 model = keras.Sequential(extracted_layers)
 model.summary()
+
+# BatchNormalization layer has 2 trainable weights and 2 non-trainable weights
+layer = keras.layers.BatchNormalization()
+layer.build((None, 4))  # Create the weights
+print("weights:", len(layer.weights)) # 4
+print("trainable_weights:", len(layer.trainable_weights)) # 2
+print("non_trainable_weights:", len(layer.non_trainable_weights)) # 2
+
+layer = keras.layers.Dense(3)
+layer.build((None, 4))  # Create the weights
+layer.trainable = False  # Freeze the layer
+
+# Make a model with 2 layers
+layer1 = keras.layers.Dense(3, activation="relu")
+layer2 = keras.layers.Dense(3, activation="sigmoid")
+model = keras.Sequential([keras.Input(shape=(3,)), layer1, layer2])
+
+# Freeze the first layer
+layer1.trainable = False
+
+# Keep a copy of the weights of layer1 for later reference
+initial_layer1_weights_values = layer1.get_weights()
+
+# Train the model
+model.compile(optimizer="adam", loss="mse")
+model.fit(np.random.random((2, 3)), np.random.random((2, 3)))
+
+# Check that the weights of layer1 have not changed during training
+final_layer1_weights_values = layer1.get_weights()
+np.testing.assert_allclose(
+    initial_layer1_weights_values[0], final_layer1_weights_values[0]
+)
+np.testing.assert_allclose(
+    initial_layer1_weights_values[1], final_layer1_weights_values[1]
+)
 ```
 
-Ref: <https://tensorflow.google.cn/guide/keras/save_and_serialize>
+Ref:
+
+- <https://tensorflow.google.cn/guide/keras/save_and_serialize>
+- <https://tensorflow.google.cn/guide/keras/transfer_learning>
 
 - [TensorFlow Model Garden](https://github.com/tensorflow/models)
 - [PyTorch Vision Pretrained Models](https://pytorch.org/vision/stable/models.html)
 - [PyTorch Github](https://github.com/pytorch/vision/tree/main/torchvision/models)
 
+### Faster Optimizers (Than SGD)
+
+- Momentum Optimization: the gradient is used as an acceleration, not as a speed.
+- Nesterov Accelerated Gradient: measure the gradient of the cost function not at the local position but slightly ahead in the direction of the momentum.
+- AdaGrad: scaling down the gradient vector along the steepest dimensions with adaptive learning rate (often stops too early when training neural networks).
+- RMSProp: accumulating only the gradients from the most recent iterations (as opposed to all the gradients since the beginning of training)
+- Adam Optimization (recommended): adaptive moment estimation, combines the ideas of Momentum optimization and RMSProp
+
+``` python
+# AdamOptimizer
+# suggest to user default parameters:
+# keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+adam = tf.keras.optimizers.Adam(learning_rate=0.01)
+model.compile(optimizer=adam)
+# or specify optimizer by name (using default optimizer parameters)
+model.compile(optimizer='adam')
+# NAdam
+# keras.optimizers.Nadam(lr=0.002, beta_1=0.9, beta_2=0.999, epsilon=None, schedule_decay=0.004)
+```
+
+Ref:
+
+- <https://keras.io/zh/optimizers/>
+- <https://tensorflow.google.cn/api_docs/python/tf/keras/optimizers/Adam>
+- <https://blog.csdn.net/weixin_49346755/article/details/124526270>
+
+### Avoiding Overfitting Through Regularization
+
+- Early stopping
+- L1 & L2 regulation
+- Dropout
+- Max-Norm Regularization
+- Data Augmentation
+
+``` python
+# L1 & L2 regulation
+from keras import regularizers
+l2_model = tf.keras.Sequential([
+    layers.Dense(512, activation='elu',
+                 kernel_regularizer=regularizers.l2(0.001),
+                 input_shape=(FEATURES,)),
+    layers.Dense(512, activation='elu',
+                 kernel_regularizer=regularizers.l2(0.001)),
+    layers.Dense(512, activation='elu',
+                 kernel_regularizer=regularizers.l2(0.001)),
+    layers.Dense(512, activation='elu',
+                 kernel_regularizer=regularizers.l2(0.001)),
+    layers.Dense(1)
+])
+regularizer_histories['l2'] = compile_and_fit(l2_model, "regularizers/l2")
+
+# Dropout
+dropout_model = tf.keras.Sequential([
+    layers.Dense(512, activation='elu', input_shape=(FEATURES,)),
+    layers.Dropout(0.5),
+    layers.Dense(512, activation='elu'),
+    layers.Dropout(0.5),
+    layers.Dense(512, activation='elu'),
+    layers.Dropout(0.5),
+    layers.Dense(512, activation='elu'),
+    layers.Dropout(0.5),
+    layers.Dense(1)
+])
+regularizer_histories['dropout'] = compile_and_fit(dropout_model, "regularizers/dropout")
+# The resulting neural network can be seen as an averaging ensemble of all these smaller neural networks.
+```
+
+Ref:
+
+- <https://keras.io/zh/regularizers/>
+- <https://tensorflow.google.cn/tutorials/keras/overfit_and_underfit>
+
+### Practical Guidelines
+
+Default DNN configuration
+
+- Initialization: He initialization
+- Activation function: ELU
+- Normalization: Batch Normalization
+- Regularization: Dropout
+- Optimizer: Adam
+- Learning rate schedule: None
+
+## Distributing TensorFlow Across Devices and Servers
+
 <!---
 TBD below:
 -->
-
-## Distributing TensorFlow Across Devices and Servers
 
 ## Convolutional Neural Networks
 
