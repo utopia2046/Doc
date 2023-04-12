@@ -41,8 +41,13 @@
     - [Faster Optimizers (Than SGD)](#faster-optimizers-than-sgd)
     - [Avoiding Overfitting Through Regularization](#avoiding-overfitting-through-regularization)
     - [Practical Guidelines](#practical-guidelines)
-  - [Distributing TensorFlow Across Devices and Servers](#distributing-tensorflow-across-devices-and-servers)
   - [Convolutional Neural Networks](#convolutional-neural-networks)
+    - [Convolutional Layer](#convolutional-layer)
+    - [Typical CNN Architectures](#typical-cnn-architectures)
+      - [LeNet-5](#lenet-5)
+      - [AlexNet](#alexnet)
+      - [GoogLeNet](#googlenet)
+      - [ResNet](#resnet)
   - [Recurrent Neural Networks](#recurrent-neural-networks)
   - [Autoencoders](#autoencoders)
   - [Reinforcement Learning](#reinforcement-learning)
@@ -1175,13 +1180,112 @@ Default DNN configuration
 - Optimizer: Adam
 - Learning rate schedule: None
 
-## Distributing TensorFlow Across Devices and Servers
+## Convolutional Neural Networks
+
+### Convolutional Layer
+
+- Receptive field: A neuron located in row i, column j of a given layer is connected to the outputs of the neurons in the previous layer located in rows i to $i + f_h – 1$, columns j to $j + f_w – 1$, where $f_h$ and $f_w$ are the height and width of the receptive field
+- Zero padding: add zeros around the inputs in order for a layer to have the same height and width as the previous layer
+- Stride: The distance between two consecutive receptive fields
+- Filter: A neuron's weights can be represented as a small image the size of the receptive field.
+- Feature map: a layer full of neurons using the same filter highlights the areas in an image that are most similar to the filter. During training, a CNN finds the most useful filters for its task, and it learns to combine them into more complex patterns.
+- Stacking Multiple Feature Maps: a convolutional layer simultaneously applies multiple filters to its inputs, making it capable of detecting multiple features anywhere in its inputs.
+
+![Convolutional Layer](./../images/ConvolutionalLayer.png)
+
+``` python
+# https://tensorflow.google.cn/api_docs/python/tf/keras/layers/Conv2D
+tf.keras.layers.Conv2D(
+    filters,
+    kernel_size,
+    strides=(1, 1),
+    padding='valid',
+    data_format=None,
+    dilation_rate=(1, 1),
+    groups=1,
+    activation=None,
+    use_bias=True,
+    kernel_initializer='glorot_uniform',
+    bias_initializer='zeros',
+    kernel_regularizer=None,
+    bias_regularizer=None,
+    activity_regularizer=None,
+    kernel_constraint=None,
+    bias_constraint=None,
+    **kwargs
+)
+# https://tensorflow.google.cn/api_docs/python/tf/keras/layers/MaxPool2D
+tf.keras.layers.MaxPool2D(
+    pool_size=(2, 2),
+    strides=None,
+    padding='valid',
+    data_format=None,
+    **kwargs
+)
+# https://tensorflow.google.cn/api_docs/python/tf/keras/layers/AveragePooling2D
+tf.keras.layers.AveragePooling2D(
+    pool_size=(2, 2),
+    strides=None,
+    padding='valid',
+    data_format=None,
+    **kwargs
+)
+```
+
+### Typical CNN Architectures
+
+- Input
+- Convolution(+ReLU)
+- Pooling
+- Convolution(+ReLU)
+- Pooling
+- Fully connected
+- Output
+
+#### LeNet-5
+
+Created by Yann LeCun in 1998 and widely used for handwritten digit recognition (MNIST)
+
+Layer|Type|Map|Size|Kernel size|Stride|Activation
+-|-|-|-|-|-|-
+Out|Fully Connected|-|10|-|-|RBF
+F6|Fully Connected|-|84|-|-|tanh
+C5|Convolution|120|1x1|5x5|1|tanh
+S4|Avg Pooling|16|5x5|2x2|2|tanh
+C3|Convolution|16|10x10|5x5|1|tanh
+S2|Avg Pooling|6|14x14|2x2|2|tanh
+C1|Convolution|6|28x28|5x5|1|tanh
+In|Input|1|32x32|-|-|-
+
+#### AlexNet
+
+Layer|Type|Map|Size|Kernel size|Stride|Padding|Activation
+-|-|-|-|-|-|-|-
+Out|Fully Connected|-|1000|-|-|-|Softmax
+F9|Fully Connected|-|4096|-|-|-|ReLU
+F8|Fully Connected|-|4096|-|-|-|ReLU
+C7|Convolution|256|13x13|3x3|1|SAME|ReLU
+C6|Convolution|384|13x13|3x3|1|SAME|ReLU
+C5|Convolution|384|13x13|3x3|1|SAME|ReLU
+S4|Max Pooling|256|13x13|3x3|2|VALID|-
+C3|Convolution|256|27x27|5x5|1|SAME|ReLU
+S2|Max Pooling|96|27x27|3x3|2|VALID|-
+C1|Convolution|96|55x55|11x11|4|SAME|ReLU
+In|Input|3 (RGB)|224x224|-|-|-|-
+
+Local response normalization: makes the neurons that most strongly activate inhibit neurons at the same location but in neighboring feature maps. This encourages different feature maps to specialize, pushing them apart and forcing them to explore a wider range of features, ultimately improving generalization.
+
+<https://tensorflow.google.cn/api_docs/python/tf/nn/local_response_normalization>
+
+#### GoogLeNet
+
+inception modules, 6 million parameters
+
+#### ResNet
 
 <!---
 TBD below:
 -->
-
-## Convolutional Neural Networks
 
 ## Recurrent Neural Networks
 
