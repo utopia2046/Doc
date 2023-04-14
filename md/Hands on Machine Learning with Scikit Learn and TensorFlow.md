@@ -49,6 +49,9 @@
       - [GoogLeNet](#googlenet)
       - [ResNet](#resnet)
   - [Recurrent Neural Networks](#recurrent-neural-networks)
+    - [Recurrent Neurons](#recurrent-neurons)
+    - [Memory Cells](#memory-cells)
+    - [LSTM](#lstm)
   - [Autoencoders](#autoencoders)
   - [Reinforcement Learning](#reinforcement-learning)
 
@@ -1283,11 +1286,75 @@ inception modules, 6 million parameters
 
 #### ResNet
 
+152 layers, skip connection
+
+## Recurrent Neural Networks
+
+### Recurrent Neurons
+
+At each time step $t$, every neuron receives both the input vector $x_{(t)}$ and the output vector from the previous time step $y_{(t–1)}$.
+
+$$y_{(t)} = \phi( {x_{(t)}}^T \cdot w_x + {y_{(t-1)}}^T \cdot w_y + b )$$
+
+- weight vectors: $w_x$, $w_y$
+- activation function (e.g. ReLU): $\phi()$
+- bias term: $b$
+
+### Memory Cells
+
+A part of a neural network that preserves some state across time steps is called a memory cell (or simply a cell). A cell's state at time step $t$, denoted $h_{(t)}$ (h stands for hidden), is a function of inputs at that time step and its state at the previous time step: $h_{(t)} = f(h_{(t–1)}, x_{(t)})$
+
+![Recurrent Memory Cell](../images/RecurrentCell.png)
+
+- sequence to sequence: predicting time series such as stock prices
+- sequence to vector (ignore output except last one): give a movie review a sentiment score
+- vector to sequence (single input), input a image, output a caption
+- sequence to vector (encoder) + vector to sequence (decoder): translation to another language
+
+Ref: <https://tensorflow.google.cn/guide/keras/rnn>
+
+``` python
+model = keras.Sequential()
+# Add an Embedding layer expecting input vocab of size 1000, and
+# output embedding dimension of size 64.
+model.add(layers.Embedding(input_dim=1000, output_dim=64))
+# Add a LSTM layer with 128 internal units.
+model.add(layers.LSTM(128))
+# Add a Dense layer with 10 units.
+model.add(layers.Dense(10))
+model.summary()
+```
+
+To train an RNN, the trick is to unroll it through time (like we just did) and then simply use regular backpropagation (see Figure 14-5). This strategy is called backpropagation through time (BPTT).
+
+``` python
+# create model
+model = tf.keras.Sequential([
+    tf.keras.layers.Embedding(encoder.vocab_size, 64),       # text index to vector
+    tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(64)), # RNN layer
+    tf.keras.layers.Dense(64, activation='relu'),
+    tf.keras.layers.Dense(1)                                 # output emotion category
+])
+model.compile(loss=tf.keras.losses.BinaryCrossentropy(from_logits=True),
+              optimizer=tf.keras.optimizers.Adam(1e-4),
+              metrics=['accuracy'])
+
+# train
+history = model.fit(train_dataset, epochs=10,
+                    validation_data=test_dataset,
+                    validation_steps=30)
+test_loss, test_acc = model.evaluate(test_dataset)
+
+# predict
+encoded_sample_pred_text = tf.cast(encoded_sample_pred_text, tf.float32)
+predictions = model.predict(tf.expand_dims(encoded_sample_pred_text, 0))
+```
+
+### LSTM
+
 <!---
 TBD below:
 -->
-
-## Recurrent Neural Networks
 
 ## Autoencoders
 
