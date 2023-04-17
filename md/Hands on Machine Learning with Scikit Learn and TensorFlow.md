@@ -52,6 +52,7 @@
     - [Recurrent Neurons](#recurrent-neurons)
     - [Memory Cells](#memory-cells)
     - [LSTM](#lstm)
+    - [Seq2seq example](#seq2seq-example)
   - [Autoencoders](#autoencoders)
   - [Reinforcement Learning](#reinforcement-learning)
 
@@ -1351,6 +1352,35 @@ predictions = model.predict(tf.expand_dims(encoded_sample_pred_text, 0))
 ```
 
 ### LSTM
+
+LSTM Cell's state is split in two vectors: h(t) and c(t) ("c" stands for "cell"). You can think of h(t) as the short-term state and c(t) as the long-term state.
+
+An LSTM cell can learn to recognize an important input (input gate), store it in the long-term state, learn to preserve it for as long as it is needed (forget gate), and learn to extract it whenever it is needed (output gate).
+
+![LSTM Cell](../images/LSTMCell.png)
+
+Peephole connections: the previous long-term state c(t-1) is added as an input to the controllers of the forget gate and the input gate, and the current longterm state c(t) is added as input to the controller of the output gate.
+
+Gated Recurrent Unit (GRU) cell: introduced the Encoder-Decoder network.
+
+- Both state vectors are merged into a single vector h(t).
+- A single gate controller controls both the forget gate and the input gate.
+- There is no output gate; the full state vector is output at every time step.
+
+![GRU Cell](../images/GRUCell.png)
+
+``` python
+# https://tensorflow.google.cn/api_docs/python/tf/keras/layers/GRUCell?hl=en
+rnn = tf.keras.layers.RNN(
+   tf.keras.layers.GRUCell(4),
+   return_sequences=True,
+   return_state=True)
+whole_sequence_output, final_state = rnn(inputs)
+```
+
+### Seq2seq example
+
+Ref: <https://tensorflow.google.cn/addons/tutorials/networks_seq2seq_nmt?hl=en>
 
 <!---
 TBD below:
