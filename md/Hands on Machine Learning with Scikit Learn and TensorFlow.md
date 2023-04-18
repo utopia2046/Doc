@@ -52,7 +52,7 @@
     - [Recurrent Neurons](#recurrent-neurons)
     - [Memory Cells](#memory-cells)
     - [LSTM](#lstm)
-    - [Seq2seq example](#seq2seq-example)
+    - [Seq2seq for machine translation](#seq2seq-for-machine-translation)
   - [Autoencoders](#autoencoders)
   - [Reinforcement Learning](#reinforcement-learning)
 
@@ -990,8 +990,7 @@ keras.layers.ReLU(max_value=None, negative_slope=0.0, threshold=0.0)
 
 #### Batch Normalization
 
-The technique consists of adding an operation in the model just before the activation
-function of each layer, simply zero-centering and normalizing the inputs, then scaling and shifting the result using two new parameters per layer (one for scaling, the other for shifting). In other words, this operation lets the model learn the optimal scale and mean of the inputs for each layer.
+The technique consists of adding an operation in the model just before the activation function of each layer, simply zero-centering and normalizing the inputs, then scaling and shifting the result using two new parameters per layer (one for scaling, the other for shifting). In other words, this operation lets the model learn the optimal scale and mean of the inputs for each layer.
 
 ``` python
 tf.layers.batch_normalization(
@@ -1378,9 +1377,52 @@ rnn = tf.keras.layers.RNN(
 whole_sequence_output, final_state = rnn(inputs)
 ```
 
-### Seq2seq example
+Ref:
 
-Ref: <https://tensorflow.google.cn/addons/tutorials/networks_seq2seq_nmt?hl=en>
+- <https://zhuanlan.zhihu.com/p/45649187>
+- <https://zhuanlan.zhihu.com/p/34203833>
+- <https://zhuanlan.zhihu.com/p/123211148>
+
+### Seq2seq for machine translation
+
+Ref:
+
+- <https://tensorflow.google.cn/addons/tutorials/networks_seq2seq_nmt?hl=en>
+- <https://zhuanlan.zhihu.com/p/135970560>
+- <https://zhuanlan.zhihu.com/p/346191907>
+
+Natural languages to vectors:
+
+1. tokenization -> build dictionary
+2. word 2 vec
+3. one hot encoding
+
+- encoder
+  - input layer
+  - encoder LSTM
+- decoder
+  - input layer
+  - decoder LSTM
+  - dense
+
+![Seq2Seq Model in Keras](../images/seq2seq.png)
+
+Bi-LSTM instead of LSTM (for encoder only)
+
+- Encoder's final states ($h_t$ and $c_t$) have all the information of the input English sentence (source).
+- If the sentence is long, the final states have forgotten early inputs.
+- Bi-LSTM (left-to-right and right-to=left) has longer memory.
+- Use Bi-LSTM in the encoder; use unidirectional LSTM in the decoder.
+
+Attention Machanism
+
+- Attention tremendously improves Seq2Seq model.
+- With attention, Seq2Seq model does not forget source input.
+- With attention, the decoder knows where to focus.
+- Downside: much more computation.
+- Attention weights shows the similarity between all states of decoder and all states of encoder
+
+![Attention Weights Visualization](../images/AttentionWeights.jpg)
 
 <!---
 TBD below:
