@@ -1424,10 +1424,35 @@ Attention Machanism
 
 ![Attention Weights Visualization](../images/AttentionWeights.jpg)
 
+## Autoencoders
+
+- learning efficient representations of the input data, called **codings**, without any supervision
+- useful for dimensionality reduction
+- autoencoders act as powerful feature detectors, can be used for unsupervised pretraining of deep neural networks
+- capable of randomly generating new data that looks very similar to the training data, called a **generative model**
+- input and output layer have same size, hidden layer smaller size to learn most important information
+
+Stacked Autoencoders (SAE): multiple hidden layers, typically symmetrical
+
+Layer|Units
+-|-
+Outputs Layer|784 units
+Hidden Layer 3|300 units
+Hidden Layer 2|150 units
+Hidden Layer 1|300 units
+Inputs Layer|784 units
+
+Unsupervised pretraining using stacked autoencoders
+
+1. Train autoencoder using all data (unsupervised, autoencoder layers learns features from unlabeled data)
+2. Freeze pre-trained lower layers (with learned features), train classifer on the labeled data
+
+Variational Autoencoders (VAE): probabilistic autoencoders, generative autoencoders that generate new instances similar with training set sample (similar to RBMs)
+
+Ref: <https://zhuanlan.zhihu.com/p/133207206>
+
+## Reinforcement Learning
+
 <!---
 TBD below:
 -->
-
-## Autoencoders
-
-## Reinforcement Learning
