@@ -1453,6 +1453,49 @@ Ref: <https://zhuanlan.zhihu.com/p/133207206>
 
 ## Reinforcement Learning
 
+In Reinforcement Learning, a software *agent* makes *observations* and takes *actions* within an environment, and in return it receives *rewards*. Its objective is to learn to act in a way that will maximize its expected long-term rewards.
+
+The algorithm used by the software agent to determine its actions is called its *policy*.
+
+Policy search method:
+
+- Genetic algorithms
+- Gradient ascent
+
+- [OpenAI Gym](https://openai.com/research/openai-gym-beta)
+- [Gym Source Code](https://github.com/openai/gym)
+- [Gymnasiam](https://gymnasium.farama.org/)
+
+``` console
+pip install --upgrade gym
+pip install gym[classic_control]
+pip install --upgrade pygame
+pip install gymnasium
+pip install gymnasium[all]
+```
+
+``` python
+import gym
+# or import gymnasium as gym
+env = gym.make('CartPole-v1', render_mode='rgb_array') # human
+observation, info = env.reset(seed=42)
+
+for _ in range(10):
+    action = env.action_space.sample() # random action
+    observation, reward, terminated, truncated, info = env.step(action)
+    print(observation, reward, terminated, truncated, info)
+    env.render()
+    if terminated or truncated:
+        observation, info = env.reset()
+env.close()
+
+# ask env possible actions
+env.action_space
+# Discrete(2), possible action 0 or 1
+action = 1    # accelerate right
+observation, reward, terminated, truncated, info = env.step(action)
+```
+
 <!---
 TBD below:
 -->
