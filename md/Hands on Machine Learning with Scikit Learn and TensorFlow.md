@@ -55,6 +55,11 @@
     - [Seq2seq for machine translation](#seq2seq-for-machine-translation)
   - [Autoencoders](#autoencoders)
   - [Reinforcement Learning](#reinforcement-learning)
+    - [Neural Network Policies](#neural-network-policies)
+    - [Markov Decision Processes](#markov-decision-processes)
+    - [Temporal Difference Learning and Q-Learning](#temporal-difference-learning-and-q-learning)
+    - [DQN (Deep Q-Network) algorithm](#dqn-deep-q-network-algorithm)
+    - [Actor Critic Algotithm](#actor-critic-algotithm)
 
 ## Fundamental
 
@@ -1464,6 +1469,7 @@ Policy search method:
 
 - [OpenAI Gym](https://openai.com/research/openai-gym-beta)
 - [Gym Source Code](https://github.com/openai/gym)
+- [Gym Docs](https://www.gymlibrary.dev/)
 - [Gymnasiam](https://gymnasium.farama.org/)
 
 ``` console
@@ -1477,7 +1483,7 @@ pip install gymnasium[all]
 ``` python
 import gym
 # or import gymnasium as gym
-env = gym.make('CartPole-v1', render_mode='rgb_array') # human
+env = gym.make('CartPole-v1', render_mode='rgb_array') # 'human'
 observation, info = env.reset(seed=42)
 
 for _ in range(10):
@@ -1496,6 +1502,64 @@ action = 1    # accelerate right
 observation, reward, terminated, truncated, info = env.step(action)
 ```
 
-<!---
-TBD below:
--->
+### Neural Network Policies
+
+Picking a random action based on the probability given by the neural network, rather than just picking the action with the highest score. This approach lets the agent find the right balance between *exploring* new actions and *exploiting* the actions that are known to work well.
+
+Credit Assignment: evaluate an action based on the sum of all the rewards that come after it, usually applying a discount rate `r` at each step (`r` near 0, short term rewards count, near 1, long term rewards is similar as short term rewards. Typical discount rates are 0.95 or 0.99).
+
+Policy Gradients: optimize the parameters of a policy by following the gradients toward higher rewards.
+
+> Williams (1992). Simple statistical gradient-following algorithms for connectionist reinforcement learning: introduces REINFORCE algorithm
+
+![REINFORCE Algorithm](../images/REINFORCE%20Algorithm.png)
+
+### Markov Decision Processes
+
+**Markov chains**: stochastic processes with no memory. It has a fixed number of *states*, and it randomly evolves from one state to another at each step. The probability for it to evolve from a state $s$ to a state $s'$ is fixed, and it depends only on the pair $(s,s′)$, not on past states.
+
+**Marcov decision process**: states similar with Marcov chain, at each step, an agent can choose one of several possible actions, and the transition probabilities depend on the chosen action. Some state transitions return some reward (positive or negative), and the agent’s goal is to find a policy that will maximize rewards over time.
+
+### Temporal Difference Learning and Q-Learning
+
+**Temporal Difference Learning**: the agent uses an exploration policy—for example, a purely random policy—to explore the MDP, and as it progresses the TD Learning algorithm updates the estimates of the state values based on the transitions and rewards that are actually observed.
+
+$$V_{k+1}(s) \gets (1-\alpha)V_k(s) + \alpha(r + \gamma \cdot V_k(s'))$$
+
+- $\alpha$: learning rate, for example 0.01
+- $\gamma$: discount rate
+
+Q-Learning:
+
+$$Q_{k+1}(s,a) \gets (1-\alpha)Q_k(s,a) + \alpha(r + \gamma \cdot max_{a'}Q_k(s',a'))$$
+
+For each state-action pair $(s, a)$, this algorithm keeps track of a running average of the rewards $r$ the agent gets upon leaving the state $s$ with action $a$, plus the rewards it expects to get later. Since the target policy would act optimally, we take the maximum of the Q-Value estimates for the next state.
+
+**ε-greedy policy**: at each step it acts randomly with probability ε, or greedily (choosing the action with the highest QValue) with probability 1-ε. The advantage of the ε-greedy policy (compared to a completely random policy) is that it will spend more and more time exploring the interesting parts of the environment, as the Q-Value estimates get better and better, while still spending some time visiting unknown regions of the MDP.
+
+### DQN (Deep Q-Network) algorithm
+
+Q-function (a.k.a the state-action value function): $Q^{\pi}(s, a)$,
+measures the expected return or discounted sum of rewards obtained from state $s$
+by taking action $a$ first and following policy $\pi$ thereafter.
+
+### Actor Critic Algotithm
+
+- Actor: interact with environment, take *action*
+- Critic: evaluate *reward*
+
+1. Run the agent on the environment to collect training data per episode.
+2. Compute expected return at each time step.
+3. Compute the loss for the combined Actor-Critic model.
+4. Compute gradients and update network parameters.
+5. Repeat 1-4 until either success criterion or max episodes has been reached.
+
+Ref:
+
+- <https://blog.csdn.net/november_chopin/article/details/108033013>
+- <https://blog.csdn.net/november_chopin/article/details/108170500>
+- [TF2RL](https://github.com/keiohta/tf2rl)
+- <https://zhuanlan.zhihu.com/p/384340218>
+- <https://tensorflow.google.cn/agents/tutorials/0_intro_rl>
+- <https://tensorflow.google.cn/tutorials/reinforcement_learning/actor_critic>
+- <https://github.com/tensorflow/agents>
