@@ -63,6 +63,64 @@ Game Surface: zero based (X, Y) coordinate system
 - pygame.draw.aaline: draw a straight antialiased line
 - pygame.draw.aalines
 
+``` python
+import pygame, sys
+from pygame.locals import *
+
+# Init
+pygame.init()
+FPS = 30 # frames per second setting
+fpsClock = pygame.time.Clock()
+# set up the window
+DISPLAYSURF = pygame.display.set_mode((400, 300), 0, 32)
+pygame.display.set_caption('Animation')
+
+while True: # the main game loop
+    for event in pygame.event.get():
+        # handling events
+        if event.type == QUIT:
+            pygame.quit()
+            sys.exit()
+    # update states and render
+    pygame.display.update()
+    fpsClock.tick(FPS)
+```
+
+### Rendering images
+
+- Load image: `pygame.image.load(path)`
+- Render image: `DISPLAYSURF.blit(img, (x, y))`
+
+### Draw texts
+
+<https://www.pygame.org/docs/ref/font.html>
+
+- Get system fonts: `pygame.font.get_fonts()`
+- Create font object using system font: `pygame.sysfont.SysFont(name, size, bold=False, italic=False, constructor=None)`
+- Create font object with file: `pygame.font.Font(path, size)`
+- Create text rendering surface: `fontObj.render`
+- Specify text location: `textSurfaceObj.get_rect()`
+- Render text surface: `DISPLAYSURF.blit(textSurfaceObj, textRectObj)`
+
+``` python
+fontObj = pygame.font.Font(fontPath, 32)
+textSurfaceObj = fontObj.render('Hellow World!', True, GREEN, BLUE)
+textRectObj = textSurfaceObj.get_rect()
+textRectObj.center = (200, 150)
+DISPLAYSURF.blit(textSurfaceObj, textRectObj)
+```
+
+### Play sound
+
+``` python
+soundObj = pygame.mixer.Sound('beeps.wav')
+soundObj.play()
+# loop play background music
+pygame.mixer.music.load(path)
+pygame.mixer.music.play(-1, 0.0)
+pygame.mixer.music.stop()
+```
+
 <!--
 TODO:
 unfinished
