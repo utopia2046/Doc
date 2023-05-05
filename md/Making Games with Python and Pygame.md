@@ -121,12 +121,12 @@ pygame.mixer.music.play(-1, 0.0)
 pygame.mixer.music.stop()
 ```
 
+## Memory Puzzle
+
 <!--
 TODO:
 unfinished
 -->
-
-## Memory Puzzle
 
 ## Slide Puzzle
 
