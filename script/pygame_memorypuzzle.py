@@ -1,19 +1,17 @@
 # Memory Puzzle, by Al Sweigart al@inventwithpython.com
 # (Pygame) A simple memory matching game.
 
-
-
 import random, pygame, sys
 from pygame.locals import *
 
 FPS = 30 # frames per second, the general speed of the program
-WINDOWWIDTH = 640 # size of window's width in pixels
-WINDOWHEIGHT = 480 # size of windows' height in pixels
+WINDOWWIDTH = 800 #640 # size of window's width in pixels
+WINDOWHEIGHT = 600 #480 # size of windows' height in pixels
 REVEALSPEED = 8 # speed boxes' sliding reveals and covers
-BOXSIZE = 40 # size of box height & width in pixels
-GAPSIZE = 10 # size of gap between boxes in pixels
-BOARDWIDTH = 10 # number of columns of icons
-BOARDHEIGHT = 7 # number of rows of icons
+BOXSIZE = 80 #40 # size of box height & width in pixels
+GAPSIZE = 20 #10 # size of gap between boxes in pixels
+BOARDWIDTH = 6 #10 # number of columns of icons
+BOARDHEIGHT = 4 #7 # number of rows of icons
 assert (BOARDWIDTH * BOARDHEIGHT) % 2 == 0, 'Board needs to have an even number of boxes for pairs of matches.'
 XMARGIN = int((WINDOWWIDTH - (BOARDWIDTH * (BOXSIZE + GAPSIZE))) / 2)
 YMARGIN = int((WINDOWHEIGHT - (BOARDHEIGHT * (BOXSIZE + GAPSIZE))) / 2)
@@ -41,12 +39,14 @@ DIAMOND = 'diamond'
 LINES = 'lines'
 OVAL = 'oval'
 
-ALLCOLORS = (RED, GREEN, BLUE, YELLOW, ORANGE, PURPLE, CYAN)
-ALLSHAPES = (DONUT, SQUARE, DIAMOND, LINES, OVAL)
+# ALLCOLORS = (RED, GREEN, BLUE, YELLOW, ORANGE, PURPLE, CYAN)
+# ALLSHAPES = (DONUT, SQUARE, DIAMOND, LINES, OVAL)
+ALLCOLORS = (RED, GREEN, BLUE, YELLOW)
+ALLSHAPES = (DONUT, SQUARE, DIAMOND)
 assert len(ALLCOLORS) * len(ALLSHAPES) * 2 >= BOARDWIDTH * BOARDHEIGHT, "Board is too big for the number of shapes/colors defined."
 
 def main():
-    global FPSCLOCK, DISPLAYSURF
+    global FPSCLOCK, DISPLAYSURF # set FPSCLOCK and DISPLAYSURF as global since they're used by most functions and can't be changed locally
     pygame.init()
     FPSCLOCK = pygame.time.Clock()
     DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
@@ -55,8 +55,8 @@ def main():
     mousey = 0 # used to store y coordinate of mouse event
     pygame.display.set_caption('Memory Game')
 
-    mainBoard = getRandomizedBoard()
-    revealedBoxes = generateRevealedBoxesData(False)
+    mainBoard = getRandomizedBoard() # mainBoard is a 2-D array saving (color, shape) tuples for each box
+    revealedBoxes = generateRevealedBoxesData(False) # store which boxes are revealed
 
     firstSelection = None # stores the (x, y) of the first box clicked.
 
@@ -67,7 +67,7 @@ def main():
         mouseClicked = False
 
         DISPLAYSURF.fill(BGCOLOR) # drawing the window
-        drawBoard(mainBoard, revealedBoxes)
+        drawBoard(mainBoard, revealedBoxes) # draw board in memory, until pygame.display.update() is called
 
         for event in pygame.event.get(): # event handling loop
             if event.type == QUIT or (event.type == KEYUP and event.key == K_ESCAPE):
@@ -190,7 +190,12 @@ def drawIcon(shape, color, boxx, boxy):
     elif shape == SQUARE:
         pygame.draw.rect(DISPLAYSURF, color, (left + quarter, top + quarter, BOXSIZE - half, BOXSIZE - half))
     elif shape == DIAMOND:
-        pygame.draw.polygon(DISPLAYSURF, color, ((left + half, top), (left + BOXSIZE - 1, top + half), (left + half, top + BOXSIZE - 1), (left, top + half)))
+        #pygame.draw.polygon(DISPLAYSURF, color, ((left + half, top), (left + BOXSIZE - 1, top + half), (left + half, top + BOXSIZE - 1), (left, top + half)))
+        pygame.draw.polygon(DISPLAYSURF, color, (
+            (left + half, top + quarter),
+            (left + 3 * quarter, top + half),
+            (left + half, top + 3 * quarter),
+            (left + quarter, top + half)))
     elif shape == LINES:
         for i in range(0, BOXSIZE, 4):
             pygame.draw.line(DISPLAYSURF, color, (left, top + i), (left + i, top))

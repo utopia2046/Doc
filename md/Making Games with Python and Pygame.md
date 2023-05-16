@@ -123,6 +123,63 @@ pygame.mixer.music.stop()
 
 ## Memory Puzzle
 
+``` python
+def main():
+    global FPSCLOCK, DISPLAYSURF # set FPSCLOCK and DISPLAYSURF as global since they're used by most functions and can't be changed locally
+    pygame.init()
+    FPSCLOCK = pygame.time.Clock()
+    DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+    ...
+    mainBoard = getRandomizedBoard() # mainBoard is a 2-D array saving (color, shape) tuples for each box
+    revealedBoxes = generateRevealedBoxesData(False) # store which boxes are revealed
+    firstSelection = None # stores the (x, y) of the first box clicked.
+    ...
+    while True: # main game loop, each iteration is a clock tick
+        mouseClicked = False
+        DISPLAYSURF.fill(BGCOLOR) # drawing the window
+        drawBoard(mainBoard, revealedBoxes)
+        for event in pygame.event.get(): # event handling loop
+            if event.type == QUIT or (event.type == KEYUP and event.key == K_ESCAPE):
+                pygame.quit()
+                sys.exit()
+            elif event.type == MOUSEMOTION: # mouse move
+                mousex, mousey = event.pos  # save mousex, mousey if mouse move or clicked
+            elif event.type == MOUSEBUTTONUP: # mouse clicked
+                mousex, mousey = event.pos
+                mouseClicked = True
+        boxx, boxy = getBoxAtPixel(mousex, mousey) # get box index from mouse x, y
+        if boxx != None and boxy != None:
+            # The mouse is currently over a box.
+            if not revealedBoxes[boxx][boxy]:
+                drawHighlightBox(boxx, boxy) # draw blue highlight box to notify user that current box is clickable
+            if not revealedBoxes[boxx][boxy] and mouseClicked:
+                revealBoxesAnimation(mainBoard, [(boxx, boxy)])
+                revealedBoxes[boxx][boxy] = True # set the box as "revealed"
+                if firstSelection == None: # the current box was the first box clicked
+                    firstSelection = (boxx, boxy)
+                else: # the current box was the second box clicked
+                    # Check if there is a match between the two icons.
+                    icon1shape, icon1color = getShapeAndColor(mainBoard, firstSelection[0], firstSelection[1])
+                    icon2shape, icon2color = getShapeAndColor(mainBoard, boxx, boxy)
+
+                    if icon1shape != icon2shape or icon1color != icon2color:
+                        # Icons don't match. Re-cover up both selections.
+                        coverBoxesAnimation(mainBoard, [(firstSelection[0], firstSelection[1]), (boxx, boxy)])
+                        revealedBoxes[firstSelection[0]][firstSelection[1]] = False
+                        revealedBoxes[boxx][boxy] = False
+                    elif hasWon(revealedBoxes): # check if all pairs found
+                        gameWonAnimation(mainBoard)
+                        # Restart a new game
+                        mainBoard = getRandomizedBoard()
+                        revealedBoxes = generateRevealedBoxesData(False)
+                        ...
+                    firstSelection = None # reset firstSelection variable
+        # Redraw the screen and wait a clock tick.
+        pygame.display.update()
+        FPSCLOCK.tick(FPS)
+
+```
+
 <!--
 TODO:
 unfinished
