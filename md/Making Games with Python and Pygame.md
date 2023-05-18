@@ -266,12 +266,100 @@ def slideAnimation(board, direction, message, animationSpeed):
 
 ## Simulate
 
+``` python
+def main():
+    # Initialize some variables for a new game
+    pattern = [] # stores the pattern of colors
+    currentStep = 0 # the color the player must push next
+    lastClickTime = 0 # timestamp of the player's last button push
+    score = 0
+    # when False, the pattern is playing. when True, waiting for the player to click a colored button:
+    waitingForInput = False
+
+    while True: # main game loop
+        clickedButton = None # button that was clicked (set to YELLOW, RED, GREEN, or BLUE)
+        ...
+        checkForQuit()
+        for event in pygame.event.get(): # event handling loop
+            if event.type == MOUSEBUTTONUP:
+                mousex, mousey = event.pos
+                clickedButton = getButtonClicked(mousex, mousey)
+
+        if not waitingForInput:
+            # play the pattern
+            pygame.display.update()
+            pygame.time.wait(1000)
+            pattern.append(random.choice((YELLOW, BLUE, RED, GREEN)))
+            for button in pattern:
+                flashButtonAnimation(button)
+                pygame.time.wait(FLASHDELAY)
+            waitingForInput = True
+        else:
+            # wait for the player to enter buttons
+            if clickedButton and clickedButton == pattern[currentStep]:
+                # pushed the correct button
+                flashButtonAnimation(clickedButton)
+                currentStep += 1
+                lastClickTime = time.time()
+
+                if currentStep == len(pattern):
+                    # pushed the last button in the pattern
+                    changeBackgroundAnimation()
+                    score += 1
+                    waitingForInput = False
+                    currentStep = 0 # reset back to first step
+
+            elif (clickedButton and clickedButton != pattern[currentStep]) or (currentStep != 0 and time.time() - TIMEOUT > lastClickTime):
+                # pushed the incorrect button, or has timed out
+                gameOverAnimation()
+                # reset the variables for a new game:
+                pattern = []
+                currentStep = 0
+                waitingForInput = False
+                score = 0
+                pygame.time.wait(1000)
+                changeBackgroundAnimation()
+
+        pygame.display.update()
+        FPSCLOCK.tick(FPS)
+```
+
+### Zen of Python
+
+Try `import this` in IPython, will see the following code:
+
+The Zen of Python, by Tim Peters
+
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+Flat is better than nested.
+Sparse is better than dense.
+Readability counts.
+Special cases aren't special enough to break the rules.
+Although practicality beats purity.
+Errors should never pass silently.
+Unless explicitly silenced.
+In the face of ambiguity, refuse the temptation to guess.
+There should be one-- and preferably only one --obvious way to do it.
+Although that way may not be obvious at first unless you're [Dutch](#dutch).
+Now is better than never.
+Although never is often better than *right* now.
+If the implementation is hard to explain, it's a bad idea.
+If the implementation is easy to explain, it may be a good idea.
+Namespaces are one honking great idea -- let's do more of those!
+
+#### Dutch
+
+The inventor of Python is a Dutch programmer named Guido van Rossum. See <https://ell.stackexchange.com/questions/85517/zen-of-python-meaning-of-unless-youre-dutch>
+
+## Wormy
+
 <!--
 TODO:
 unfinished
 -->
-
-## Wormy
 
 ## Tetromino
 
