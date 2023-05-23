@@ -356,12 +356,221 @@ The inventor of Python is a Dutch programmer named Guido van Rossum. See <https:
 
 ## Wormy
 
+``` python
+def main():
+    ...
+    showStartScreen()
+    while True:
+        runGame()
+        showGameOverScreen()
+
+def runGame():
+    # Set a random start point.
+    startx = random.randint(5, CELLWIDTH - 6)
+    starty = random.randint(5, CELLHEIGHT - 6)
+    wormCoords = [{'x': startx,     'y': starty},
+                  {'x': startx - 1, 'y': starty},
+                  {'x': startx - 2, 'y': starty}]
+    direction = RIGHT
+
+    # Start the apple in a random place.
+    apple = getRandomLocation()
+
+    while True: # main game loop
+        for event in pygame.event.get(): # event handling loop
+            if event.type == QUIT:
+                terminate()
+            elif event.type == KEYDOWN:
+                if (event.key == K_LEFT or event.key == K_a) and direction != RIGHT:
+                    direction = LEFT
+                elif (event.key == K_RIGHT or event.key == K_d) and direction != LEFT:
+                    direction = RIGHT
+                elif (event.key == K_UP or event.key == K_w) and direction != DOWN:
+                    direction = UP
+                elif (event.key == K_DOWN or event.key == K_s) and direction != UP:
+                    direction = DOWN
+                elif event.key == K_ESCAPE:
+                    terminate()
+
+        # check if the worm has hit itself or the edge
+        if wormCoords[HEAD]['x'] == -1 or wormCoords[HEAD]['x'] == CELLWIDTH or wormCoords[HEAD]['y'] == -1 or wormCoords[HEAD]['y'] == CELLHEIGHT:
+            return # game over
+        for wormBody in wormCoords[1:]:
+            if wormBody['x'] == wormCoords[HEAD]['x'] and wormBody['y'] == wormCoords[HEAD]['y']:
+                return # game over
+
+        # check if worm has eaten an apply
+        if wormCoords[HEAD]['x'] == apple['x'] and wormCoords[HEAD]['y'] == apple['y']:
+            # don't remove worm's tail segment
+            apple = getRandomLocation() # set a new apple somewhere
+        else:
+            del wormCoords[-1] # remove worm's tail segment
+
+        # move the worm by adding a segment in the direction it is moving
+        if direction == UP:
+            newHead = {'x': wormCoords[HEAD]['x'], 'y': wormCoords[HEAD]['y'] - 1}
+        elif direction == DOWN:
+            newHead = {'x': wormCoords[HEAD]['x'], 'y': wormCoords[HEAD]['y'] + 1}
+        elif direction == LEFT:
+            newHead = {'x': wormCoords[HEAD]['x'] - 1, 'y': wormCoords[HEAD]['y']}
+        elif direction == RIGHT:
+            newHead = {'x': wormCoords[HEAD]['x'] + 1, 'y': wormCoords[HEAD]['y']}
+        wormCoords.insert(0, newHead)
+        DISPLAYSURF.fill(BGCOLOR)
+        drawGrid()
+        drawWorm(wormCoords)
+        drawApple(apple)
+        drawScore(len(wormCoords) - 3)
+        pygame.display.update()
+        FPSCLOCK.tick(FPS)
+```
+
+PyGame Key Constants
+<https://www.pygame.org/docs/ref/key.html#key-constants-label>
+
+Constant      |ASCII   |Description
+--------------|--------|-----------
+K_BACKSPACE   |\b      |backspace
+K_TAB         |\t      |tab
+K_CLEAR       |        |clear
+K_RETURN      |\r      |return
+K_PAUSE       |        |pause
+K_ESCAPE      |^[      |escape
+K_SPACE       |        |space
+K_EXCLAIM     |!       |exclaim
+K_QUOTEDBL    |"       |quotedbl
+K_HASH        |#       |hash
+K_DOLLAR      |$       |dollar
+K_AMPERSAND   |&       |ampersand
+K_QUOTE       |        |quote
+K_LEFTPAREN   |(       |left parenthesis
+K_RIGHTPAREN  |)       |right parenthesis
+K_ASTERISK    |*       |asterisk
+K_PLUS        |+       |plus sign
+K_COMMA       |,       |comma
+K_MINUS       |-       |minus sign
+K_PERIOD      |.       |period
+K_SLASH       |/       |forward slash
+K_0           |0       |0
+K_1           |1       |1
+K_2           |2       |2
+K_3           |3       |3
+K_4           |4       |4
+K_5           |5       |5
+K_6           |6       |6
+K_7           |7       |7
+K_8           |8       |8
+K_9           |9       |9
+K_COLON       |:       |colon
+K_SEMICOLON   |;       |semicolon
+K_LESS        |<       |less-than sign
+K_EQUALS      |=       |equals sign
+K_GREATER     |>       |greater-than sign
+K_QUESTION    |?       |question mark
+K_AT          |@       |at
+K_LEFTBRACKET |[       |left bracket
+K_BACKSLASH   |\       |backslash
+K_RIGHTBRACKET| ]      |right bracket
+K_CARET       |^       |caret
+K_UNDERSCORE  |_       |underscore
+K_BACKQUOTE   |`       |grave
+K_a           |a       |a
+K_b           |b       |b
+K_c           |c       |c
+K_d           |d       |d
+K_e           |e       |e
+K_f           |f       |f
+K_g           |g       |g
+K_h           |h       |h
+K_i           |i       |i
+K_j           |j       |j
+K_k           |k       |k
+K_l           |l       |l
+K_m           |m       |m
+K_n           |n       |n
+K_o           |o       |o
+K_p           |p       |p
+K_q           |q       |q
+K_r           |r       |r
+K_s           |s       |s
+K_t           |t       |t
+K_u           |u       |u
+K_v           |v       |v
+K_w           |w       |w
+K_x           |x       |x
+K_y           |y       |y
+K_z           |z       |z
+K_DELETE      |        |delete
+K_KP0         |        |keypad 0
+K_KP1         |        |keypad 1
+K_KP2         |        |keypad 2
+K_KP3         |        |keypad 3
+K_KP4         |        |keypad 4
+K_KP5         |        |keypad 5
+K_KP6         |        |keypad 6
+K_KP7         |        |keypad 7
+K_KP8         |        |keypad 8
+K_KP9         |        |keypad 9
+K_KP_PERIOD   |.       |keypad period
+K_KP_DIVIDE   |/       |keypad divide
+K_KP_MULTIPLY |*       |keypad multiply
+K_KP_MINUS    |-       |keypad minus
+K_KP_PLUS     |+       |keypad plus
+K_KP_ENTER    |\r      |keypad enter
+K_KP_EQUALS   |=       |keypad equals
+K_UP          |        |up arrow
+K_DOWN        |        |down arrow
+K_RIGHT       |        |right arrow
+K_LEFT        |        |left arrow
+K_INSERT      |        |insert
+K_HOME        |        |home
+K_END         |        |end
+K_PAGEUP      |        |page up
+K_PAGEDOWN    |        |page down
+K_F1          |        |F1
+K_F2          |        |F2
+K_F3          |        |F3
+K_F4          |        |F4
+K_F5          |        |F5
+K_F6          |        |F6
+K_F7          |        |F7
+K_F8          |        |F8
+K_F9          |        |F9
+K_F10         |        |F10
+K_F11         |        |F11
+K_F12         |        |F12
+K_F13         |        |F13
+K_F14         |        |F14
+K_F15         |        |F15
+K_NUMLOCK     |        |numlock
+K_CAPSLOCK    |        |capslock
+K_SCROLLOCK   |        |scrollock
+K_RSHIFT      |        |right shift
+K_LSHIFT      |        |left shift
+K_RCTRL       |        |right control
+K_LCTRL       |        |left control
+K_RALT        |        |right alt
+K_LALT        |        |left alt
+K_RMETA       |        |right meta
+K_LMETA       |        |left meta
+K_LSUPER      |        |left Windows key
+K_RSUPER      |        |right Windows key
+K_MODE        |        |mode shift
+K_HELP        |        |help
+K_PRINT       |        |print screen
+K_SYSREQ      |        |sysrq
+K_BREAK       |        |break
+K_MENU        |        |menu
+K_POWER       |        |power
+K_EURO        |        |Euro
+K_AC_BACK     |        |Android back button
+
+## Tetromino
+
 <!--
 TODO:
 unfinished
 -->
-
-## Tetromino
 
 ## Squirrel Eat Squirrel
 
