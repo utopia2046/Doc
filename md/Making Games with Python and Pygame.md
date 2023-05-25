@@ -567,12 +567,130 @@ K_AC_BACK     |        |Android back button
 
 ## Tetromino
 
+``` python
+# Board is a 2D array with char '.' as blank and 'o' as block
+BOARDWIDTH = 10
+BOARDHEIGHT = 20
+BLANK = '.'
+# Each brick is defined in templates (3D char array for rotation)
+S_SHAPE_TEMPLATE = [['.....',
+                     '.....',
+                     '..OO.',
+                     '.OO..',
+                     '.....'],
+                    ['.....',
+                     '..O..',
+                     '..OO.',
+                     '...O.',
+                     '.....']]
+# Each piece is an object with shape, rotation, x, y, and color
+def getNewPiece():
+    # return a random new piece in a random rotation and color
+    shape = random.choice(list(PIECES.keys()))
+    newPiece = {'shape': shape,
+                'rotation': random.randint(0, len(PIECES[shape]) - 1),
+                'x': int(BOARDWIDTH / 2) - int(TEMPLATEWIDTH / 2),
+                'y': -2, # start it above the board (i.e. less than 0)
+                'color': random.randint(0, len(COLORS)-1)}
+    return newPiece
+
+# colliding detection for each block in piece
+def isValidPosition(board, piece, adjX=0, adjY=0):
+    # Return True if the piece is within the board and not colliding
+    for x in range(TEMPLATEWIDTH):
+        for y in range(TEMPLATEHEIGHT):
+            isAboveBoard = y + piece['y'] + adjY < 0
+            if isAboveBoard or PIECES[piece['shape']][piece['rotation']][y][x] == BLANK:
+                continue
+            if not isOnBoard(x + piece['x'] + adjX, y + piece['y'] + adjY):
+                return False
+            if board[x + piece['x'] + adjX][y + piece['y'] + adjY] != BLANK:
+                return False
+    return True
+
+def isCompleteLine(board, y):
+    # Return True if the line filled with boxes with no gaps.
+    for x in range(BOARDWIDTH):
+        if board[x][y] == BLANK:
+            return False
+    return True
+
+def runGame():
+    # setup variables for the start of the game
+    board = getBlankBoard()
+    fallingPiece = getNewPiece()
+    nextPiece = getNewPiece()
+    ...
+
+    while True: # game loop
+        if fallingPiece == None:
+            # No falling piece in play, so start a new piece at the top
+            fallingPiece = nextPiece
+            nextPiece = getNewPiece()
+            lastFallTime = time.time() # reset lastFallTime
+
+            if not isValidPosition(board, fallingPiece):
+                return # can't fit a new piece on the board, so game over
+
+        for event in pygame.event.get(): # event handling loop
+            ...
+            elif event.type == KEYDOWN:
+                # moving the piece sideways
+                if (event.key == K_LEFT or event.key == K_a) and isValidPosition(board, fallingPiece, adjX=-1):
+                    fallingPiece['x'] -= 1
+                    movingLeft = True
+                    movingRight = False
+                    lastMoveSidewaysTime = time.time()
+                elif (event.key == K_RIGHT or event.key == K_d) and isValidPosition(board, fallingPiece, adjX=1):
+                    fallingPiece['x'] += 1
+                    movingRight = True
+                    movingLeft = False
+                    lastMoveSidewaysTime = time.time()
+                # rotating the piece (if there is room to rotate)
+                elif (event.key == K_UP or event.key == K_w):
+                    fallingPiece['rotation'] = (fallingPiece['rotation'] + 1) % len(PIECES[fallingPiece['shape']])
+                    if not isValidPosition(board, fallingPiece):
+                        fallingPiece['rotation'] = (fallingPiece['rotation'] - 1) % len(PIECES[fallingPiece['shape']])
+
+        # handle moving the piece because of user input
+        if (movingLeft or movingRight) and time.time() - lastMoveSidewaysTime > MOVESIDEWAYSFREQ:
+            if movingLeft and isValidPosition(board, fallingPiece, adjX=-1):
+                fallingPiece['x'] -= 1
+            elif movingRight and isValidPosition(board, fallingPiece, adjX=1):
+                fallingPiece['x'] += 1
+            lastMoveSidewaysTime = time.time()
+
+        # let the piece fall if it is time to fall
+        if time.time() - lastFallTime > fallFreq:
+            # see if the piece has landed
+            if not isValidPosition(board, fallingPiece, adjY=1):
+                # falling piece has landed, set it on the board
+                addToBoard(board, fallingPiece)
+                score += removeCompleteLines(board)
+                level, fallFreq = calculateLevelAndFallFreq(score)
+                fallingPiece = None
+            else:
+                # piece did not land, just move the piece down
+                fallingPiece['y'] += 1
+                lastFallTime = time.time()
+
+        # drawing everything on the screen
+        drawBoard(board)
+        drawStatus(score, level)
+        drawNextPiece(nextPiece)
+        if fallingPiece != None:
+            drawPiece(fallingPiece)
+
+        pygame.display.update()
+        FPSCLOCK.tick(FPS)
+```
+
+## Squirrel Eat Squirrel
+
 <!--
 TODO:
 unfinished
 -->
-
-## Squirrel Eat Squirrel
 
 ## Star Pusher
 
