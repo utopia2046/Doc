@@ -687,11 +687,13 @@ def runGame():
 
 ## Squirrel Eat Squirrel
 
+Nothing new, changed to germ eat germ.
+
+## Star Pusher
+
 <!--
 TODO:
 unfinished
 -->
-
-## Star Pusher
 
 ## Four Extra Games
