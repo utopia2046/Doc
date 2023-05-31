@@ -691,9 +691,4 @@ Nothing new, changed to germ eat germ.
 
 ## Star Pusher
 
-<!--
-TODO:
-unfinished
--->
-
 ## Four Extra Games
