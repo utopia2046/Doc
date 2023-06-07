@@ -1,0 +1,59 @@
+# Visual Studio Code 指南阅读笔记
+
+Visual Studio Code 是基于 Electron 开发框架开发的。Electron 是一个使用 JavaScript、HTML 和 CSS 构建桌面应用程序的框架。通过嵌入 Chromium 和 Node.js，允许开发者使用 JavaScript 创建跨平台应用（包括 Windows，macOS 和 Linux）。
+
+[Electron Documents](https://www.electronjs.org/docs/latest/)
+
+核心组件
+
+- Electron: 跨平台
+- Monaco Editor: Web-based editor
+- TypeScript: strong type for JavaScript
+- Language Server Protocol (LSP) + Debug Adapter Protocol (DAP): 解耦前端界面与后端语言功能
+- Xterm.js: integrated terminal
+
+Settings: (Ctrl+,)
+
+1. User Settings (global, %APPDATA%\Code\User\settings.json, 可以用 Settings 右上角 Open Settings (JSON) 按钮打开或者 Ctrl+Shift+P 搜索 Settings (JSON))
+2. Workspace Settings (override user settings, 保存在当前 workspace 的 .code-workspace 文件里)
+3. Folder Settings (保存在 .\.vscode\settings.json 里)
+4. Language Specific Settings (Ctrl+Shift+P 或 F1, Language Specific Settings, @lang:python)
+
+Common settings
+
+``` json
+"editor.fontFamily": "'Cascadia Mono', Consolas, 'Courier New', monospace",
+"editor.fontSize": 14,
+"editor.insertSpaces": true,
+"editor.tabSize": 4,
+"editor.renderWhitespace": "all",
+"editor.renderControlCharacters": true,
+"editor.trimAutoWhitespace": true,
+"editor.formatOnPaste": true,
+"editor.formatOnSave": true,
+```
+
+编辑功能
+
+- 多光标功能：Alt+Click，增加新的光标，同时编辑多个光标处
+- 列编辑：Shift+Alt+MouseDrag，或者鼠标中键拖拽
+- 格式化：Shift+Alt+F，格式化当前文件；Ctrl+K, Ctrl+F，格式化选中部分
+- 当前文件语言和编码：可以用右下角状态栏按钮改变 Language Mode 和 Encoding
+- 快捷键：Ctrl+K,Ctrl+S
+
+![Visual Studio Code Keyboard Shortcuts](../images/VisualStudioCode%20Shortcuts.gif)
+
+集成终端 Ctrl+`
+
+[设置 Anaconda Prompt 为默认 terminal](https://blog.csdn.net/god_wen/article/details/99450356)
+
+``` json
+"terminal.integrated.defaultProfile.windows": "Windows PowerShell",
+"terminal.integrated.cwd": "D:\\Projects",
+
+"[python]": {
+    "editor.formatOnType": true
+},
+"python.pythonPath": "C:\\Users\\utopi\\anaconda3\\python.exe",
+"python.languageServer": "Jedi",
+```
