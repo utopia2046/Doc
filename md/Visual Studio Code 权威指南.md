@@ -26,6 +26,7 @@ Common settings
 "editor.fontSize": 14,
 "editor.insertSpaces": true,
 "editor.tabSize": 4,
+"editor.tabCompletion": "on",
 "editor.renderWhitespace": "all",
 "editor.renderControlCharacters": true,
 "editor.trimAutoWhitespace": true,
@@ -37,9 +38,11 @@ Common settings
 
 - 多光标功能：Alt+Click，增加新的光标，同时编辑多个光标处
 - 列编辑：Shift+Alt+MouseDrag，或者鼠标中键拖拽
-- 格式化：Shift+Alt+F，格式化当前文件；Ctrl+K, Ctrl+F，格式化选中部分
+- 格式化：Shift+Alt+F，格式化当前文件；Ctrl+K,Ctrl+F，格式化选中部分
 - 当前文件语言和编码：可以用右下角状态栏按钮改变 Language Mode 和 Encoding
 - 快捷键：Ctrl+K,Ctrl+S
+- IntelliSense: Ctrl+Space
+- Go to symbol: Ctrl+P,@: 或者 Ctrl+Shift+O,:
 
 ![Visual Studio Code Keyboard Shortcuts](../images/VisualStudioCode%20Shortcuts.gif)
 
@@ -57,3 +60,12 @@ Common settings
 "python.pythonPath": "C:\\Users\\utopi\\anaconda3\\python.exe",
 "python.languageServer": "Jedi",
 ```
+
+命令行
+
+用 Visual Studio Code 打开当前目录: `code .`
+参数：
+-n, --new-window
+-r, --reuse-window
+-g, `-goto file[:line[:character]]`, example: `code --goto package.json:10:5`
+-d, `--diff <file1> <file2>`
