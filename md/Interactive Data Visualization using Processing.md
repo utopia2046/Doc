@@ -2,7 +2,7 @@
 
 ## Download and install Processing
 
-1. Go to https://processing.org, download the zip for Windows 64;
+1. Go to <https://processing.org>, download the zip for Windows 64;
 2. Extract it, then run the processing.exe;
 
 ## Basic graphic functions
@@ -189,16 +189,16 @@ String A = nf(a, 10); // 0000000798
 
 ### Load external palette
 
-https://colorbrewer2.org/
-https://paletton.com/
-https://color.adobe.com/
+<https://colorbrewer2.org/>
+<https://paletton.com/>
+<https://color.adobe.com/>
 
 ### Use different fonts
 
-https://processing.org/tutorials/typography
+<https://processing.org/tutorials/typography>
 
 ### Sharing
 
-https://openprocessing.org
-http://sketchpad.cc/
-https://www.arduino.cc/
+<https://openprocessing.org>
+<http://sketchpad.cc/>
+<https://www.arduino.cc/>

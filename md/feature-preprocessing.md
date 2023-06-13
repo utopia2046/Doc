@@ -19,7 +19,7 @@
     - [Convert to Bag of words](#convert-to-bag-of-words)
     - [Convert to Vectors: Word2vec, Glove, FastText, Doc2vec (pretrained models)](#convert-to-vectors-word2vec-glove-fasttext-doc2vec-pretrained-models)
   - [Feature extraction from Image -\> vector](#feature-extraction-from-image---vector)
-- [Exploratary Data Analysis (EDA)](#exploratary-data-analysis-eda)
+  - [Exploratary Data Analysis (EDA)](#exploratary-data-analysis-eda)
   - [Visualization](#visualization)
   - [Dataset cleaning](#dataset-cleaning)
 
@@ -142,12 +142,12 @@ Non-tree-based models don't usually handle ordinal data very well.
 
 ### One-hot encoding
 
-target|1|0|1
-------|-|-|-
-pclass|1|2|3
-pclass==1|1|0|0
-pclass==2|0|1|0
-pclass==3|0|0|1
+target    | 1 | 0 | 1
+----------|---|---|--
+pclass    | 1 | 2 | 3
+pclass==1 | 1 | 0 | 0
+pclass==2 | 0 | 1 | 0
+pclass==3 | 0 | 0 | 1
 
 ``` python
 pandas.get_dummies
@@ -182,11 +182,11 @@ Many (though not yet all) of the Scikit-Learn estimators accept such sparse inpu
 
 Combine 2 or more categorial features.
 
-pclass|sex|pclass_sex
-------|---|----------
-3|male|3male
-1|female|1female
-3|female|3female
+pclass | sex    | pclass_sex
+-------|--------|-----------
+3      | male   | 3male
+1      | female | 1female
+3      | female | 3female
 
 ## Date & time, coordinates
 
@@ -302,41 +302,41 @@ pyplot.show()
 2. Train network from scratch
 3. Finetuning
 
-layer|size
--|-
-original image|(224x224x3)
-↓ convolution+ReLU|(224x224x64)
-↓ convolution+ReLU|(224x224x64)
-↓ max pooling|(112x112x128)
-↓ convolution+ReLU|(112x112x128)
-↓ convolution+ReLU|(112x112x128)
-↓ max pooling|(56x56x256)
-↓ convolution+ReLU|(56x56x256)
-↓ convolution+ReLU|(56x56x256)
-↓ convolution+ReLU|(56x56x256)
-↓ max pooling|(14x14x512)
-↓ convolution+ReLU|(14x14x512)
-↓ convolution+ReLU|(14x14x512)
-↓ convolution+ReLU|(14x14x512)
-↓ max pooling|(7x7x512)
-↓ fully connected+ReLU|(1x1x4096)
-↓ fully connected+ReLU|(1x1x4096)
-↓ fully connected+ReLU|(1x1x1000)
-↓ softmax|(1x1x1000)
+layer                  | size
+-----------------------|--------------
+original image         | (224x224x3)
+↓ convolution+ReLU     | (224x224x64)
+↓ convolution+ReLU     | (224x224x64)
+↓ max pooling          | (112x112x128)
+↓ convolution+ReLU     | (112x112x128)
+↓ convolution+ReLU     | (112x112x128)
+↓ max pooling          | (56x56x256)
+↓ convolution+ReLU     | (56x56x256)
+↓ convolution+ReLU     | (56x56x256)
+↓ convolution+ReLU     | (56x56x256)
+↓ max pooling          | (14x14x512)
+↓ convolution+ReLU     | (14x14x512)
+↓ convolution+ReLU     | (14x14x512)
+↓ convolution+ReLU     | (14x14x512)
+↓ max pooling          | (7x7x512)
+↓ fully connected+ReLU | (1x1x4096)
+↓ fully connected+ReLU | (1x1x4096)
+↓ fully connected+ReLU | (1x1x1000)
+↓ softmax              | (1x1x1000)
 
 Keras, PyTorch, Caffe
 
-# Exploratary Data Analysis (EDA)
+## Exploratary Data Analysis (EDA)
 
 ## Visualization
 
 Libraries
 
-- seaborn: https://seaborn.pydata.org/
-- Plotly: https://plot.ly/python/
-- bokeh: https://github.com/bokeh/bokeh
-- ggplot: http://ggplot.yhathq.com/
-- NetworkX: https://networkx.github.io/
+- seaborn: <https://seaborn.pydata.org/>
+- Plotly: <https://plot.ly/python/>
+- bokeh: <https://github.com/bokeh/bokeh>
+- ggplot: <http://ggplot.yhathq.com/>
+- NetworkX: <https://networkx.github.io/>
 
 - Histograms: `plt.hist(x)`
 - Plot index versus value: `plt.plot(x,'.')`, `plt.scatter(range(len(x)), x, c=y)`

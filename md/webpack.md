@@ -90,13 +90,13 @@ Example index.html
 
 ## Setup Babel Loader
 
-1. Install Babel modules
+### 1. Install Babel modules
 
 ``` shell
 npm install --save-dev babel-cli babel-preset-es2015 babel-loader
 ```
 
-2. Create a Babel configuration file named `.babelrc`:
+### 2. Create a Babel configuration file named `.babelrc`
 
 ``` json
 // .babelrc
@@ -105,7 +105,7 @@ npm install --save-dev babel-cli babel-preset-es2015 babel-loader
 }
 ```
 
-3. Configure `webpack.config.js` to use Babel loader:
+### 3. Configure `webpack.config.js` to use Babel loader
 
 ``` javascript
 const path = require('path');
@@ -127,7 +127,8 @@ module.exports = {
 };
 ```
 
-4. Add a webpack build command in `package.json` file:
+### 4. Add a webpack build command in `package.json` file
+
 ``` json
 {
   /* package.json configuration */
@@ -150,4 +151,3 @@ yarn add react@16.0.1 react-dom@16.0.1 webpack-dev-server@3.1.14 live-server@1.2
 yarn add -D webpack-cli
 
 npm install webpack webpack-cli webpack-dev-server --save-dev
-

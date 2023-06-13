@@ -32,6 +32,7 @@ Common settings
 "editor.trimAutoWhitespace": true,
 "editor.formatOnPaste": true,
 "editor.formatOnSave": true,
+"gulp.autoDetect": "on",
 ```
 
 编辑功能
@@ -69,3 +70,37 @@ Common settings
 -r, --reuse-window
 -g, `-goto file[:line[:character]]`, example: `code --goto package.json:10:5`
 -d, `--diff <file1> <file2>`
+
+Run Tasks
+
+Reference: <https://code.visualstudio.com/Docs/editor/tasks>
+Run Build Task: `Ctrl+Shift+B`
+Configuration: .vscode\tasks.json
+
+Example
+
+``` json
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "markdownlint",
+      "problemMatcher": [
+        "$markdownlint"
+      ],
+      "label": "markdownlint: Lint all Markdown files in the workspace with markdownlint",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
+```
+
+Next build error: F8
+Previous build error: Shift+F8
+
+Turn `"gulp.autoDetect": "on"` in settings.json, then `Ctrl+Shift+P, Task: Run Tasks, gulp:default` to run gulp
+Other tasks, like npm, eslint, are similar.
+For frequently used task, add Keyboard Shortcuts in `keybindings.json` to save time.

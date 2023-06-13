@@ -1,10 +1,11 @@
 # Chrome Extension Development Learning Notes
 
-https://developer.chrome.com/extensions/getstarted
+<https://developer.chrome.com/extensions/getstarted>
 
 ## Manifest file
 
 1. Create a manifest.json file like following:
+
 ``` json
 {
   "name": "Getting Started Example",
@@ -28,8 +29,9 @@ https://developer.chrome.com/extensions/getstarted
   "manifest_version": 2
 }
 ```
-2. In Chrome, go to `chrome://extensions`;
-3. Enable `Developer Mode`, click `LOAD UNPACKED` button and select the extension directory;
+
+1. In Chrome, go to `chrome://extensions`;
+2. Enable `Developer Mode`, click `LOAD UNPACKED` button and select the extension directory;
 
 The extension will be loaded and its source code could be debugged in developer tool.
 Each file can be accessed using a URL like: `chrome-extension://<extensionID>/<pathToFile>`. The extension ID could be found on extensions manager page.
@@ -58,7 +60,8 @@ chrome.runtime.onInstalled.addListener(function() {
 > Note: You should always register or unregister rules in bulk rather than individually because each of these operations recreates internal data structures. This re-creation is computationally expensive but facilitates a faster matching algorithm.
 
 ### chrome.runtime API
-https://developer.chrome.com/apps/runtime
+
+<https://developer.chrome.com/apps/runtime>
 
 Retrieve the background page, return details about the manifest, and listen for and respond to events in the app or extension lifecycle.
 
@@ -82,24 +85,25 @@ Events
 * ...
 
 ### chrome.storage API
-https://developer.chrome.com/apps/storage
 
-### chrome.storage API
-https://developer.chrome.com/extensions/declarativeContent
+* <https://developer.chrome.com/apps/storage>
+* <https://developer.chrome.com/extensions/declarativeContent>
 
 ## UI Elements
 
 Extensions's UI could be browser action or page action, or context menus, omnibox, or keyboard shortcut.
 
 This example contains a page action using popup. It is registered in manifest like following:
+
 ``` json
-  "page_action": {
-    "default_popup": "popup.html",
+"page_action": {
+  "default_popup": "popup.html",
 ```
 
 Use any HTML+JavaScript in the popup.html file. It sets the content page background color to be what we set in the `background.js`.
 
 ### popup.html
+
 ``` html
 <html>
   <head>
@@ -117,6 +121,7 @@ Use any HTML+JavaScript in the popup.html file. It sets the content page backgro
 ```
 
 ### popup.js
+
 ``` javascript
 'use strict';
 
@@ -143,6 +148,7 @@ changeColor.onclick = function(element) {
 In `manifest.json` an option page is declared like `"options_page": "options.html"`:
 
 ### options.html
+
 ``` html
 <!DOCTYPE html>
 <html>
@@ -165,6 +171,7 @@ In `manifest.json` an option page is declared like `"options_page": "options.htm
 ```
 
 ### options.js
+
 ``` javascript
 'use strict';
 
@@ -184,4 +191,3 @@ function constructOptions(kButtonColors) {
 }
 constructOptions(kButtonColors);
 ```
-

@@ -2,8 +2,8 @@
 
 ## Download Links
 
-https://www.telerik.com/download/fiddler/fiddler4
-https://telerik-fiddler.s3.amazonaws.com/fiddler/FiddlerSetup.exe
+- <https://www.telerik.com/download/fiddler/fiddler4>
+- <https://telerik-fiddler.s3.amazonaws.com/fiddler/FiddlerSetup.exe>
 
 ## Fiddler Script
 
@@ -21,8 +21,9 @@ To edit the script, following ways supported:
 https://docs.telerik.com/fiddler/KnowledgeBase/FiddlerScript/ModifyRequestOrResponse
 
 In CustomRules.js, there are 2 important functions *OnBeforeRequest* & *OnBeforeResponse*:
-* static function OnBeforeRequest(oSession: Session)
-* static function OnBeforeResponse(oSession: Session)
+
+- static function OnBeforeRequest(oSession: Session)
+- static function OnBeforeResponse(oSession: Session)
 
 In these functions, you can write if clause on oSession object and run any scripts.
 
@@ -52,11 +53,11 @@ if (oSession.host=="www.bayden.com:8080") {
 
 // Point all requests for one server to a different server, including HTTPS tunnels
 // Redirect traffic, including HTTPS tunnels
-if (oSession.HTTPMethodIs("CONNECT") && (oSession.PathAndQuery == "www.example.com:443")) { 
-    oSession.PathAndQuery = "beta.example.com:443"; 
+if (oSession.HTTPMethodIs("CONNECT") && (oSession.PathAndQuery == "www.example.com:443")) {
+    oSession.PathAndQuery = "beta.example.com:443";
 }
 
-if (oSession.HostnameIs("www.example.com")) oSession.hostname = "beta.example.com"; 
+if (oSession.HostnameIs("www.example.com")) oSession.hostname = "beta.example.com";
 
 // Simulate the Windows HOSTS file, by pointing one Hostname to a different IP address. (Retargets without changing the request's Host header)
 
@@ -102,7 +103,7 @@ if (oSession.oResponse.headers.ExistsAndContains("Content-Type", "html")){
   oBody = oBody.replace(oRegEx, "");
 
   // Set the response body to the div-less string
-  oSession.utilSetResponseBody(oBody); 
+  oSession.utilSetResponseBody(oBody);
 }
 
 // Pretend your browser is the GoogleBot webcrawler
@@ -113,7 +114,7 @@ oSession.oRequest["Accept-Language"]="he";
 
 // Deny .CSS requests
 if (oSession.uriContains(".css")) {
-  oSession["ui-color"]="orange"; 
+  oSession["ui-color"]="orange";
   oSession["ui-bold"]="true";
   oSession.oRequest.FailSession(404, "Blocked", "Fiddler blocked CSS file");
 }
@@ -122,7 +123,7 @@ if (oSession.uriContains(".css")) {
 if ((oSession.HostnameIs("www.example.com")) && !oSession.oRequest.headers.Exists("Authorization")) {
   // Prevent IE's "Friendly Errors Messages" from hiding the error message by making response body longer than 512 chars.
   var oBody = "<html><body>[Fiddler] Authentication Required.<BR>".PadRight(512, ' ') + "</body></html>";
-  oSession.utilSetResponseBody(oBody); 
+  oSession.utilSetResponseBody(oBody);
   // Build up the headers
   oSession.oResponse.headers.HTTPResponseCode = 401;
   oSession.oResponse.headers.HTTPResponseStatus = "401 Auth Required";
@@ -140,7 +141,7 @@ if (oSession.PathAndQuery=="/version1.css") {
 
 Use native FiddlerObject for methods like log, alert, or set StatusText
 
-https://docs.telerik.com/fiddler/KnowledgeBase/FiddlerScript/CustomizeMenus
+<https://docs.telerik.com/fiddler/KnowledgeBase/FiddlerScript/CustomizeMenus>
 
 ## Pause Web Sessions
 
@@ -157,16 +158,16 @@ oSession["x-breakrequest"] = "keyword";
 
 // Pause a request for an XML file to allow hand-editing
 if (oSession.url.toLowerCase().indexOf(".xml")>-1){
- oSession["x-breakrequest"]="reason_XML"; 
+ oSession["x-breakrequest"]="reason_XML";
 }
 
 // Pause a response containing JavaScript to allow hand-editing (in OnBeforeResponse)
 if (oSession.oResponse.headers.ExistsAndContains("Content-Type", "javascript")){
-  oSession["x-breakresponse"]="reason is JScript"; 
+  oSession["x-breakresponse"]="reason is JScript";
 }
 ```
 
 ## Reference
 
-https://www.telerik.com/blogs/understanding-fiddlerscript
-http://fiddlerbook.com/Fiddler/dev/ScriptSamples.asp
+- <https://www.telerik.com/blogs/understanding-fiddlerscript>
+- <http://fiddlerbook.com/Fiddler/dev/ScriptSamples.asp>
