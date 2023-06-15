@@ -1,0 +1,43 @@
+# File Variables
+@hostname = api.example.com
+@port = 8080
+@host = {{hostname}}:{{port}}
+@version = V1
+@contentType = application/json
+@createdAt = {{$datetime iso8601}}
+@modifiedBy = {{$processEnv USERNAME}}
+@token = dXNlcjpwYXNzd2Q=
+@name = hello
+
+# Basic authentication
+GET https://httpbin.org/basic-auth/user/passwd HTTP/1.1
+Authorization: Basic user:passwd
+
+###
+
+GET https://{{host}}/api/{{version}}comments/1 HTTP/1.1
+Authorization: {{token}}
+
+### Patch request with JSON body
+
+PATCH https://{{host}}/authors/{{name}} HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "content": "foo bar",
+    "created_at": "{{createdAt}}",
+    "modified_by": "{{modifiedBy}}"
+}
+
+# Prompt Variables
+###
+# @prompt username
+# @prompt refCode Your reference code display on webpage
+# @prompt otp Your one-time password in your mailbox
+POST https://{{host}}/verify-otp/{{refCode}} HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "username": "{{username}}",
+    "otp": "{{otp}}"
+}
