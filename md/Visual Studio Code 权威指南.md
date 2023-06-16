@@ -155,3 +155,10 @@ Accept: application/xml
 # @name getFirstReply
 GET {{baseUrl}}/comments/{{commentId}}/replies/{{getReplies.response.body.//reply[1]/@id}}
 ```
+
+### Python
+
+- Ctrl+Shift+P, Python: Select Interpreter, black (or autopep8), Python: Select Linter, pylint (or flake8)
+- 选择一行或多行代码，Shift+Enter, 等于右键 Run Python -> Run Selection/Line in Python Terminal
+- 右键，Sort Imports
+- autoDocstring, 快速生成文档字符串
