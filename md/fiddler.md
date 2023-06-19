@@ -18,7 +18,7 @@ To edit the script, following ways supported:
 
 ## Modify Request or Response
 
-https://docs.telerik.com/fiddler/KnowledgeBase/FiddlerScript/ModifyRequestOrResponse
+<https://docs.telerik.com/fiddler/KnowledgeBase/FiddlerScript/ModifyRequestOrResponse>
 
 In CustomRules.js, there are 2 important functions *OnBeforeRequest* & *OnBeforeResponse*:
 

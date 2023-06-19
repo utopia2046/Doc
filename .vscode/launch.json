@@ -1,0 +1,33 @@
+{
+    "configurations": [
+        {
+            "name": "Launch Program using Node.js",
+            "program": "${workspaceFolder}/app.js",
+            "preLaunchTask": "tsc: build - script/typescript/tsconfig.json",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/**/*.js",
+                "!**/node_modules/**"
+            ],
+            "type": "node"
+        },
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Python: File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "justMyCode": true
+        }
+    ]
+}

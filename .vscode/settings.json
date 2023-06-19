@@ -1,0 +1,7 @@
+{
+    "files.trimTrailingWhitespace": true,
+    "editor.fontFamily": "'Cascadia Mono', Consolas, 'Courier New', monospace",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": false,
+    "python.linting.flake8Enabled": false
+}

@@ -60,6 +60,9 @@ Install Node.js, then install common packages like:
 ``` console
 npm install --global gulp
 npm install --global yarn
+npm install -g eslint
+npm install -g typescript
+npm install -g ts-node
 yarn install
 ```
 

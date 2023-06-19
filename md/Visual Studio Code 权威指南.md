@@ -156,9 +156,57 @@ Accept: application/xml
 GET {{baseUrl}}/comments/{{commentId}}/replies/{{getReplies.response.body.//reply[1]/@id}}
 ```
 
+## 常用语言
+
 ### Python
 
 - Ctrl+Shift+P, Python: Select Interpreter, black (or autopep8), Python: Select Linter, pylint (or flake8)
 - 选择一行或多行代码，Shift+Enter, 等于右键 Run Python -> Run Selection/Line in Python Terminal
 - 右键，Sort Imports
 - autoDocstring, 快速生成文档字符串
+
+### JavaScript
+
+- JSDoc: 在函数上方输入 /**，触发代码片段提示
+- Enable Imports Organize & CodeLens:
+
+  ``` json
+  "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+  },
+  "javascript.updateImportsOnFileMove.enabled": "prompt",
+  "javascript.referencesCodeLens.enabled": true,
+  "javascript.referencesCodeLens.showOnAllFunctions": true
+  ```
+
+### TypeScript
+
+- Run `tsc file.ts` to compile the file to .js
+- In launch.json or user settings.json, set code runner to be Node.js, then F5 to start debugging
+
+``` json
+    // in launch.json
+    "configurations": [
+        {
+            "name": "Launch Program",
+            "program": "${workspaceFolder}/app.js",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        }
+    ]
+    // in settings.json
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "type": "node",
+                "request": "launch",
+                "name": "Launch Program",
+                "program": "${file}"
+            }
+        ]
+    }
+```
