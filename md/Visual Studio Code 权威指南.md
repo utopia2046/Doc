@@ -210,3 +210,27 @@ GET {{baseUrl}}/comments/{{commentId}}/replies/{{getReplies.response.body.//repl
         ]
     }
 ```
+
+### C Sharp
+
+- Create a new console project: `dotnet new console`
+- `code .` to start a new workspace for this project
+- Generate `tasks.json` and `launch.json` in VSCode
+- Recommended extensions:
+  - C#
+  - XUnit or NUnit for unit tests
+  - C# FixFormat
+  - NuGet Package Manager
+  - MSBuild project tools
+
+### C/C++
+
+- Install Mingw-w64 to get gcc (latest x86_64-posix-seh build) on Windows from <https://sourceforge.net/projects/mingw-w64/files/>
+- Extract .7z package and add bin folder to path
+- Add C/C++ Extension Pack
+- Generate config files: `tasks.json`, `launch.json`, `c_cpp_properties.json`
+- Recommended extensions:
+  - CMake
+  - vscode-clangd
+  - C/C++ Project Generator
+  - Native Debug
