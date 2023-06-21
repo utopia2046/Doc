@@ -234,3 +234,52 @@ GET {{baseUrl}}/comments/{{commentId}}/replies/{{getReplies.response.body.//repl
   - vscode-clangd
   - C/C++ Project Generator
   - Native Debug
+
+### HTML
+
+- 推荐插件：HTML CSS Support
+- 通过定义区域标记实现代码折叠
+
+  ``` html
+  <!-- #region -->
+  <!-- #endregion -->
+  ```
+
+- 使用 Emmet 缩写扩展功能，按 Tab 或 Enter 键自动扩展成 HTML (css or pug flavor markups)
+  - `#` for id
+  - `.` for class
+  - `>` for child
+  - `+` for sibling
+  - `*n` for repeating n times
+  - `$` for continuous numbers, `$@n*m`, starting from n, creating m items
+  - `()` for group
+  - `[]` for customized attributes, e.g. `td[rowspan=2 colspan=3 title='test']`
+  - `{}` for inner text, e.g. `p>{Click }+a{here}+{ to continue}`
+
+Setting
+
+``` json
+"emmet.triggerExpansionOnTab": true
+```
+
+Example
+
+``` emmet
+#page>div.logo+ul#navigation>li*5>a(Item $)
+```
+
+References:
+
+- <http://docs.emmet.io/abbreviations/>
+- <https://code.visualstudio.com/docs/editor/emmet>
+
+### CSS, SCSS, Less
+
+- Ctrl+Space 触发 IntelliSense
+- 颜色预览和颜色选择器（鼠标悬停）
+- 代码折叠
+
+``` css
+/* #region */
+/* #endregion */
+```

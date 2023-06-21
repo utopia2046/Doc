@@ -254,3 +254,18 @@ Port 443
 ```
 
 Reference: <https://blog.csdn.net/Eric_q8666/article/details/127179501>
+
+### Clean up unused packages and cache
+
+Reference: <https://docs.conda.io/projects/conda/en/latest/commands/clean.html>
+
+``` console
+conda clean -a
+```
+
+``` console
+pip list --not-required
+pip uninstall --yes <package_name>
+...
+pip cache purge
+```
