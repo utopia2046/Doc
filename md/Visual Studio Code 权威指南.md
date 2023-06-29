@@ -304,7 +304,7 @@ package.json 中 activationEvents 定义插件在何种情况下被激活，cont
 
 Tutorial: <https://code.visualstudio.com/api/get-started/your-first-extension>
 
-Important APIs:
+Important APIs: <https://code.visualstudio.com/api/references/vscode-api>
 
 - Web View Panel
   - window.createWebviewPanel
