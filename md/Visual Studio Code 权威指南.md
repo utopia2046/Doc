@@ -283,3 +283,47 @@ References:
 /* #region */
 /* #endregion */
 ```
+
+## Create Visual Studio Extension
+
+### Setup env
+
+1. Install Visual Studio Code & Node.js;
+2. Install Yeoman and VS Code Extension Generator;
+
+``` console
+npm install -g yo generator-code
+yo code
+```
+
+插件清单文件：package.json
+入口文件：src\extension.ts
+
+package.json 中 activationEvents 定义插件在何种情况下被激活，contributes 定义插件的 commands
+当插件被激活时，extensions.ts 里的 activate 函数被调用
+
+Tutorial: <https://code.visualstudio.com/api/get-started/your-first-extension>
+
+Important APIs:
+
+- Web View Panel
+  - window.createWebviewPanel
+  - window.registerWebviewPanelSerializer
+- Status Bar
+  - window.createStatusBarItem
+  - StatusBarItem
+- Tree View
+  - window.createTreeView
+  - window.registerTreeDataProvider
+  - TreeView
+  - TreeDataProvider
+  - contributes.views
+  - contributes.viewsContainers
+- Tasks
+  - tasks.registerTaskProvider
+  - Task
+  - ShellExecution
+  - contributes.taskDefinitions
+- Workspace
+  - workspace.getWorkspaceFolder
+  - workspace.onDidChangeWorkspaceFolders
