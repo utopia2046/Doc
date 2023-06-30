@@ -33,3 +33,11 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 #Nuget packages folder
 packages/
+*.unityproj
+*.unitypackage
+*.apk
+script/unity/MiniGame2D/.plastic/
+script/unity/MiniGame2D/Library/
+script/unity/MiniGame2D/Logs/
+script/unity/MiniGame2D/UserSettings/
+script/unity/MiniGame2D/Temp/
