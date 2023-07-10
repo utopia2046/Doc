@@ -269,3 +269,29 @@ pip uninstall --yes <package_name>
 ...
 pip cache purge
 ```
+
+### Re-install OS
+
+Fix the "We Couldn't Create a New Partition" Error
+
+1. Remove (physical or disable in BIOS) all external and internal storage devices except the target SSD to install OS and the bootable USB;
+2. Try plug bootable USB in USB 2.0 rather than 3.0 slot;
+3. In windows installation, press Shift+F11 to open console, or open it in Trouble shooting -> Advanced options -> Command;
+4. In console, use `diskpart` util to create partition, convert it to GPT format, activate it, and format it;
+
+    ``` console
+    diskpart
+    list disk
+    select disk #
+    clean                       // optional, clean all partitions on this disk
+    convert gpt                 // optional, change disk format from MBR to GPT
+    create partition primary    // optional if not re-partitioning
+    list partition
+    select partition #
+    active                      // set selected partition as active
+    format fs=ntfs quick        // optional, fast format as NTFS
+    assign                      // assign a disk symbol
+    exit
+    ```
+
+5. Retry installation.
