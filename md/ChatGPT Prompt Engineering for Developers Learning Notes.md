@@ -557,7 +557,7 @@ I would like you to generate a dataset of {Dataset About?} with {Number of Recor
 The data should be realistic and plausible, not obviously fake or randomly generated. Format the output as a comma-separated values (CSV) file with a header row listing the field names and {Dataset Number} data rows.
 ```
 
-ChatGPT limitations:
+### ChatGPT limitations
 
 - Accuracy and Reliability: ChatGPT is a language model, so the responses cannot be declared 100% accurate. You need to cross-verify your answers and consult additional sources.
 - Ethics and Bias: Researchers should strive to maintain ethical research standards and be aware of potential biases in ChatGPT’s responses.
