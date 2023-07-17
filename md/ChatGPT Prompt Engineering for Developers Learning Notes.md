@@ -511,3 +511,55 @@ messages.append(
 response = get_completion_from_messages(messages, temperature=0)
 print(response)
 ```
+
+## Prompts for Research
+
+### Data Analysis
+
+1. Data summary
+
+    ``` prompt
+    I would like you to help me with the initial data exploration of the customer satisfaction ratings dataset that I collected. Please provide insights on the following:
+    1) Can you provide summary statistics of the customer satisfaction rating dataset, including the range, mean, median, and mode of the ratings?
+    2) How many customers gave the highest rating (5) for each question, and how many gave the lowest rating (1)?
+
+    Dataset: {}
+    ```
+
+2. Interpreting key insights
+
+    ``` prompt
+    Based on the above statistics, what are the key insights I can draw from the data? Can you also provide information about the following:
+    1. Key drivers of customer loyalty based on available data?
+    2. Common reasons for customer complaints or negative feedback?
+    ```
+
+### Research review
+
+``` prompt
+I need help with a literature review on {research_area}. Can you provide me with an overview of the current state of research in this area?
+
+Can you provide a list of the top 10 most-cited papers on {research_area}?
+
+Based on the current research, what are the main challenges and research gaps that need to be addressed in the {research_area}?
+
+Can you suggest 5 important unanswered questions related to [your area of interest] that would advance the current state of knowledge in [specific subfield or topic]
+
+Can you suggest the best research methodology and data collection techniques for studying [research topic] in [specific subfield or context], including their strengths, weaknesses, and when each would be most appropriate?
+
+What are some effective strategies for developing a strong introduction, clear thesis statement, and convincing conclusion for my [research paper] on [research topic]? Please provide guiding questions and ideas on how to structure these elements to ensure they are effective and aligned with the research goals.
+
+Proofread and edit my {Research Paper} for any grammatical, punctuation, repetitive words, and spelling errors. Please provide suggestions to improve the readability and flow of my research paper.
+
+I would like you to generate a dataset of {Dataset About?} with {Number of Records} synthetic records with the following characteristics.
+{Name of Field} ({Data Type / Range }) … and so on.
+{Special Instructions about Dataset}
+The data should be realistic and plausible, not obviously fake or randomly generated. Format the output as a comma-separated values (CSV) file with a header row listing the field names and {Dataset Number} data rows.
+```
+
+ChatGPT limitations:
+
+- Accuracy and Reliability: ChatGPT is a language model, so the responses cannot be declared 100% accurate. You need to cross-verify your answers and consult additional sources.
+- Ethics and Bias: Researchers should strive to maintain ethical research standards and be aware of potential biases in ChatGPT’s responses.
+
+Ref: <https://machinelearningmastery.com/advanced-techniques-for-research-with-chatgpt/>
