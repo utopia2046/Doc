@@ -17,6 +17,23 @@ Hello World Project
 5. Add the log command to the script.
 6. Click Play!
 
+## Create a simple 2D RPG
+
+### 1. Create project
+
+1. Create project using "2D Core" template.
+2. Add [MiniFantasy Resources](https://assetstore.unity.com/?q=minifantasy&orderBy=1) to My Assets, click Open in Unity.
+3. Window -> Package Manager -> Import MiniFantasy resources -> Select Sprites only -> Import.
+
+### 2. Create map
+
+1. In Hierachy window, right click -> 2D Object -> Tilemap -> Rectangular, rename it as "Ground".
+2. In Scene window -> Open Tile Palette -> Create New Palette -> name it as "Plains" -> Create new folder under resources and name it as "Tiles".
+3. In Project window, select "Forgotten Plains" -> Sprites -> Tileset -> Tiles.
+4. In Inspector, make sure Filter Mode is "Point (no filter)", and Compression is "None", click Sprite Editor -> Slice -> Grid by Cell Size -> set as 8x8 -> Slice -> Apply.
+5. Drag Tiles from Project window to Tile Palette window, select "Resources/Tiles" folder. Use mouse scroll to zoom in/out, alt + drag or right mouse drag to pan.
+6. Click any tile or tiles, and draw it on Scene window. U for box fill and E for erase.
+
 <!--
 TODO: unfinished below here
 

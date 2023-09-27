@@ -36,8 +36,8 @@ packages/
 *.unityproj
 *.unitypackage
 *.apk
-script/unity/MiniGame2D/.plastic/
-script/unity/MiniGame2D/Library/
-script/unity/MiniGame2D/Logs/
-script/unity/MiniGame2D/UserSettings/
-script/unity/MiniGame2D/Temp/
+script/unity/Mini2DRPG/.plastic/
+script/unity/Mini2DRPG/Library/
+script/unity/Mini2DRPG/Logs/
+script/unity/Mini2DRPG/UserSettings/
+script/unity/Mini2DRPG/Temp/
