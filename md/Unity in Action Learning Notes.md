@@ -33,6 +33,12 @@ Hello World Project
 4. In Inspector, make sure Filter Mode is "Point (no filter)", and Compression is "None", click Sprite Editor -> Slice -> Grid by Cell Size -> set as 8x8 -> Slice -> Apply.
 5. Drag Tiles from Project window to Tile Palette window, select "Resources/Tiles" folder. Use mouse scroll to zoom in/out, alt + drag or right mouse drag to pan.
 6. Click any tile or tiles, and draw it on Scene window. U for box fill and E for erase.
+7. Create another Palette of plants under "Resources/Tiles".
+8. Create another Tilemap named "Plant" and drag it under "Ground", draw grass and flowers on it.
+9. Create Tilemap named "Obstacle" and draw trees and rocks on it.
+10. In Inspector -> Add Component -> Tilemap -> Tilemap Collider 2D.
+
+### 3. Create actor
 
 <!--
 TODO: unfinished below here
