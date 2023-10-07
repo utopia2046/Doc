@@ -40,6 +40,43 @@ Hello World Project
 
 ### 3. Create actor
 
+1. Create a new folder under "Resources" and name it as "Prefabs:.
+2. Under Hierachy, create 2D object -> Sprites -> Square, name it as "Player".
+3. In Inspector -> Additional Settings -> Sorting Layer -> Add Sorting Layers -> + -> name as "Player" -> change the sprite's layer to be on it.
+4. In Inspector -> Sprite -> input "HumanBase" -> select a sprite.
+5. Under Resources folder, create a new folder named "Scripts". Create C# script in the folder named "PlayerMovement", sample code is as below.
+6. Windows -> Package Manager -> Select Unity Registry -> Search for "Input System" -> Install.
+7. In Inspector, Add Component -> Physics 2D -> Rigidbody 2D, set Gravity Scale to be 0.
+8. In Inspector, Add Component -> Input -> Player Input -> Create Actions -> name it as "PlayerInputActions" and use default settings.
+9. In Inspector, Add Component -> Script -> Select "PlayerMovement", this link the movement script to Player sprite.
+
+``` csharp
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class PlayerMovement : MonoBehaviour
+{
+    Rigidbody2D rb;
+    Vector2 moveInput;
+    public float moveSpeed;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void OnMove(InputValue value)
+    {
+        moveInput = value.Get<Vector2>();
+    }
+
+    private void FixedUpdate()
+    {
+        rb.AddForce(moveInput * moveSpeed);
+    }
+}
+```
+
 <!--
 TODO: unfinished below here
 
