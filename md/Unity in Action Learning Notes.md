@@ -50,6 +50,12 @@ Hello World Project
 8. In Inspector, Add Component -> Input -> Player Input -> Create Actions -> name it as "PlayerInputActions" and use default settings.
 9. In Inspector, Add Component -> Script -> Select "PlayerMovement", this link the movement script to Player sprite.
 
+- Set sprite to be "multiple" to use a series of sprites as animation.
+- Set Flip X to flip the character sprite on moving left & right.
+- Use Packagae "cenamatic" for camera zooming and moving.
+- Create a character and drag it to "prefab", create this character as a class, later you can create multiple instances of this character.
+- Add combat animation to player sprite.
+
 ``` csharp
 using UnityEngine;
 using UnityEngine.InputSystem;
