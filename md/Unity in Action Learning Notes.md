@@ -59,6 +59,7 @@ Hello World Project
 - Create an interface call IDamageable and declare OnHit method in it. Inherit and implement this interface in class DamageableCharacter, then add this class as component for player character and enemies (notice the component system difference with traditional OO inheritance).
 - Add multiple animations like PlayerWalk, PlayerIdle, PlayerHit, PlayerDamage, PlayerDie, OrcHit, OrcDamage, OrcDie, etc. Specify state transition in Animator window and transition condition in Inspector window.
 - In DamageableCharacter, add a method to destroy the character when it dies. In animation window, add event at last frame of orc die animation.
+- Add 3D object -> Text mesh-pro and TMP essentials to draw text on screen, name it as DamagePopup and drag it to Prefabs.
 
 ``` csharp
 using UnityEngine;
