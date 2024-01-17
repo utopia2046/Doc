@@ -295,3 +295,83 @@ Fix the "We Couldn't Create a New Partition" Error
     ```
 
 5. Retry installation.
+
+### Clean up Honor Built-In Apps
+
+荣耀手机更新多了一堆应用，智慧XX，荣耀XX，全是广告乌烟瘴气且不能卸载，深厌之。
+
+1. Download abd from:
+
+- https://developer.android.google.cn/tools/releases/platform-tools, or
+- https://adbshell.com
+
+2. Enable USB debugging on phone
+
+- 打开开发者模式
+- 打开 USB 调试
+- 仅充电模式下允许 ADB 调试
+- 打开 USB 共享网络
+- 选择 USB 配置为 RNDIS (USB 以太网)
+
+3. Install HDB dirver on windows
+
+- Connect phone to PC, open Device manager
+- 其他设备下，找到带黄色惊叹号的 HDB interface，更新驱动程序，浏览我的电脑，从可用驱动程序列表中选择，Android Phone -> Huawei HDB Interface，无视警告，安装
+- 安装完成后，Android Phone -> Huawei HDB Interface，右键，属性，详细信息，硬件ID，VID_XXXX，后面这个四位的就是 VID
+- 在 C:\Users\{current_user}\.android\ 目录下新建 adb_usb.ini，写入一行内容 0xXXXX (刚才那个四位的VID)
+
+4. Start abd tool
+
+- Extract adb package
+- In command line, run
+
+```
+adb start-server
+adb devices
+```
+
+没找到 device 的话就试试插拔 USB 线，删除 USB debugging 授权再插，重启 PC，重启 ADB server，查找是否有 5037 端口冲突等等
+
+```
+adb kill-server
+adb start-server
+adb devices
+
+adb nodaemon server
+netstat -ano | findstr "5037"
+```
+
+找到设备后，列出所有 app 清单
+
+```
+adb shell pm list packages
+```
+
+卸载流氓软件，以 智能助手(负一屏) 为例
+
+```
+adb shell pm uninstall --user 0 com.huawei.intelligent
+```
+
+Examples:
+
+adb shell pm uninstall --user 0 cn.HONOR.qinxuan            # 荣耀亲选
+adb shell pm uninstall --user 0 com.huawei.gamebox          # 游戏中心
+adb shell pm uninstall --user 0 com.huawei.gameassistant    # 应用助手
+adb shell pm uninstall --user 0 com.huawei.hifolder         # 精品推荐
+adb shell pm uninstall --user 0 com.huawei.fastapp          # 快应用中心
+adb shell pm uninstall --user 0 com.huawei.tips             # 智能提醒
+adb shell pm uninstall --user 0 com.huawei.scanner          # 智慧视觉
+adb shell pm uninstall --user 0 com.huawei.hwvoipservice    # 智能电话
+adb shell pm uninstall --user 0 com.huawei.search           # 智慧搜索
+adb shell pm uninstall --user 0 com.huawei.hwdetectrepair   # 智能检测
+adb shell pm uninstall --user 0 com.huawei.vassistant       # 语音助手
+adb shell pm uninstall --user 0 com.huawei.skytone          # 天际通数据服务
+adb shell pm uninstall --user 0 com.huawei.hiai             # 华为智慧引擎
+adb shell pm uninstall --user 0 com.huawei.hitouch          # 智慧识屏
+adb shell pm uninstall --user 0 com.huawei.bd               # 用户改进体验计划
+adb shell pm uninstall --user 0 com.huawei.intelligent      # 负一屏
+
+Reference:
+
+https://www.bilibili.com/read/cv21078097/
