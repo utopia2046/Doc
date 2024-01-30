@@ -88,6 +88,15 @@ public class PlayerMovement : MonoBehaviour
 }
 ```
 
+## Basic First-Person Shooter (FPS)
+
+1. Set up the room: create the floor, outer walls, and inner walls.
+2. Place the lights and camera.
+3. Create the player object (including attaching the camera on top).
+4. Write movement scripts: rotate with the mouse and move with the keyboard.
+
+| Notice that Unity uses a left-handed coordinate system, as do many 3D art applications.
+
 <!--
 TODO: unfinished below here
 
