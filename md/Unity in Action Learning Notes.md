@@ -97,6 +97,12 @@ public class PlayerMovement : MonoBehaviour
 
 | Notice that Unity uses a left-handed coordinate system, as do many 3D art applications.
 
+Scene Navigation:
+
+- Drag to move; right click drag or Alt drag to rotate; wheel or Alt right drag to zoom
+- Use the Flythrough mode to fly around the Scene view in first-person, hold right key, WASD to move left/right/forward/backward, and the Q and E keys to move up and down
+- Shift click center of Gizmo to reset it to default perspective view.
+
 <!--
 TODO: unfinished below here
 
