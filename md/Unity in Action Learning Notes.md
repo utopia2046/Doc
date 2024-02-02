@@ -101,7 +101,12 @@ Scene Navigation:
 
 - Drag to move; right click drag or Alt drag to rotate; wheel or Alt right drag to zoom
 - Use the Flythrough mode to fly around the Scene view in first-person, hold right key, WASD to move left/right/forward/backward, and the Q and E keys to move up and down
-- Shift click center of Gizmo to reset it to default perspective view.
+- Shift click center of Gizmo to reset it to default perspective view. F to reset view on selected object.
+
+Game Object Hierachy:
+
+- You can create empty object as parent, and drag objects to link parent and chidren in the Hierachy window.
+- You can change all the children as a whole by setting Transform(Position/Rotation/Scale) on the parent object.
 
 <!--
 TODO: unfinished below here
