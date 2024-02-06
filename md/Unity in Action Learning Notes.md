@@ -95,7 +95,15 @@ public class PlayerMovement : MonoBehaviour
 3. Create the player object (including attaching the camera on top).
 4. Write movement scripts: rotate with the mouse and move with the keyboard.
 
+## 3D camera control
+
 | Notice that Unity uses a left-handed coordinate system, as do many 3D art applications.
+
+API References:
+
+- MonoBehavior: <https://docs.unity3d.com/ScriptReference/MonoBehaviour.html>
+- Transform: <https://docs.unity3d.com/ScriptReference/Transform.html>
+- Manual: https://docs.unity.cn/cn/2021.1/Manual/class-MonoBehaviour.html
 
 Scene Navigation:
 
@@ -113,8 +121,6 @@ Public variables in Script GameObjects are exposed in the Inspector, this is ref
 
 <!--
 TODO: unfinished below here
-
-## 3D camera control
 
 ## Raycasting
 

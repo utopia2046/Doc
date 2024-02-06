@@ -21,7 +21,11 @@ public class MouseLook : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        Rigidbody body = GetComponent<Rigidbody>();
+        if (body != null)
+        {
+            body.freezeRotation = true; // Disable player's rigidbody rotation
+        }
     }
 
     // Update is called once per frame
@@ -41,7 +45,13 @@ public class MouseLook : MonoBehaviour
         }
         else
         {
-            this.transform.Rotate(SensitivityVer * Input.GetAxis("Mouse Y"), SensitivityHor * Input.GetAxis("Mouse X"), 0);
+            verticalRot -= SensitivityVer * Input.GetAxis("Mouse Y");
+            verticalRot = Mathf.Clamp(verticalRot, MinVert, MaxVert);
+
+            float delta = SensitivityHor * Input.GetAxis("Mouse X");
+            float horizontalRot = this.transform.localEulerAngles.y + delta;
+
+            this.transform.localEulerAngles = new Vector3(verticalRot, horizontalRot, 0);
         }
     }
 }
