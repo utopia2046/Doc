@@ -11,11 +11,11 @@ public class MouseLook : MonoBehaviour
         MouseY = 2,
     }
 
-    public RotationAxes Axes = RotationAxes.MouseX;
-    public float SensitivityHor = 9.0f;
-    public float SensitivityVer = 3.0f;
-    public float MaxVert = 45.0f;
-    public float MinVert = -45.0f;
+    public RotationAxes axes = RotationAxes.MouseX;
+    public float sensitivityHor = 9.0f;
+    public float sensitivityVer = 3.0f;
+    public float maxVert = 45.0f;
+    public float minVert = -45.0f;
     private float verticalRot = 0;
 
     // Start is called before the first frame update
@@ -31,24 +31,24 @@ public class MouseLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Axes == RotationAxes.MouseX) // horizontal rotate
+        if (axes == RotationAxes.MouseX) // horizontal rotate
         {
-            this.transform.Rotate(0, SensitivityHor * Input.GetAxis("Mouse X"), 0);
+            this.transform.Rotate(0, sensitivityHor * Input.GetAxis("Mouse X"), 0);
         }
-        else if (Axes == RotationAxes.MouseY)
+        else if (axes == RotationAxes.MouseY)
         {
-            verticalRot -= SensitivityVer * Input.GetAxis("Mouse Y");
-            verticalRot = Mathf.Clamp(verticalRot, MinVert, MaxVert);
+            verticalRot -= sensitivityVer * Input.GetAxis("Mouse Y");
+            verticalRot = Mathf.Clamp(verticalRot, minVert, maxVert);
             float horizontalRot = this.transform.localEulerAngles.y;
 
             this.transform.localEulerAngles = new Vector3(verticalRot, horizontalRot, 0);
         }
         else
         {
-            verticalRot -= SensitivityVer * Input.GetAxis("Mouse Y");
-            verticalRot = Mathf.Clamp(verticalRot, MinVert, MaxVert);
+            verticalRot -= sensitivityVer * Input.GetAxis("Mouse Y");
+            verticalRot = Mathf.Clamp(verticalRot, minVert, maxVert);
 
-            float delta = SensitivityHor * Input.GetAxis("Mouse X");
+            float delta = sensitivityHor * Input.GetAxis("Mouse X");
             float horizontalRot = this.transform.localEulerAngles.y + delta;
 
             this.transform.localEulerAngles = new Vector3(verticalRot, horizontalRot, 0);
