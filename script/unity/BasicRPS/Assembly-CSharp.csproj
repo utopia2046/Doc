@@ -36,8 +36,8 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scenes\Spin.cs" />
      <Compile Include="Assets\Scenes\MouseLook.cs" />
+     <Compile Include="Assets\Scenes\Spin.cs" />
      <Compile Include="Assets\Scenes\FPSInput.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.23f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

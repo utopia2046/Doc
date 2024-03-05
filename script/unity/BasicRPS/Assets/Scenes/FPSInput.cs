@@ -29,7 +29,7 @@ public class FPSInput : MonoBehaviour
         movement = transform.TransformDirection(movement);  // tranform movement vector from local to global coordinates
         //Debug.Log(movement.x, movement.y, movement.z);
 
-        //transform.Translate(deltaX * Time.deltaTime, 0, deltaZ * Time.deltaTime);
-        charController.Move(movement);                      // use CharacterController move instead of transform to enable collition detection
+        transform.Translate(deltaX * Time.deltaTime, 0, deltaZ * Time.deltaTime);
+        // charController.Move(movement);                      // use CharacterController move instead of transform to enable collition detection
     }
 }
