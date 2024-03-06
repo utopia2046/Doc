@@ -7,7 +7,7 @@ using UnityEngine;
 public class FPSInput : MonoBehaviour
 {
     public float speed = 0.5f;
-    public float gravity = -9.8f;
+    public float gravity = 1f;
     private CharacterController charController;
 
     // Start is called before the first frame update
@@ -24,12 +24,12 @@ public class FPSInput : MonoBehaviour
         Vector3 movement = new Vector3(deltaX, 0, deltaZ);
 
         movement = Vector3.ClampMagnitude(movement, speed); // limit diagonal movement to the same speed
-        movement.y = gravity;
         movement *= Time.deltaTime;                         // move frame-rate independently
-        movement = transform.TransformDirection(movement);  // tranform movement vector from local to global coordinates
-        //Debug.Log(movement.x, movement.y, movement.z);
+        //movement.y = gravity;
+        //movement = transform.TransformDirection(movement);  // tranform movement vector from local to global coordinates
+        Debug.Log(string.Format("movement x = {0}, y = {1}, z= {2}", movement.x, movement.y, movement.z));
 
         transform.Translate(deltaX * Time.deltaTime, 0, deltaZ * Time.deltaTime);
-        // charController.Move(movement);                      // use CharacterController move instead of transform to enable collition detection
+        //charController.Move(movement);                      // use CharacterController move instead of transform to enable collition detection
     }
 }
