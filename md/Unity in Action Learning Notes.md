@@ -119,12 +119,26 @@ Game Object Hierachy:
 
 Public variables in Script GameObjects are exposed in the Inspector, this is referred to as *serializing* the value.
 
+## Graphics
+
+### Texture
+
+- Texture: 2D image being used to enhance 3D graphics.
+- Supported image formats: PNG, JPG, GIF, BMP, TGA, TIFF, PICT, PSD
+- Recommended formats: PNG, TGA
+- Useful resources: <http://www.textures.com>
+- Tips: The size (in pixels) of a texture should be in powers of 2, like 256, 512, etc.
+
+Actions
+
+1. Import an image as texture: drag an image file to Project view -> Assets/Textures, or right click and Import New Asset.
+2. Apply texture to 3D object: drag text from Project view onto an object in the scene (auto create material), or in Project view ->  Assets, Create -> Material, drag texture into material Albedo property.
+3. Create Skybox material: Assets -> Create -> Material, Shader -> Skybox/6 Sided, change Assets/Texture Skybox Wrap Mode to Clamp (default Repeat).
+4. Set Skybox: Window -> Rendering -> Lighting, Environment -> Skeybox Material.
+
 <!--
 TODO: unfinished below here
 
-## Raycasting
-
-## 2D graphics
 
 ## 2D physics
 
