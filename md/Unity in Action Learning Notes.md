@@ -136,9 +136,24 @@ Actions
 3. Create Skybox material: Assets -> Create -> Material, Shader -> Skybox/6 Sided, change Assets/Texture Skybox Wrap Mode to Clamp (default Repeat).
 4. Set Skybox: Window -> Rendering -> Lighting, Environment -> Skeybox Material.
 
+### 3D models
+
+- Tools: Maya, 3DS Max, Blender(open source)
+- Models: Unity Asset Store: <https://assetstore.unity.com>
+- Supported 3D model formats: FBX(recommended), OBJ, COLLADA(DAE), 3DS, DXF, maya, blender, gITF(via UnityGLTF add-on)
+
+Import Tips:
+
+- Default Scale Factor is too small, suggest to set to 50
+- Check Generate Collider
+- Uncheck Import Animation unless you need it
+
+### Particle Systems
+
+GameObject -> Effects -> Particle System
+
 <!--
 TODO: unfinished below here
-
 
 ## 2D physics
 
