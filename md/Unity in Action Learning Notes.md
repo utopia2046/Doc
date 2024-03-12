@@ -152,6 +152,10 @@ Import Tips:
 
 GameObject -> Effects -> Particle System
 
+### 2D Graphics
+
+Sprites: 2D images displayed directly on the screen (comparing to textures that displayed on 3D models)
+
 <!--
 TODO: unfinished below here
 

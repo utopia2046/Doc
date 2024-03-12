@@ -46,3 +46,7 @@ script/unity/BasicRPS/Logs/
 script/unity/BasicRPS/UserSettings/
 script/unity/BasicRPS/Temp/
 script/unity/BasicRPS/build/
+script/unity/MemoryCards/Library/
+script/unity/MemoryCards/Logs/
+script/unity/MemoryCards/UserSettings/
+script/unity/MemoryCards/Temp/
