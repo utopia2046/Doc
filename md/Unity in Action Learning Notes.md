@@ -156,6 +156,17 @@ GameObject -> Effects -> Particle System
 
 Sprites: 2D images displayed directly on the screen (comparing to textures that displayed on 3D models)
 
+Tools for packing multiple sprites to one sprite sheet (sprites atlases): TexturePacker, Unity Sprite Packer (In Project Settings)
+
+2D Camera:
+
+- In 2D Editor, Z value is for stacking (lower Z on top, background should be highest)
+- Default Pixels Per Unit is 100, meaning 1 pexel for 0.01 units.
+- Projection should be Orthographic
+- Clear Flags (camera background) is Solid Color
+- Set Size to be SCREEN_SIZE / 2 / PIXELS_PER_UNIT, will get pixel-perfect graphics.
+
+
 <!--
 TODO: unfinished below here
 
