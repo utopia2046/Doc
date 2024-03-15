@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MemoryCard : MonoBehaviour
 {
-    [SerializeField] Sprite image;
     [SerializeField] GameObject cardBack; // attribute SerializeField enable object reference setting in Editor UI
     [SerializeField] SceneController controller;
 
@@ -23,18 +22,17 @@ public class MemoryCard : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = image;
     }
 
-    public void Start()
-    {
-        //GetComponent<SpriteRenderer>().sprite = image;
-
-    }
-
     public void OnMouseDown()
     {
-        Debug.Log("card 1 clicked");
+        Debug.Log(string.Format("card id = {0} clicked", _id));
         if (cardBack.activeSelf)
         {
             cardBack.SetActive(false); // hide the card_back object on top to reveal card undereath
         }
+    }
+
+    public void Unreveal()
+    {
+        cardBack.SetActive(true);
     }
 }
