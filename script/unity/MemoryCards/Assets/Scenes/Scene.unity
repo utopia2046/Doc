@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 1135661025}
   - component: {fileID: 1135661027}
   - component: {fileID: 1135661028}
+  - component: {fileID: 1135661029}
   m_Layer: 0
   m_Name: card1
   m_TagString: Untagged
@@ -332,7 +333,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3450ed2b3215f49428537b9b0dcc8a19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 21300000, guid: 42a3e5b2d1120b7489f25f122f94e1e9, type: 3}
   cardBack: {fileID: 87303873}
+  controller: {fileID: 0}
+--- !u!114 &1135661029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135661024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3075a9f555e0c44e951f92b0b5afbd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalCard: {fileID: 1135661028}
+  images:
+  - {fileID: 21300000, guid: 42a3e5b2d1120b7489f25f122f94e1e9, type: 3}
+  - {fileID: 21300000, guid: 494792a43ca894742b507bcf9df3cb52, type: 3}
+  - {fileID: 21300000, guid: 7bff483d7bcf0434b85d89db23c3ada6, type: 3}
+  - {fileID: 21300000, guid: 26c85db7949565c46975bc3abcc1ea38, type: 3}
 --- !u!1 &1606809958
 GameObject:
   m_ObjectHideFlags: 0
