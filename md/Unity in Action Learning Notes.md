@@ -166,6 +166,7 @@ Tools for packing multiple sprites to one sprite sheet (sprites atlases): Textur
 - Clear Flags (camera background) is Solid Color
 - Set Size to be SCREEN_SIZE / 2 / PIXELS_PER_UNIT, will get pixel-perfect graphics.
 
+Use TextMeshPro package for on screen text display.
 
 <!--
 TODO: unfinished below here

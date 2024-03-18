@@ -25,9 +25,10 @@ public class MemoryCard : MonoBehaviour
     public void OnMouseDown()
     {
         Debug.Log(string.Format("card id = {0} clicked", _id));
-        if (cardBack.activeSelf)
+        if (cardBack.activeSelf && controller.canReveal)
         {
             cardBack.SetActive(false); // hide the card_back object on top to reveal card undereath
+            controller.CardRevealed(this);
         }
     }
 
