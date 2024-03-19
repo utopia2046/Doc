@@ -168,6 +168,50 @@ Tools for packing multiple sprites to one sprite sheet (sprites atlases): Textur
 
 Use TextMeshPro package for on screen text display.
 
+## Script Events Lifecycle
+
+- Initialization
+  - Awake
+  - OnEnable, called when hidden object becomes visible again
+  - Reset
+  - *Start*, only called once for a given script
+- Physics
+  - FixedUpdate
+  - OnTriggerXXX
+  - OnCollisionXXX
+  - yield WaitForFixedUpdate
+- Input Events
+  - OnMouseXXX
+- Game Logic
+  - *Update*
+  - yield null
+  - yield WaitForSeconds
+  - yield WWW
+  - yield StartCoroutine
+  - LateUpdate
+- Scene Rendering
+  - OnPreCull
+  - OnBecameVisible
+  - OnWillRenderObject
+  - OnPreRender
+  - OnRenderObject
+  - OnPostRender
+  - OnRenderImage
+- GUI
+  - OnGUI
+  - yieldWaitForEndOfFrame
+- Teardown
+  - OnDisable
+  - OnDestroy
+  - OnApplicationQuit
+
+Reference:
+
+- <https://docs.unity3d.com/Manual/ExecutionOrder.html>
+- <https://docs.unity.cn/cn/2021.3/Manual/ExecutionOrder.html>
+- Flow Chart
+  ![Unity Scripting Events](../images/UnityScriptingEvents.png)
+
 <!--
 TODO: unfinished below here
 

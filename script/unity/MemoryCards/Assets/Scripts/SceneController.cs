@@ -8,6 +8,11 @@ using UnityEngine.UIElements;
 
 public class SceneController : MonoBehaviour
 {
+
+    private MemoryCard firstRevealed;
+    private MemoryCard secondRevealed;
+    private int score = 0;
+
     public const int gridRows = 2;
     public const int gridCols = 4;
     public const float offsetX = 2f;
@@ -17,11 +22,51 @@ public class SceneController : MonoBehaviour
     [SerializeField] Sprite[] images;
     [SerializeField] TMP_Text scoreLabel;
 
-    private MemoryCard firstRevealed;
-    private MemoryCard secondRevealed;
-    private int score = 0;
+    public bool canReveal
+    {
+        get
+        {
+            return secondRevealed == null;  // returns false when a second card is revealed
+        }
+    }
 
-    // Start is called before the first frame update
+    private int[] ShuffleArray(int[] numbers)
+    {
+        int[] newArray = numbers.Clone() as int[];
+
+        for (int i = 0; i < newArray.Length; i++)
+        {
+            int tmp = newArray[i];
+            int r = UnityEngine.Random.Range(i, newArray.Length);
+            newArray[i] = newArray[r];
+            newArray[r] = tmp;
+        }
+
+        return newArray;
+    }
+
+    private IEnumerator CheckMatch()
+    {
+        if (firstRevealed.Id == secondRevealed.Id)
+        {
+            score++;
+            Debug.Log($"Score: {score}");
+            scoreLabel.text = $"Score: {score}";
+        }
+        else
+        {
+            // wait for 0.5s then unreveal the cards if they don't match
+            yield return new WaitForSeconds(.5f);
+
+            firstRevealed.Unreveal();
+            secondRevealed.Unreveal();
+        }
+
+        // clear our variables
+        firstRevealed = null;
+        secondRevealed = null;
+    }
+
     public void Start()
     {
         Vector3 startPos = originalCard.transform.position;  // get first card position
@@ -61,29 +106,6 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    private int[] ShuffleArray(int[] numbers)
-    {
-        int[] newArray = numbers.Clone() as int[];
-
-        for (int i = 0; i < newArray.Length; i++)
-        {
-            int tmp = newArray[i];
-            int r = UnityEngine.Random.Range(i, newArray.Length);
-            newArray[i] = newArray[r];
-            newArray[r] = tmp;
-        }
-
-        return newArray;
-    }
-
-    public bool canReveal
-    {
-        get
-        {
-            return secondRevealed == null;  // returns false when a second card is revealed
-        }
-    }
-
     public void CardRevealed(MemoryCard card)
     {
         if (firstRevealed == null)
@@ -98,25 +120,8 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    private IEnumerator CheckMatch()
+    public void Restart()
     {
-        if (firstRevealed.Id == secondRevealed.Id)
-        {
-            score++;
-            Debug.Log($"Score: {score}");
-            scoreLabel.text = $"Score: {score}";
-        }
-        else
-        {
-            // wait for 0.5s then unreveal the cards if they don't match
-            yield return new WaitForSeconds(.5f);
-
-            firstRevealed.Unreveal();
-            secondRevealed.Unreveal();
-        }
-
-        // clear our variables
-        firstRevealed = null;
-        secondRevealed = null;
+        SceneManager.LoadScene("Scene");
     }
 }
