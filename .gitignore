@@ -50,3 +50,7 @@ script/unity/MemoryCards/Library/
 script/unity/MemoryCards/Logs/
 script/unity/MemoryCards/UserSettings/
 script/unity/MemoryCards/Temp/
+script/unity/Platformer/Library/
+script/unity/Platformer/Logs/
+script/unity/Platformer/UserSettings/
+script/unity/Platformer/Temp/
