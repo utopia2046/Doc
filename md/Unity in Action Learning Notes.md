@@ -212,10 +212,17 @@ Reference:
 - Flow Chart
   ![Unity Scripting Events](../images/UnityScriptingEvents.png)
 
+## 2D physics
+
+Difference between Collider and Rigidbody:
+
+- Collider 2D: defines the shape for physics to act on.
+- Rigidbody 2D: tells the physics simulation what object to act on.
+
+
 <!--
 TODO: unfinished below here
 
-## 2D physics
 
 ## Game GUI
 
