@@ -219,6 +219,13 @@ Difference between Collider and Rigidbody:
 - Collider 2D: defines the shape for physics to act on.
 - Rigidbody 2D: tells the physics simulation what object to act on.
 
+Resources:
+
+- Unity tilemap system: Window -> Package Manager -> 2D Tilemap Editor
+- Doc: <https://docs.unity3d.com/Manual/class-Tilemap.html>
+- External library: SuperTiled2-Unity <https://www.seanba.com/supertiled2unity>
+- Image courtesy of Tiled: <https://www.mapeditor.org>
+- Open Game Art: <https://lpc.opengameart.org>
 
 <!--
 TODO: unfinished below here
