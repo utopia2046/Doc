@@ -40,11 +40,31 @@ public class PlatformerPlayer : MonoBehaviour
             body.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
 
+        // handle friction when player is on moving platform
+        MovingPlatform platform = null;
+        if (hit != null)
+        {
+            platform = hit.GetComponent<MovingPlatform>();
+        }
+        if (platform != null)
+        { // set the movement relative to moving platform
+            transform.parent = platform.transform;
+        }
+        else
+        {
+            transform.parent = null;
+        }
+
         anim.SetFloat("speed", Mathf.Abs(deltaX));
+        Vector3 pScale = Vector3.one; // default scale 1 if not on moving platform
+        if (platform != null)
+        {
+            pScale = platform.transform.localScale; // if on moving platform, get platform scale
+        }
         if (!Mathf.Approximately(deltaX, 0))
         {
-            // when moving, scale positive or negative 1 to face right or left
-            transform.localScale = new Vector3(Mathf.Sign(deltaX), 1, 1);
+            // when moving, scale positive or negative 1 to face right or left, and cancel scale of parent platform
+            transform.localScale = new Vector3(Mathf.Sign(deltaX) / pScale.x, 1 / pScale.y, 1);
         }
     }
 }
