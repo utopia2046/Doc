@@ -227,11 +227,14 @@ Resources:
 - Image courtesy of Tiled: <https://www.mapeditor.org>
 - Open Game Art: <https://lpc.opengameart.org>
 
+## Game GUI
+
+Heads Up Display (HUD): additional overlay text and buttons on top of game view.
+Immediate mode system: explicitly issuing drawing commands every frame. (OnGUI method)
+Retained mode system: defining all the visuals once, and then for every frame.
+
 <!--
 TODO: unfinished below here
-
-
-## Game GUI
 
 ## Manage inventory
 
