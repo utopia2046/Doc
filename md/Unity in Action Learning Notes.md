@@ -229,9 +229,13 @@ Resources:
 
 ## Game GUI
 
-Heads Up Display (HUD): additional overlay text and buttons on top of game view.
-Immediate mode system: explicitly issuing drawing commands every frame. (OnGUI method)
-Retained mode system: defining all the visuals once, and then for every frame.
+- Heads Up Display (HUD): additional overlay text and buttons on top of game view.
+- Immediate mode system: explicitly issuing drawing commands every frame. (OnGUI method)
+- Retained mode system: defining all the visuals once, and then for every frame.
+
+> All HUD images must be attached to a canvas object
+
+To import a TrueType font with TextMeshPro, first import the font into Unity and then choose Window -> TextMeshPro -> Font Asset Creator.
 
 <!--
 TODO: unfinished below here
