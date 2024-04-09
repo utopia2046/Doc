@@ -54,3 +54,7 @@ script/unity/Platformer/Library/
 script/unity/Platformer/Logs/
 script/unity/Platformer/UserSettings/
 script/unity/Platformer/Temp/
+script/unity/Core3D/Library/
+script/unity/Core3D/Logs/
+script/unity/Core3D/UserSettings/
+script/unity/Core3D/Temp/

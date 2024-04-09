@@ -237,6 +237,14 @@ Resources:
 
 To import a TrueType font with TextMeshPro, first import the font into Unity and then choose Window -> TextMeshPro -> Font Asset Creator.
 
+To add Click event handler on an HUD button.
+
+1. Create a GameObject named GameController, create a script called UIController.cs and attach to it, and add public method in UIController called OnOpenSettings;
+2. In Unity Editor, select the Settings button object, in Inspector On Click() event handler list, click +;
+3. Drag GameController in the controller slot, then select the OnOpenSettings method;
+
+To interact with other mouse events, use an EventTrigger component.
+
 <!--
 TODO: unfinished below here
 
