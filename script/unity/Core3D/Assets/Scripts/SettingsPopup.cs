@@ -12,7 +12,7 @@ public class SettingsPopup : MonoBehaviour
     void Start()
     {
         speedSlider.value = PlayerPrefs.GetFloat("speed", 1);
-        nameInput.text = PlayerPrefs.GetString("name");
+        //nameInput.text = PlayerPrefs.GetString("name");
     }
 
     public void Open()
@@ -27,7 +27,7 @@ public class SettingsPopup : MonoBehaviour
 
     public void OnSubmitName(string name)
     {
-        PlayerPrefs.SetString("name", name);
+        //PlayerPrefs.SetString("name", name);
         Debug.Log($"Name: {name}");
     }
 

@@ -246,6 +246,7 @@ To add Click event handler on an HUD button.
 To interact with other mouse events, use an EventTrigger component.
 
 Saving settings between plays by using PlayerPrefs (small amount of data)
+
 ``` csharp
 using UnityEngine.UI;
 [SerializeField] Slider speedSlider;
@@ -254,6 +255,10 @@ speedSlider.value = PlayerPrefs.GetFloat("speed", 1);
 // save value
 PlayerPrefs.SetFloat("speed", speed);
 ```
+
+![Handling Events between GameObjects via a Messaging System](../images/MessagingSystem.png)
+
+
 
 <!--
 TODO: unfinished below here
