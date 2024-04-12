@@ -58,3 +58,7 @@ script/unity/Core3D/Library/
 script/unity/Core3D/Logs/
 script/unity/Core3D/UserSettings/
 script/unity/Core3D/Temp/
+script/unity/3rdPerson/Library/
+script/unity/3rdPerson/Logs/
+script/unity/3rdPerson/UserSettings/
+script/unity/3rdPerson/Temp/
