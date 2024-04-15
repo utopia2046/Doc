@@ -258,7 +258,13 @@ PlayerPrefs.SetFloat("speed", speed);
 
 ![Handling Events between GameObjects via a Messaging System](../images/MessagingSystem.png)
 
+### Lights and Shadows
 
+- Light Map: textures applied to the level geometry, with pictures of the shadows baked into the texture image.
+- Baking the shadow: drawing shadows onto a model's texture is referred to as baking the shadows.
+- Culling mask: set of objected that we want to remove from shadow casting.
+
+Refer to Cinemachine package (Window -> Package Manager -> Cinemachine) for more advanced camera control tools
 
 <!--
 TODO: unfinished below here
