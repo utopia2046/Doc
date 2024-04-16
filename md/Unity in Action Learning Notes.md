@@ -264,7 +264,7 @@ PlayerPrefs.SetFloat("speed", speed);
 - Baking the shadow: drawing shadows onto a model's texture is referred to as baking the shadows.
 - Culling mask: set of objected that we want to remove from shadow casting.
 
-Refer to Cinemachine package (Window -> Package Manager -> Cinemachine) for more advanced camera control tools
+Refer to Cinemachine package (Window -> Package Manager -> Cinemachine) for more advanced camera control tools.
 
 <!--
 TODO: unfinished below here

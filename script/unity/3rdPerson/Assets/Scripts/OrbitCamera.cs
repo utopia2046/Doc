@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // maintains position offset while orbiting around target
-
 public class OrbitCamera : MonoBehaviour
 {
     [SerializeField] Transform target;
