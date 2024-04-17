@@ -263,8 +263,16 @@ PlayerPrefs.SetFloat("speed", speed);
 - Light Map: textures applied to the level geometry, with pictures of the shadows baked into the texture image.
 - Baking the shadow: drawing shadows onto a model's texture is referred to as baking the shadows.
 - Culling mask: set of objected that we want to remove from shadow casting.
+- Skeletal animation: a series of bones setup inside the model, when bones move, the model's surface linked to bones moves along.
+- Mecanim: Unity system for managing animations on models.
 
 Refer to Cinemachine package (Window -> Package Manager -> Cinemachine) for more advanced camera control tools.
+
+Make skeletal animation:
+
+1. define animation clips in the imported model file;
+2. set up controller to play those animation clips;
+3. incorporate the animation controller in code.
 
 <!--
 TODO: unfinished below here
