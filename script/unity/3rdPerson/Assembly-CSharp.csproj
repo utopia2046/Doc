@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\OrbitCamera.cs" />
     <Compile Include="Assets\Scripts\RelativeMovement.cs" />
+    <Compile Include="Assets\Scripts\DoorOpenDevice.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

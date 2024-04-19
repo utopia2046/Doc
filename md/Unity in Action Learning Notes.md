@@ -265,6 +265,7 @@ PlayerPrefs.SetFloat("speed", speed);
 - Culling mask: set of objected that we want to remove from shadow casting.
 - Skeletal animation: a series of bones setup inside the model, when bones move, the model's surface linked to bones moves along.
 - Mecanim: Unity system for managing animations on models.
+- Tween: code commands that cause object to move around.
 
 Refer to Cinemachine package (Window -> Package Manager -> Cinemachine) for more advanced camera control tools.
 
