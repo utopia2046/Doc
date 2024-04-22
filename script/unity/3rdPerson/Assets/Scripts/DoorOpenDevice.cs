@@ -20,7 +20,7 @@ public class DoorOpenDevice : MonoBehaviour
 
     }
 
-    public void Open()
+    public void Operate()
     {
         if (open)
         {

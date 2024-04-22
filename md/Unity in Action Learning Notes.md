@@ -275,6 +275,13 @@ Make skeletal animation:
 2. set up controller to play those animation clips;
 3. incorporate the animation controller in code.
 
+| Tips: You can use Dot production to check if two vector are of same direction, for example:
+
+``` csharp
+// check if target object is 'facing' the direction
+if (Vector3.Dot(transform.forward, direction.normalized) > .5f) { ... }
+```
+
 <!--
 TODO: unfinished below here
 
