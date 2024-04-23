@@ -60,6 +60,7 @@
     <Compile Include="Assets\Scripts\OrbitCamera.cs" />
     <Compile Include="Assets\Scripts\RelativeMovement.cs" />
     <Compile Include="Assets\Scripts\DeviceOperator.cs" />
+    <Compile Include="Assets\Scripts\ColorChangeDevice.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -8,18 +8,6 @@ public class DoorOpenDevice : MonoBehaviour
 
     private bool open;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void Operate()
     {
         if (open)
