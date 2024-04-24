@@ -57,10 +57,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\DoorOpenDevice.cs" />
+    <Compile Include="Assets\Scripts\ColorChangeDevice.cs" />
     <Compile Include="Assets\Scripts\OrbitCamera.cs" />
     <Compile Include="Assets\Scripts\RelativeMovement.cs" />
     <Compile Include="Assets\Scripts\DeviceOperator.cs" />
-    <Compile Include="Assets\Scripts\ColorChangeDevice.cs" />
+    <Compile Include="Assets\Scripts\DeviceTrigger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

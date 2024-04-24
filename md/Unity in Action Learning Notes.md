@@ -282,6 +282,12 @@ Make skeletal animation:
 if (Vector3.Dot(transform.forward, direction.normalized) > .5f) { ... }
 ```
 
+Tips: When setting an object to be trigger object, remember to:
+
+1. In Inspector -> Box Collider, check 'Is Trigger';
+2. In Inspector top right, set the layer to be 'Ignore Raycast';
+3. In Inspector -> Mesh Renderer -> Lighting -> turn off 'Cast Shadows';
+
 <!--
 TODO: unfinished below here
 
