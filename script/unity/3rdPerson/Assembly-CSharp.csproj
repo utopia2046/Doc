@@ -62,6 +62,7 @@
     <Compile Include="Assets\Scripts\RelativeMovement.cs" />
     <Compile Include="Assets\Scripts\DeviceOperator.cs" />
     <Compile Include="Assets\Scripts\DeviceTrigger.cs" />
+    <Compile Include="Assets\Scripts\CollectibleItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

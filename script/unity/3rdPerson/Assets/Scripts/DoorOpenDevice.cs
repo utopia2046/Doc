@@ -25,6 +25,7 @@ public class DoorOpenDevice : MonoBehaviour
 
     public void Activate()
     {
+        Debug.Log("Activate called");
         if (!open)
         {
             Vector3 pos = transform.position + dPos;
@@ -35,6 +36,7 @@ public class DoorOpenDevice : MonoBehaviour
 
     public void Deactivate()
     {
+        Debug.Log("Deactivate called");
         if (open)
         {
             Vector3 pos = transform.position - dPos;

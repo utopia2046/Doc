@@ -8,6 +8,7 @@ public class DeviceTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Enter Door Trigger");
         foreach (GameObject target in targets)
         {
             target.SendMessage("Activate");
@@ -16,6 +17,7 @@ public class DeviceTrigger : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
+        Debug.Log("Exit Door Trigger");
         foreach (GameObject target in targets)
         {
             target.SendMessage("Deactivate");
