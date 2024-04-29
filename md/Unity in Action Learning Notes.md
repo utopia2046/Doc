@@ -288,12 +288,22 @@ Tips: When setting an object to be trigger object, remember to:
 2. In Inspector top right, set the layer to be 'Ignore Raycast';
 3. In Inspector -> Mesh Renderer -> Lighting -> turn off 'Cast Shadows';
 
-<!--
-TODO: unfinished below here
-
 ## Manage inventory
 
-## Interactive devices and items in game
+Tips:
+
+1. Drag GameObject from Hierarchy view to Project view will turn it into a prefab. Then we can create multiple instances from a Prefab. In this we could create collectable items (like keys, engery, health) easily.
+2. To use MVC pattern for game status management, create an Interface `IGamgeManager`, then managers like `InventoryManager` and `PlayerManager` which inherit from the interface, then create a centralized `Managers` to manage all managers (see diagram below);
+3. Use built-in `StartCoroutine` method to call other long-running data loading methods asynchronously (see sample code below), so that UI animation won't stuck on startup.
+
+![Game Managers](../images/GameManagers.png)
+
+``` csharp
+StartCoroutine(StartupManagers()); // call StartupManagers asynchronously
+```
+
+<!--
+TODO: unfinished below here
 
 ## Sound effects and music
 
