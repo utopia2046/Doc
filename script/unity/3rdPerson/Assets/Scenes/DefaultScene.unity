@@ -3087,6 +3087,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 592845361}
     m_Modifications:
+    - target: {fileID: 877232455935205679, guid: cba29351353cc5a4d95256907da93c4a, type: 3}
+      propertyPath: itemName
+      value: Key
+      objectReference: {fileID: 0}
     - target: {fileID: 877232455935205680, guid: cba29351353cc5a4d95256907da93c4a, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -3187,6 +3191,10 @@ PrefabInstance:
     - target: {fileID: 2821500522824937232, guid: ab22715a08f30744787b31b2fe8059fa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2821500522824937233, guid: ab22715a08f30744787b31b2fe8059fa, type: 3}
+      propertyPath: itemName
+      value: Health
       objectReference: {fileID: 0}
     - target: {fileID: 2821500522824937239, guid: ab22715a08f30744787b31b2fe8059fa, type: 3}
       propertyPath: m_Name

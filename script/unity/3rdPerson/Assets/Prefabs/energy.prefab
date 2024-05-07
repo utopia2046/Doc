@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7252353270268529107}
   - component: {fileID: 7252353270268529134}
   m_Layer: 2
-  m_Name: engery
+  m_Name: energy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,4 +110,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fea67ce787deb46438702be1b49b264d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: MagicSphere
+  itemName: Energy
