@@ -2518,6 +2518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0fae8bc4f1ec0541b7a8f5c600670bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fontSize: 18
 --- !u!4 &1430379490
 Transform:
   m_ObjectHideFlags: 0

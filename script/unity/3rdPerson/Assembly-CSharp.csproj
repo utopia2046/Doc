@@ -63,11 +63,11 @@
     <Compile Include="Assets\Scripts\ColorChangeDevice.cs" />
     <Compile Include="Assets\Scripts\IGameManager.cs" />
     <Compile Include="Assets\Scripts\OrbitCamera.cs" />
+    <Compile Include="Assets\Scripts\BasicUI.cs" />
     <Compile Include="Assets\Scripts\RelativeMovement.cs" />
     <Compile Include="Assets\Scripts\Managers.cs" />
     <Compile Include="Assets\Scripts\InventoryManager.cs" />
     <Compile Include="Assets\Scripts\DeviceOperator.cs" />
-    <Compile Include="Assets\Scripts\BasicUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
