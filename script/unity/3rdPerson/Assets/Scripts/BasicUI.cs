@@ -28,11 +28,44 @@ public class BasicUI : MonoBehaviour
             return;
         }
 
+        // show item list
         foreach (string item in itemList)
         {
             int count = Managers.Inventory.GetItemCount(item);
             Texture2D image = Resources.Load<Texture2D>($"Icons/{item}");
             GUI.Box(new Rect(posX, posY, width, height), new GUIContent($"({count})", image), currentStyle);
+            posX += width + buffer;
+        }
+
+        // show equipped item
+        string equipped = Managers.Inventory.equippedItem;
+        if (equipped != null)
+        {
+            posX = Screen.width - (width + buffer);
+            Texture2D image = Resources.Load($"Icons/{equipped}") as Texture2D;
+            GUI.Box(new Rect(posX, posY, width, height), new GUIContent("Equipped", image));
+        }
+
+        posX = 10;
+        posY += height + buffer;
+
+        // equip button
+        foreach (string item in itemList)
+        {
+            if (GUI.Button(new Rect(posX, posY, width, height), $"Equip {item}"))
+            {
+                Managers.Inventory.EquipItem(item);
+            }
+
+            if (item == "health")
+            {
+                if (GUI.Button(new Rect(posX, posY + height + buffer, width, height), "Use Health"))
+                {
+                    //Managers.Inventory.ConsumeItem("health");
+                    //Managers.Player.ChangeHealth(25);
+                }
+            }
+
             posX += width + buffer;
         }
     }

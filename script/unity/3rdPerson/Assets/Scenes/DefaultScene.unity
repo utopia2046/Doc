@@ -2317,6 +2317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fbba3f48696b644fa0195b7381908ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  requireKey: 1
   targets:
   - {fileID: 197060137}
 --- !u!54 &1137872118
