@@ -68,6 +68,8 @@
     <Compile Include="Assets\Scripts\Managers.cs" />
     <Compile Include="Assets\Scripts\InventoryManager.cs" />
     <Compile Include="Assets\Scripts\DeviceOperator.cs" />
+    <Compile Include="Assets\Scripts\PlayerCharacter.cs" />
+    <Compile Include="Assets\Scripts\WanderingAI.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

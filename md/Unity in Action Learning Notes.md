@@ -303,12 +303,26 @@ Tips:
 StartCoroutine(StartupManagers()); // call StartupManagers asynchronously
 ```
 
+## Sound effects and music
 
+Supported Audio File Formats: WAV, AIF(Mac), MP3, OGG, MOD, XM
+Tool to create sound files: Audacity
+Free sound clips: <www.freesound.org>
+
+Tips:
+
+- Load in Background and Preload Audio Data settings balance playback performance and memory usage, don't preload long audio clip.
+- 3D sounds have specific location within the simulation. Their volume and pitch are influenced by the movement of the listener.
+
+Audio Components:
+
+- AudioClip: the sound file, like CD
+- AudioSource: play the source, like CD player
+- AudioListener: receiver in game, like the user controlled character (on the default camera)
+- AudioMixer(optional): process audio signals and apply various effects
 
 <!--
 TODO: unfinished below here
-
-## Sound effects and music
 
 ## Deploy to desktop, web, or mobile
 
