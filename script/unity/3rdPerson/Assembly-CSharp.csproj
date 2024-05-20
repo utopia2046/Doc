@@ -70,6 +70,8 @@
     <Compile Include="Assets\Scripts\DeviceOperator.cs" />
     <Compile Include="Assets\Scripts\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\WanderingAI.cs" />
+    <Compile Include="Assets\Scripts\RayShooter.cs" />
+    <Compile Include="Assets\Scripts\ReactiveTarget.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
