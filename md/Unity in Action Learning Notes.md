@@ -243,6 +243,8 @@ To add Click event handler on an HUD button.
 2. In Unity Editor, select the Settings button object, in Inspector On Click() event handler list, click +;
 3. Drag GameController in the controller slot, then select the OnOpenSettings method;
 
+> Important! When linking event handlers to HUD controls, remember to choose the function under **`Dynamic Float`** (upper in popup), and **not `Static Parameter`**, in the latter case it will receive only a single value preset in editor.
+
 To interact with other mouse events, use an EventTrigger component.
 
 Saving settings between plays by using PlayerPrefs (small amount of data)
@@ -320,6 +322,25 @@ Audio Components:
 - AudioSource: play the source, like CD player
 - AudioListener: receiver in game, like the user controlled character (on the default camera)
 - AudioMixer(optional): process audio signals and apply various effects
+
+Tips: You can create a centralized AudioManager to control the volume and mute all if needed, it is implemented using global values on `AudioListener`. The `AudioListener` class can modulate the volume of all sounds received by all `AudioListener` instances.
+
+``` csharp
+public class AudioManager : MonoBehaviour, IGameManager
+{
+    public float soundVolume
+    {
+        get { return AudioListener.volume; }
+        set { AudioListener.volume = value; }
+    }
+    public bool soundMute
+    {
+        get { return AudioListener.pause; }
+        set { AudioListener.pause = value; }
+    }
+    //...
+}
+```
 
 <!--
 TODO: unfinished below here
