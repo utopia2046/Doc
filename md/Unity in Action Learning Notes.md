@@ -342,6 +342,17 @@ public class AudioManager : MonoBehaviour, IGameManager
 }
 ```
 
+Music
+
+- Normally, Unity loads all assets in a scene as soon as the scene loads, but assets from `Resources` aren't loaded until the code manually fetches them. In this case, we want to lazy-load the audio clips for music.
+- For music clips, we would like to set:
+  - `Load Type` as `Streaming`
+  - `Compression Format` to be `Vorbis`
+- For music `AudioSource`:
+  - `Play On Awake`: false
+  - `Loop`: true
+  - `Priority` set to a lower value (higher priority)
+
 <!--
 TODO: unfinished below here
 

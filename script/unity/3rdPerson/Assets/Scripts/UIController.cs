@@ -21,4 +21,9 @@ public class UIController : MonoBehaviour
             popup.gameObject.SetActive(!isShowing); // toggle settings popup show/hide
         }
     }
+
+    public bool IsSettingsShown()
+    {
+        return popup.gameObject.activeSelf;
+    }
 }

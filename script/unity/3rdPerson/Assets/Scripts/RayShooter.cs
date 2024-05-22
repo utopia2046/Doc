@@ -7,6 +7,7 @@ public class RayShooter : MonoBehaviour
     [SerializeField] AudioSource soundSource;
     [SerializeField] AudioClip hitWallSound;
     [SerializeField] AudioClip hitEnemySound;
+    [SerializeField] UIController uiController;
 
     private Camera cam;
 
@@ -30,7 +31,7 @@ public class RayShooter : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !uiController.IsSettingsShown())
         {
             //Vector3 point = new Vector3(cam.pixelWidth / 2, cam.pixelHeight / 2, 0);
             //Ray ray = cam.ScreenPointToRay(point);
