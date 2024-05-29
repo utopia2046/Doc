@@ -4720,6 +4720,7 @@ GameObject:
   - component: {fileID: 1430379490}
   - component: {fileID: 1430379489}
   - component: {fileID: 1430379491}
+  - component: {fileID: 1430379492}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -4768,6 +4769,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popup: {fileID: 1609547907}
+--- !u!114 &1430379492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430379488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c1f4186aa5e9e74d8b42d5841bf8973, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 195220, guid: 625e6e05dca734480a6094f6ae51be4a, type: 3}
 --- !u!1 &1454460336
 GameObject:
   m_ObjectHideFlags: 0

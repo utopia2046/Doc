@@ -103,7 +103,7 @@ API References:
 
 - MonoBehavior: <https://docs.unity3d.com/ScriptReference/MonoBehaviour.html>
 - Transform: <https://docs.unity3d.com/ScriptReference/Transform.html>
-- Manual: https://docs.unity.cn/cn/2021.1/Manual/class-MonoBehaviour.html
+- Manual: <https://docs.unity.cn/cn/2021.1/Manual/class-MonoBehaviour.html>
 
 Scene Navigation:
 

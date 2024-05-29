@@ -4811,6 +4811,7 @@ GameObject:
   - component: {fileID: 2378610}
   - component: {fileID: 11491928}
   - component: {fileID: 11470818}
+  - component: {fileID: 1019498611985511882}
   - component: {fileID: 8278730}
   m_Layer: 0
   m_Name: Enemy
@@ -4925,6 +4926,18 @@ MonoBehaviour:
   speed: 3
   obstacleRange: 5
   fireballPrefab: {fileID: 143464, guid: e88d7c49744b54e85ab3a1537ed50eed, type: 3}
+--- !u!114 &1019498611985511882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53b4faf3187337549a7a54b2b7ea7e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &8278730
 AudioSource:
   m_ObjectHideFlags: 0

@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCharacter : MonoBehaviour {
-    private int health;
+public class PlayerCharacter : MonoBehaviour
+{
+    //private int health;
 
-    void Start() {
-        health = 5;
+    void Start()
+    {
+        //health = 5;
     }
 
-    public void Hurt(int damage) {
-        health -= damage;
-        Debug.Log($"Health: {health}");
+    public void Hurt(int damage)
+    {
+        //health -= damage;
+        Managers.Player.ChangeHealth(-damage);
+        //Debug.Log($"Health: {health}");
     }
 }

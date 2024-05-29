@@ -56,25 +56,27 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\DoorOpenDevice.cs" />
-    <Compile Include="Assets\Scripts\PlayerManager.cs" />
-    <Compile Include="Assets\Scripts\DeviceTrigger.cs" />
-    <Compile Include="Assets\Scripts\CollectibleItem.cs" />
-    <Compile Include="Assets\Scripts\ColorChangeDevice.cs" />
-    <Compile Include="Assets\Scripts\IGameManager.cs" />
+    <Compile Include="Assets\Scripts\Devices\DoorOpenDevice.cs" />
+    <Compile Include="Assets\Scripts\Managers\PlayerManager.cs" />
+    <Compile Include="Assets\Scripts\Devices\DeviceTrigger.cs" />
+    <Compile Include="Assets\Scripts\Devices\CollectibleItem.cs" />
+    <Compile Include="Assets\Scripts\Devices\ColorChangeDevice.cs" />
+    <Compile Include="Assets\Scripts\Managers\IGameManager.cs" />
     <Compile Include="Assets\Scripts\UIController.cs" />
     <Compile Include="Assets\Scripts\OrbitCamera.cs" />
-    <Compile Include="Assets\Scripts\AudioManager.cs" />
-    <Compile Include="Assets\Scripts\BasicUI.cs" />
+    <Compile Include="Assets\Scripts\Managers\AudioManager.cs" />
+    <Compile Include="Assets\Scripts\UI\BasicUI.cs" />
     <Compile Include="Assets\Scripts\RelativeMovement.cs" />
-    <Compile Include="Assets\Scripts\Managers.cs" />
-    <Compile Include="Assets\Scripts\ReactiveTarget.cs" />
-    <Compile Include="Assets\Scripts\InventoryManager.cs" />
-    <Compile Include="Assets\Scripts\DeviceOperator.cs" />
-    <Compile Include="Assets\Scripts\SettingsPopup.cs" />
+    <Compile Include="Assets\Scripts\Managers\Managers.cs" />
+    <Compile Include="Assets\Scripts\Enemies\ReactiveTarget.cs" />
+    <Compile Include="Assets\Scripts\Managers\InventoryManager.cs" />
+    <Compile Include="Assets\Scripts\Devices\DeviceOperator.cs" />
+    <Compile Include="Assets\Scripts\UI\SettingsPopup.cs" />
     <Compile Include="Assets\Scripts\RayShooter.cs" />
     <Compile Include="Assets\Scripts\PlayerCharacter.cs" />
-    <Compile Include="Assets\Scripts\WanderingAI.cs" />
+    <Compile Include="Assets\Scripts\Enemies\WanderingAI.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Fireball.cs" />
+    <Compile Include="Assets\Scripts\SceneController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
