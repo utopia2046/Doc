@@ -75,9 +75,10 @@
     <Compile Include="Assets\Scripts\Devices\DeviceOperator.cs" />
     <Compile Include="Assets\Scripts\UI\SettingsPopup.cs" />
     <Compile Include="Assets\Scripts\Player\RayShooter.cs" />
+    <Compile Include="Assets\Scripts\Player\PointClickMovement.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\Enemies\WanderingAI.cs" />
-    <Compile Include="Assets\Scripts\Player\PointClickMovement.cs" />
+    <Compile Include="Assets\Scripts\Devices\BaseDevice.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

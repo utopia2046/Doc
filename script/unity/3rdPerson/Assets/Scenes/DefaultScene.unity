@@ -569,6 +569,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: character
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e01e249e002c273468a88c4b197a01f8, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e01e249e002c273468a88c4b197a01f8, type: 3}
 --- !u!4 &203560023 stripped
@@ -774,7 +778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 075500ae82baa484c8e9a33262f23c14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 203560023}
   moveSpeed: 6
   rotSpeed: 15
   jumpSpeed: 15
@@ -1562,7 +1566,7 @@ GameObject:
   - component: {fileID: 429035768}
   - component: {fileID: 429035767}
   - component: {fileID: 429035766}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Platform4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1873,7 +1877,7 @@ GameObject:
   - component: {fileID: 651380096}
   - component: {fileID: 651380095}
   - component: {fileID: 651380094}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Platform2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3509,7 +3513,7 @@ GameObject:
   - component: {fileID: 988298532}
   - component: {fileID: 988298531}
   - component: {fileID: 988298530}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Platform1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4396,7 +4400,7 @@ GameObject:
   - component: {fileID: 1216975661}
   - component: {fileID: 1216975660}
   - component: {fileID: 1216975659}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Platform3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5782,8 +5786,8 @@ GameObject:
   - component: {fileID: 1927583315}
   - component: {fileID: 1927583314}
   - component: {fileID: 1927583313}
-  m_Layer: 0
-  m_Name: Floor
+  m_Layer: 3
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

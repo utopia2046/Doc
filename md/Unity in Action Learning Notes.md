@@ -353,6 +353,11 @@ Music
   - `Loop`: true
   - `Priority` set to a lower value (higher priority)
 
+Path Finding Algorithm
+
+1. Unity built-in pathfinding solution `NavMesh`. Now included in `AI Navigation` package: <https://docs.unity3d.com/Packages/com.unity.ai.navigation@1.1/manual/index.html>
+2. Free `A* Pathfinding` Project: <https://arongranberg.com/astar/>
+
 <!--
 TODO: unfinished below here
 

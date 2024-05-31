@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorOpenDevice : MonoBehaviour
+public class DoorOpenDevice : BaseDevice
 {
     [SerializeField] Vector3 dPos;  // amount to offset the position by when the door opens
 
     private bool open;
 
-    public void Operate()
+    public override void Operate()
     {
         if (open)
         {
