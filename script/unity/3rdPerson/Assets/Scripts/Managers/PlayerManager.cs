@@ -25,5 +25,6 @@ public class PlayerManager : MonoBehaviour, IGameManager
         health = (health > maxHealth) ? maxHealth : health;
         health = (health < 0) ? 0 : health;
         Debug.Log($"Health: {health}/{maxHealth}");
+        Messenger.Broadcast(GameEvent.HEALTH_UPDATED);
     }
 }
