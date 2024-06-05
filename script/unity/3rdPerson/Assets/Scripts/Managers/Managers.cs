@@ -4,24 +4,30 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerManager))]
 [RequireComponent(typeof(InventoryManager))]
+[RequireComponent(typeof(MissionManager))]
 public class Managers : MonoBehaviour
 {
     public static PlayerManager Player { get; private set; }
     public static InventoryManager Inventory { get; private set; }
     public static AudioManager Audio { get; private set; }
+    public static MissionManager Mission { get; private set; }
 
     private List<IGameManager> startSequence;
 
     void Awake() // built-in method from MonoBehaviour
     {
+        DontDestroyOnLoad(gameObject); // Unity's build-in command to persist an object between scenes
+
         Player = GetComponent<PlayerManager>();
         Inventory = GetComponent<InventoryManager>();
         Audio = GetComponent<AudioManager>();
+        Mission = GetComponent<MissionManager>();
 
         startSequence = new List<IGameManager>();
         startSequence.Add(Player);
         startSequence.Add(Inventory);
         startSequence.Add(Audio);
+        startSequence.Add(Mission);
 
         StartCoroutine(StartupManagers()); // call StartupManagers asynchronously
     }
@@ -52,11 +58,15 @@ public class Managers : MonoBehaviour
             }
 
             if (numReady > lastReady)
+            {
                 Debug.Log($"Progress: {numReady}/{numModules}");
+                Messenger<int, int>.Broadcast(StartupEvent.MANAGERS_PROGRESS, numReady, numModules);
+            }
 
             yield return null;
         }
 
         Debug.Log("All managers started up");
+        Messenger.Broadcast(StartupEvent.MANAGERS_STARTED);
     }
 }
