@@ -59,6 +59,7 @@
     <Compile Include="Assets\Scripts\Devices\DoorOpenDevice.cs" />
     <Compile Include="Assets\Scripts\SceneController.cs" />
     <Compile Include="Assets\Scripts\Managers\PlayerManager.cs" />
+    <Compile Include="Assets\Scripts\StartupController.cs" />
     <Compile Include="Assets\Scripts\Devices\DeviceTrigger.cs" />
     <Compile Include="Assets\Scripts\Devices\CollectibleItem.cs" />
     <Compile Include="Assets\Scripts\Enemies\Fireball.cs" />
@@ -66,6 +67,8 @@
     <Compile Include="Assets\Scripts\Managers\IGameManager.cs" />
     <Compile Include="Assets\Scripts\Devices\BaseDevice.cs" />
     <Compile Include="Assets\Scripts\UI\UIController.cs" />
+    <Compile Include="Assets\Scripts\Managers\NetworkService.cs" />
+    <Compile Include="Assets\Scripts\Managers\MissionManager.cs" />
     <Compile Include="Assets\Scripts\UI\InventoryPopup.cs" />
     <Compile Include="Assets\Scripts\OrbitCamera.cs" />
     <Compile Include="Assets\Scripts\Managers\AudioManager.cs" />
@@ -82,9 +85,7 @@
     <Compile Include="Assets\Scripts\Player\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\Enemies\WanderingAI.cs" />
     <Compile Include="Assets\Scripts\Events\StartupEvent.cs" />
-    <Compile Include="Assets\Scripts\Managers\MissionManager.cs" />
-    <Compile Include="Assets\Scripts\Managers\NetworkService.cs" />
-    <Compile Include="Assets\Scripts\StartupController.cs" />
+    <Compile Include="Assets\Scripts\Devices\ObjectiveTrigger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
