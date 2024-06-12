@@ -1392,6 +1392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthLabel: {fileID: 0}
+  levelEnding: {fileID: 0}
   popup: {fileID: 0}
 --- !u!1 &1430379488
 GameObject:
@@ -1454,6 +1455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthLabel: {fileID: 0}
+  levelEnding: {fileID: 0}
   popup: {fileID: 0}
 --- !u!114 &1430379492
 MonoBehaviour:

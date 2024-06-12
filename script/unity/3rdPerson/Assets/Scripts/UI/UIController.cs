@@ -25,8 +25,15 @@ public class UIController : MonoBehaviour
     {
         OnHealthUpdated();
 
-        levelEnding.gameObject.SetActive(false);
-        popup.gameObject.SetActive(false);
+        if (levelEnding != null && levelEnding.gameObject != null)
+        {
+            levelEnding.gameObject.SetActive(false);
+        }
+
+        if (popup != null && popup.gameObject != null)
+        {
+            popup.gameObject.SetActive(false);
+        }
     }
 
     void Update()
@@ -47,7 +54,10 @@ public class UIController : MonoBehaviour
     private void OnHealthUpdated()
     {
         string message = $"Health: {Managers.Player.health}/{Managers.Player.maxHealth}";
-        healthLabel.text = message;
+        if (healthLabel != null)
+        {
+            healthLabel.text = message;
+        }
     }
 
     private void OnLevelComplete()
