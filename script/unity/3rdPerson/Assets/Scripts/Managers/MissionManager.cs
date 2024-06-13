@@ -18,7 +18,7 @@ public class MissionManager : MonoBehaviour, IGameManager
 
         //network = service;
 
-        UpdateData(0, 3);
+        UpdateData(0, 1);
 
         // any long-running startup tasks go here, and set status to 'Initializing' until those tasks are complete
         status = ManagerStatus.Started;

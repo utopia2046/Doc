@@ -5,12 +5,14 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerManager))]
 [RequireComponent(typeof(InventoryManager))]
 [RequireComponent(typeof(MissionManager))]
+[RequireComponent(typeof(DataManager))]
 public class Managers : MonoBehaviour
 {
     public static PlayerManager Player { get; private set; }
     public static InventoryManager Inventory { get; private set; }
     public static AudioManager Audio { get; private set; }
     public static MissionManager Mission { get; private set; }
+    public static DataManager Data { get; private set; }
 
     private List<IGameManager> startSequence;
 
@@ -18,6 +20,7 @@ public class Managers : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject); // Unity's build-in command to persist an object between scenes
 
+        Data = GetComponent<DataManager>();
         Player = GetComponent<PlayerManager>();
         Inventory = GetComponent<InventoryManager>();
         Audio = GetComponent<AudioManager>();
@@ -28,6 +31,7 @@ public class Managers : MonoBehaviour
         startSequence.Add(Inventory);
         startSequence.Add(Audio);
         startSequence.Add(Mission);
+        startSequence.Add(Data);
 
         StartCoroutine(StartupManagers()); // call StartupManagers asynchronously
     }

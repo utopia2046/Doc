@@ -316,7 +316,7 @@ Tips:
 - Load in Background and Preload Audio Data settings balance playback performance and memory usage, don't preload long audio clip.
 - 3D sounds have specific location within the simulation. Their volume and pitch are influenced by the movement of the listener.
 
-Audio Components:
+### Audio Components
 
 - AudioClip: the sound file, like CD
 - AudioSource: play the source, like CD player
@@ -342,7 +342,7 @@ public class AudioManager : MonoBehaviour, IGameManager
 }
 ```
 
-Music
+### Music
 
 - Normally, Unity loads all assets in a scene as soon as the scene loads, but assets from `Resources` aren't loaded until the code manually fetches them. In this case, we want to lazy-load the audio clips for music.
 - For music clips, we would like to set:
@@ -353,10 +353,36 @@ Music
   - `Loop`: true
   - `Priority` set to a lower value (higher priority)
 
-Path Finding Algorithm
+### Path Finding Algorithm
 
 1. Unity built-in pathfinding solution `NavMesh`. Now included in `AI Navigation` package: <https://docs.unity3d.com/Packages/com.unity.ai.navigation@1.1/manual/index.html>
 2. Free `A* Pathfinding` Project: <https://arongranberg.com/astar/>
+
+### Saving and Loading Data
+
+- Save small amount of settings: `PlayerPrefs`
+- Save user data (game progress, inventory): `System.IO`
+
+``` csharp
+// read from PlayerPrefs to display on UI
+speedSlider.value = PlayerPrefs.GetFloat("speed", 1);
+// save setting
+PlayerPrefs.SetFloat("speed", speed);
+
+// save game state object to binary file
+using (FileStream stream = File.Create(filename))
+{
+    BinaryFormatter formatter = new BinaryFormatter();
+    formatter.Serialize(stream, gamestate);
+}
+
+// load game state
+using (FileStream stream = File.Open(filename, FileMode.Open))
+{
+    BinaryFormatter formatter = new BinaryFormatter();
+    gamestate = formatter.Deserialize(stream) as Dictionary<string, object>;
+}
+```
 
 <!--
 TODO: unfinished below here

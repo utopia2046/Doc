@@ -86,6 +86,7 @@
     <Compile Include="Assets\Scripts\Player\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\Enemies\WanderingAI.cs" />
     <Compile Include="Assets\Scripts\Events\StartupEvent.cs" />
+    <Compile Include="Assets\Scripts\Managers\DataManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -51,6 +51,16 @@ public class UIController : MonoBehaviour
         return popup.gameObject.activeSelf;
     }
 
+    public void SaveGame()
+    {
+        Managers.Data.SaveGameState();
+    }
+
+    public void LoadGame()
+    {
+        Managers.Data.LoadGameState();
+    }
+
     private void OnHealthUpdated()
     {
         string message = $"Health: {Managers.Player.health}/{Managers.Player.maxHealth}";

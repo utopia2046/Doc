@@ -13,8 +13,19 @@ public class InventoryManager : MonoBehaviour, IGameManager
     {
         Debug.Log("Inventory manager starting...");
         status = ManagerStatus.Initializing;
-        items = new Dictionary<string, int>();
+
+        UpdateData(new Dictionary<string, int>());
         status = ManagerStatus.Started;
+    }
+
+    public void UpdateData(Dictionary<string, int> items)
+    {
+        this.items = items;
+    }
+
+    public Dictionary<string, int> GetData()
+    {
+        return items;
     }
 
     public void AddItem(string name)
