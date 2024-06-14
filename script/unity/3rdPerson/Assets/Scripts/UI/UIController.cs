@@ -13,12 +13,14 @@ public class UIController : MonoBehaviour
     {
         Messenger.AddListener(GameEvent.HEALTH_UPDATED, OnHealthUpdated);
         Messenger.AddListener(GameEvent.LEVEL_COMPLETE, OnLevelComplete);
+        Messenger.AddListener(GameEvent.GAME_COMPLETE, OnGameComplete);
     }
 
     void OnDisable()
     {
         Messenger.RemoveListener(GameEvent.HEALTH_UPDATED, OnHealthUpdated);
         Messenger.RemoveListener(GameEvent.LEVEL_COMPLETE, OnLevelComplete);
+        Messenger.RemoveListener(GameEvent.GAME_COMPLETE, OnGameComplete);
     }
 
     void Start()
@@ -83,5 +85,11 @@ public class UIController : MonoBehaviour
         yield return new WaitForSeconds(2);  // Show the message for 2 sec then go to next level
 
         Managers.Mission.GoToNext();
+    }
+
+    private void OnGameComplete()
+    {
+        levelEnding.gameObject.SetActive(true);
+        levelEnding.text = "You Finished the Game!";
     }
 }

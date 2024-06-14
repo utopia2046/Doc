@@ -384,6 +384,14 @@ using (FileStream stream = File.Open(filename, FileMode.Open))
 }
 ```
 
+Tips
+
+When multiple scene share similar HUD (settings dialog, inventory, etc.), the HUD components could be separated in a scene, and loaded in Additive mode.
+
+``` csharp
+SceneManager.LoadScene( "HUDScene", LoadSceneMode.Additive);
+```
+
 <!--
 TODO: unfinished below here
 
