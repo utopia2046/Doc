@@ -392,9 +392,85 @@ When multiple scene share similar HUD (settings dialog, inventory, etc.), the HU
 SceneManager.LoadScene( "HUDScene", LoadSceneMode.Additive);
 ```
 
-<!--
-TODO: unfinished below here
-
 ## Deploy to desktop, web, or mobile
 
--->
+- Generate Build for different Platforms: File -> Build Settings -> Select Scenes and Target Platforms
+- Adjust player settings: Setting the game's name and Icon (Project Settings -> Player)
+- Platform-dependent compilation via MACROs like UNITY_EDITOR
+
+``` csharp
+public class PlatformTest : MonoBehaviour {
+  void OnGUI()
+  {
+  #if UNITY_EDITOR
+      GUI.Label(new Rect(10, 10, 200, 20), "Running in Editor");
+  #elif UNITY_STANDALONE
+      GUI.Label(new Rect(10, 10, 200, 20), "Running on Desktop");
+  #else
+      GUI.Label(new Rect(10, 10, 200, 20), "Running on other platform");
+  #endif
+  }
+}
+```
+
+### Build for Web
+
+- Building the game embedded in a web page (using WebGL plugin)
+- Communicating with Javascript in browser
+
+``` csharp
+using System.Runtime.InteropServices;
+using UnityEngine;
+
+public class WebTestObject : MonoBehaviour
+{
+    private string message;
+    [DllImport("__Internal")] // import the function from JS library
+    private static extern void ShowAlert(string msg);
+
+    void Start()
+    {
+        message = "No message yet";
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0)) // On mouse click, call the imported function
+        {
+            ShowAlert("Hello out there!");
+        }
+    }
+
+    void OnGUI()
+    {
+        GUI.Label(new Rect(10, 10, 200, 20), message); // display message on top left of the screen
+    }
+
+    public void RespondToBrowser(string message) // function for the browser to call
+    {
+        this.message = message;
+    }
+}
+```
+
+``` js
+// Scripts/Plugins/WebGL/WebTest.jslib
+mergeInto(LibraryManager.library, {
+    ShowAlert: function(msg) { // function imported and called from C#
+        window.alert(Pointer_stringify(msg));
+    },
+});
+```
+
+### Set up a plugin project in Android Studio
+
+1. Create a New Project by either selecting that in the startup window or going to File > New > New Project.
+2. In the New Project window that appears, select the No Activity template (since this is a plugin, not a standalone Android app) and click Next.
+3. Now name it TestPluginProj; for this test, it doesn’t matter what the Min SDK is, but leave Language as Java and take note of the project location because you’ll need to find it later. Click Finish to create the new project, and if there is a brief wait for loading, then click Finish again to dismiss the window.
+4. Once the editor view appears, choose File > New > New Module to add a library.
+5. Select Android Library, name it testplugin, change Package Name to com.testcompany.testplugin, and then click Finish.
+6. With that module added, choose Build > Select Build Variant; in the panel that opens, click the Active Build Variant for TestPluginProj.testplugin and select Release.
+7. Now expand testplugin > java in the upper Project panel, right-click com.testcompany.testplugin, and choose New > Java Class.
+8. A tiny window opens to configure the new class, so type the name TestPlugin and press Enter.
+
+Fin ^-^
