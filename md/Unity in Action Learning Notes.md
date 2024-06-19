@@ -1,5 +1,32 @@
 # Unity in Action: Multiplatform Game Development in C#, by Joseph Hocking, 3rd Edition (2022)
 
+- [Unity in Action: Multiplatform Game Development in C#, by Joseph Hocking, 3rd Edition (2022)](#unity-in-action-multiplatform-game-development-in-c-by-joseph-hocking-3rd-edition-2022)
+  - [Basics](#basics)
+  - [Create a simple 2D RPG](#create-a-simple-2d-rpg)
+    - [1. Create project](#1-create-project)
+    - [2. Create map](#2-create-map)
+    - [3. Create actor](#3-create-actor)
+  - [Basic First-Person Shooter (FPS)](#basic-first-person-shooter-fps)
+  - [3D camera control](#3d-camera-control)
+  - [Graphics](#graphics)
+    - [Texture](#texture)
+    - [3D models](#3d-models)
+    - [Particle Systems](#particle-systems)
+    - [2D Graphics](#2d-graphics)
+  - [Script Events Lifecycle](#script-events-lifecycle)
+  - [2D physics](#2d-physics)
+  - [Game GUI](#game-gui)
+    - [Lights and Shadows](#lights-and-shadows)
+  - [Manage inventory](#manage-inventory)
+  - [Sound effects and music](#sound-effects-and-music)
+    - [Audio Components](#audio-components)
+    - [Music](#music)
+    - [Path Finding Algorithm](#path-finding-algorithm)
+    - [Saving and Loading Data](#saving-and-loading-data)
+  - [Deploy to desktop, web, or mobile](#deploy-to-desktop-web-or-mobile)
+    - [Build for Web](#build-for-web)
+    - [Set up a plugin project in Android Studio](#set-up-a-plugin-project-in-android-studio)
+
 ## Basics
 
 In a component system, objects exist on a flat hierachy, and different objects have different collections of components.
