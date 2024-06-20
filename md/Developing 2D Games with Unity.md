@@ -1,8 +1,24 @@
 # Developing 2D Games with Unity, Independent Game Programming with C#, by Jared Halpern
 
+Source code and Assets: <https://github.com/Apress/Devel-2D-Games-Unity>
+
 ## Foundation
 
 Sprite Tool - Pixel Dude Maker: <https://0x72.itch.io/pixeldudesmaker>
+
+Import Sprite Sheet:
+
+1. Add Sprite Renderer Component to Player GameObject
+2. Import Sprite Sheet image, set `Texture Type` as `Sprite (2D and UI)`, `Sprite Mode` as `Multiple`
+3. Use Sprite Editor to slice up the sprite sheet into individual sprites
+
+Suggested Poeject Structure:
+
+- Assets\
+  - Scenes\
+  - Sprites\
+    - Enemies\
+    - Player\
 
 <!-- TODO: unfinished below -->
 
