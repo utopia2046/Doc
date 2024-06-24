@@ -11,6 +11,7 @@ Import Sprite Sheet:
 1. Add Sprite Renderer Component to Player GameObject
 2. Import Sprite Sheet image, set `Texture Type` as `Sprite (2D and UI)`, `Sprite Mode` as `Multiple`
 3. Use Sprite Editor to slice up the sprite sheet into individual sprites
+4. Set Filter Mode to "Point (no filter)" and Compression to None
 
 Suggested Poeject Structure:
 
