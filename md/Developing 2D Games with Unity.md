@@ -13,6 +13,11 @@ Import Sprite Sheet:
 3. Use Sprite Editor to slice up the sprite sheet into individual sprites
 4. Set Filter Mode to "Point (no filter)" and Compression to None
 
+Add animation:
+
+1. Select frames in imported sprite sheet, drag to GameObject to create animation clips and a controller.
+2. Double click animation controller to open animator window and edit state changing conditions.
+
 Suggested Poeject Structure:
 
 - Assets\
