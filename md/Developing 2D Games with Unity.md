@@ -26,6 +26,12 @@ Suggested Poeject Structure:
     - Enemies\
     - Player\
 
+Tips:
+
+1. When the 2D game is top down view, remember to turn off gravity (Edit -> Project Settings -> Physics 2D -> Gravity).
+2. Layers are used in collision detection to determine which layers are aware of each other and thus can interact.
+3. Sorting Layers (in Renderer settings) are used by Unity rendering engine to describe the order in which to render pixels.
+
 <!-- TODO: unfinished below -->
 
 ## World Building
