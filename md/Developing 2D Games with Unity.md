@@ -16,7 +16,17 @@ Import Sprite Sheet:
 Add animation:
 
 1. Select frames in imported sprite sheet, drag to GameObject to create animation clips and a controller.
-2. Double click animation controller to open animator window and edit state changing conditions.
+2. Double click animation controller to open animator window, create animator parameters for states and edit state changing conditions.
+3. In code, control state change by changing the value of animator parameters.
+
+``` csharp
+// To change animator parameter value in code
+Animator animator;
+// in Start()
+animator = GetComponent<Animator>();
+// in state change logic
+animator.SetInteger(parameterName, value);
+```
 
 Suggested Poeject Structure:
 
