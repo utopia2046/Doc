@@ -51,6 +51,7 @@ Create Tilemap
 1. Import tilemap resource image, then slice it into SpriteSheet;
 2. Create a tilemap GameObject: Create -> 2D Object -> Tilemap -> Rectangle (or hexagonal, depends on your game);
 3. Create Tile Palette: Window -> 2D -> Tile Palette -> Create New Palette;
+4. Drag spritesheet into tile palette
 
 ## Interactive Items
 
