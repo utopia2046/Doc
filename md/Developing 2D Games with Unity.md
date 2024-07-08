@@ -48,10 +48,11 @@ Tips:
 
 Create Tilemap
 
-1. Import tilemap resource image, then slice it into SpriteSheet;
-2. Create a tilemap GameObject: Create -> 2D Object -> Tilemap -> Rectangle (or hexagonal, depends on your game);
-3. Create Tile Palette: Window -> 2D -> Tile Palette -> Create New Palette;
-4. Drag spritesheet into tile palette
+1. Import tilemap resource image, then slice it into SpriteSheet.
+2. Create a tilemap GameObject: Create -> 2D Object -> Tilemap -> Rectangle (or hexagonal, depends on your game).
+3. Create Tile Palette: Window -> 2D -> Tile Palette -> Create New Palette.
+4. Drag spritesheet into tile palette, then use brush tool to paint selected tile on tilemap (use `[]` keys to rotate the tile).
+5. To paint multiple tile on same grid (object on background), we need multiple tilemaps and stack them in Sorting Layers (notice that the Sorting Layer setting is under Tilemap Renderer, not on top right of Inspector).
 
 ## Interactive Items
 
