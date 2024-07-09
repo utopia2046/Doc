@@ -54,6 +54,10 @@ Create Tilemap
 4. Drag spritesheet into tile palette, then use brush tool to paint selected tile on tilemap (use `[]` keys to rotate the tile).
 5. To paint multiple tile on same grid (object on background), we need multiple tilemaps and stack them in Sorting Layers (notice that the Sorting Layer setting is under Tilemap Renderer, not on top right of Inspector).
 
+Camera Size and PPU (Pixels per Unit): `(Vertical resolution / PPU) * 0.5 = Camera Size`
+
+Install Cinemachine using Package Manager, then we can use virtual cameras using this package
+
 ## Interactive Items
 
 ## Health and Inventory
