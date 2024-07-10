@@ -56,7 +56,13 @@ Create Tilemap
 
 Camera Size and PPU (Pixels per Unit): `(Vertical resolution / PPU) * 0.5 = Camera Size`
 
-Install Cinemachine using Package Manager, then we can use virtual cameras using this package
+Cinamachine Virtual Camera
+
+1. Install Cinemachine using Package Manager.
+2. Create Object -> Cinemachine -> 2D Camera, which creates a virtual camera object and add CinemachineBrain component to Main Camera.
+3. Drag Player object on CM vcam `Follow`, the vcam will follow player movement.
+4. Setting `Dead Zone Width` and Height on CM vcam, the map won't scroll until player reach dead zone border.
+5. To set map border, on CM vcam, add Extension -> Cinemachine Confiner -> Bounding Sape 2D -> add a Polygon Collider to Layer_Ground and attach it here.
 
 ## Interactive Items
 
