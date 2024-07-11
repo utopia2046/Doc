@@ -4061,6 +4061,7 @@ GameObject:
   - component: {fileID: 1284970508}
   - component: {fileID: 1284970507}
   - component: {fileID: 1284970509}
+  - component: {fileID: 1284970510}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -4139,6 +4140,19 @@ MonoBehaviour:
   m_BoundingShape2D: {fileID: 615555585}
   m_ConfineScreenEdges: 1
   m_Damping: 0
+--- !u!114 &1284970510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284970506}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d009eb6833f7ae41afed0401de2ac29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PixelsPerUnit: 32
 --- !u!1001 &2367637929278601137
 PrefabInstance:
   m_ObjectHideFlags: 0

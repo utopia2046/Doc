@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\MovementController.cs" />
+    <Compile Include="Assets\Scripts\RoundCameraPos.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
