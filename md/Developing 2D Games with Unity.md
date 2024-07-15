@@ -64,6 +64,12 @@ Cinamachine Virtual Camera
 4. Setting `Dead Zone Width` and Height on CM vcam, the map won't scroll until player reach dead zone border.
 5. To set map border, on CM vcam, add Extension -> Cinemachine Confiner -> Bounding Sape 2D -> add a Polygon Collider to Layer_Ground and attach it here.
 
+| Tips: To create a pixel-perfect sprite, use `Material` with shader as `Spites/Default`, and make sure that `Pixel Snap` is checked.
+
+Use Tilemap Collider to limit Player's walking area
+
+1. Use a tilemap for impenatrable objects and set it on a separate sorting layer, add `Tilemap Collider 2D` component on this tilemap layer, all object rendered on this tilemap will have colliders around them;
+
 ## Interactive Items
 
 ## Health and Inventory
