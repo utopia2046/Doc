@@ -18,10 +18,19 @@
                         <Setter Property="VerticalAlignment" Value="Center" />
                     </Style>
                     <Style TargetType="{x:Type CheckBox}">
+                        <Setter Property="Margin" Value="5" />
+                        <Setter Property="FontSize" Value="18" />
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                    </Style>
+                    <Style TargetType="{x:Type Button}">
                         <Setter Property="Margin" Value="10" />
                         <Setter Property="FontSize" Value="18" />
                         <Setter Property="HorizontalAlignment" Value="Center" />
                         <Setter Property="VerticalAlignment" Value="Center" />
+                        <Setter Property="Width" Value="100" />
+                        <Setter Property="Height" Value="40" />
+                        <Setter Property="Background" Value="White" />
                     </Style>
                 </StackPanel.Resources>
                 <TextBlock x:Name="txbEventType" Text="EventType" Width="180" />
@@ -29,6 +38,7 @@
                 <CheckBox x:Name="ckbCtrl" Content="Ctrl"/>
                 <CheckBox x:Name="ckbShift" Content="Shift"/>
                 <CheckBox x:Name="ckbAlt" Content="Alt"/>
+                <Button x:Name="btnClear" Content="Clear All" Click="btnClear_Click"/>
             </StackPanel>
             <ListBox x:Name="lstList" DockPanel.Dock="Bottom"/>
         </DockPanel>

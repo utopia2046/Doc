@@ -79,5 +79,10 @@ namespace KeyboardTest
             ckbCtrl.IsChecked = false;
             ckbShift.IsChecked = false;
         }
+
+        private void btnClear_Click(object sender, RoutedEventArgs e)
+        {
+            lstList.Items.Clear();
+        }
     }
 }
