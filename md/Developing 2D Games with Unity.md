@@ -72,6 +72,12 @@ Use Tilemap Collider to limit Player's walking area
 
 ## Interactive Items
 
+To make a GameObject (item) interactive:
+
+1. Add a collider on it so that it could be touched;
+2. Check collider setting `Is Trigger` (!important);
+3. Add a Tag to the object so that in script we could detect it;
+
 ## Health and Inventory
 
 ## Characters, Coroutines, and Spawn Points

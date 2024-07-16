@@ -57,7 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\RoundCameraPos.cs" />
-    <Compile Include="Assets\Scripts\MovementController.cs" />
+    <Compile Include="Assets\Scripts\MonoBehaviours\MovementController.cs" />
+    <Compile Include="Assets\Scripts\MonoBehaviours\Character.cs" />
+    <Compile Include="Assets\Scripts\MonoBehaviours\Player.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
