@@ -6,6 +6,18 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <PackageIcon>keyboard128.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="keyboard128.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="keyboard128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </Resource>
+  </ItemGroup>
 
 </Project>

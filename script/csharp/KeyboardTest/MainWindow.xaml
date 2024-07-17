@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KeyboardTest"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" KeyUp="Window_KeyUp" KeyDown="Window_KeyDown">
+        Title="MainWindow" Height="450" Width="800" KeyUp="Window_KeyUp" KeyDown="Window_KeyDown" Icon="/keyboard128.png">
     <Grid>
         <DockPanel HorizontalAlignment="Stretch">
             <TextBlock x:Name="txbPrompt" Text="Press any key" FontSize="20" HorizontalAlignment="Center" DockPanel.Dock="Top"/>
