@@ -78,6 +78,24 @@ To make a GameObject (item) interactive:
 2. Check collider setting `Is Trigger` (!important);
 3. Add a Tag to the object so that in script we could detect it;
 
+### Layer-based Collision Detection
+
+1. Create Layer for consumables items and enemies (who will not consume items).
+2. In Edit menu -> Project Settings -> Physics 2D, set Layer Collision Matrix, uncheck consumables & enemies layer checkbox so that enemies won't be aware of consumables.
+3. Implement `OnTriggerEnter2D` method in player script for interacting with consumable items, sample like below.
+
+``` csharp
+void OnTriggerEnter2D(Collider2D collision)
+{
+    if (collision.gameObject.CompareTag("CanBePickedUp")) // CanBePickedUp is the tag we add on consumable items
+    {
+        Debug.Log("Item collected");
+        // ... logic that manage the item in inventory
+        collision.gameObject.SetActive(false); // hide the collected item
+    }
+}
+```
+
 ## Health and Inventory
 
 ## Characters, Coroutines, and Spawn Points
