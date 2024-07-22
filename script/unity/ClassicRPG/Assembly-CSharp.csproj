@@ -60,6 +60,8 @@
     <Compile Include="Assets\Scripts\RoundCameraPos.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviours\MovementController.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviours\Character.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\Item.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\Consumable.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

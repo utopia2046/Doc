@@ -96,6 +96,14 @@ void OnTriggerEnter2D(Collider2D collision)
 }
 ```
 
+### Scriptable Objects
+
+- Used to store data
+- Defined once and multiple references to save memory
+- Scriptable Object instances are stored in project as separate asset files, their properties can be modified in Inspector
+- Inherit from `ScriptableObject` class instead of `MonoBebaviour`, can't be attached to `GameObjects`
+- Create reference from inside Unity scripts that inherit from `MonoBehaviour`
+
 ## Health and Inventory
 
 ## Characters, Coroutines, and Spawn Points
