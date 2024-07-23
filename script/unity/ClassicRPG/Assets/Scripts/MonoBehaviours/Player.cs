@@ -20,29 +20,26 @@ public class Player : Character
     {
         if (collision.gameObject.CompareTag("CanBePickedUp"))
         {
-            Debug.Log("Item collected");
-            collision.gameObject.SetActive(false); // hide the collected item
-            /*
-                Item hitObject = collision.gameObject.GetComponent<Consumable>().item;
+            Item hitObject = collision.gameObject.GetComponent<Consumable>().item;
 
-                if (hitObject != null)
+            if (hitObject != null)
+            {
+                print("Hit: " + hitObject.objectName);
+
+                switch (hitObject.type)
                 {
-                    print("Hit: " + hitObject.objectName);
-
-                    switch (hitObject.itemType)
-                    {
-                        case Item.ItemType.COIN:
-                            break;
-                        case Item.ItemType.HEALTH:
-                            AdjustHitPoints(hitObject.quantity);
-                            break;
-                        default:
-                            break;
-                    }
-
-                    collision.gameObject.SetActive(false);
+                    case Item.ItemType.COIN:
+                        break;
+                    case Item.ItemType.HEALTH:
+                        AdjustHitPoints(hitObject.quantity);
+                        break;
+                    default:
+                        break;
                 }
-            */
+
+                Debug.Log("Item collected");
+                collision.gameObject.SetActive(false); // hide the collected item
+            }
         }
     }
 
@@ -51,5 +48,4 @@ public class Player : Character
         hitPoints = hitPoints + amount;
         print("Adjusted hitpoints by: " + amount + ". New value: " + hitPoints);
     }
-
 }
