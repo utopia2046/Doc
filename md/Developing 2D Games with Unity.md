@@ -106,6 +106,20 @@ void OnTriggerEnter2D(Collider2D collision)
 
 ## Health and Inventory
 
+### Masked Image
+
+1. Create a UI->Image object and add component `Mask` on it, any child object of it will be masked automatically;
+2. Create a child Image of previous image with mask component, select its source image, and set `Image Type` to be `Filled`, and choose `Fill Method` and `Fill Origin` depends on how you want the mask uncovers. By changing `Fill Amount`, we could see how the mask works.
+3. In script, programmatically update the `FillAmount` property to update the masked image, for example, a health bar.
+
+### Customized Fonts
+
+1. Create a `Fonts` folder under `Assets` and drag .ttf file in it.
+2. Right click the imported font, `Create` -> `TextMeshPro` -> `Font Asset`.
+3. Select the created font asset in TMP text's Inspector window, or set it as default in `Project Setting` -> `TextMeshPro` -> `Settings` -> `Default Font Asset`.
+
+The order in which objects appear in the hierarchy view is the order in which they’ll be rendered. the top-most objects in the hierarchy will be rendered first and the bottom last, resulting in the top-most objects appearing in the background.
+
 ## Characters, Coroutines, and Spawn Points
 
 ## Artificial Intelligence and Slingshots
