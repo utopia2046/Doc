@@ -62,6 +62,8 @@
     <Compile Include="Assets\Scripts\RoundCameraPos.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviours\MovementController.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviours\Character.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\HitPoints.cs" />
+    <Compile Include="Assets\Scripts\MonoBehaviours\HealthBar.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

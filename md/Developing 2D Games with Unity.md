@@ -106,6 +106,8 @@ void OnTriggerEnter2D(Collider2D collision)
 
 ## Health and Inventory
 
+The order in which objects appear in the hierarchy view is the order in which they’ll be rendered. the top-most objects in the hierarchy will be rendered first and the bottom last, resulting in the top-most objects appearing in the background.
+
 ### Masked Image
 
 1. Create a UI->Image object and add component `Mask` on it, any child object of it will be masked automatically;
@@ -117,8 +119,6 @@ void OnTriggerEnter2D(Collider2D collision)
 1. Create a `Fonts` folder under `Assets` and drag .ttf file in it.
 2. Right click the imported font, `Create` -> `TextMeshPro` -> `Font Asset`.
 3. Select the created font asset in TMP text's Inspector window, or set it as default in `Project Setting` -> `TextMeshPro` -> `Settings` -> `Default Font Asset`.
-
-The order in which objects appear in the hierarchy view is the order in which they’ll be rendered. the top-most objects in the hierarchy will be rendered first and the bottom last, resulting in the top-most objects appearing in the background.
 
 ## Characters, Coroutines, and Spawn Points
 
