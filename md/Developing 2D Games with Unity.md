@@ -120,6 +120,8 @@ The order in which objects appear in the hierarchy view is the order in which th
 2. Right click the imported font, `Create` -> `TextMeshPro` -> `Font Asset`.
 3. Select the created font asset in TMP text's Inspector window, or set it as default in `Project Setting` -> `TextMeshPro` -> `Settings` -> `Default Font Asset`.
 
+| Tips: `Horizontal Layout Group` component will automatically arrange for all its subviews to be placed alongside each other horizontally.
+
 ## Characters, Coroutines, and Spawn Points
 
 ## Artificial Intelligence and Slingshots
