@@ -15,5 +15,5 @@ public class Item : ScriptableObject
         HEALTH
     }
 
-    public ItemType type;
+    public ItemType itemType;
 }

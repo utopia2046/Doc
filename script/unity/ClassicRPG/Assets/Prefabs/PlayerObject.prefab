@@ -185,4 +185,6 @@ MonoBehaviour:
   hitPoints: {fileID: 11400000, guid: 5cd628b9e72274049a2e41771ea3bac2, type: 2}
   maxHitPoints: 10
   startingHitPoints: 8
+  characterCategory: 0
+  inventoryPrefab: {fileID: 7835605086958227410, guid: 1b451d76819841548a702cddea2137b5, type: 3}
   healthBarPrefab: {fileID: 3794382356529125528, guid: 03ac44e8833f34748becdeab6e34d3d2, type: 3}
