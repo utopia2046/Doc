@@ -124,4 +124,27 @@ The order in which objects appear in the hierarchy view is the order in which th
 
 ## Characters, Coroutines, and Spawn Points
 
+Instead of using `Update` method in `MonoBehaviour` class, we could also use `InvokeRepeating` method to repeat regularly.
+
+``` csharp
+// in Start()
+if (repeatInterval > 0)
+{
+    // InvokeRepeating(methodToCall, timeToWaitBeforeFirstCall, timeIntervalToWaitBetweenInvocations)
+    InvokeRepeating("SpawnObject", 0.0f, repeatInterval);
+}
+```
+
+We could use `Instantiate` method to create new instance of a prefab
+
+``` csharp
+if (prefabToSpawn != null)
+{
+    // Instantiate(prefab, position, rotation)
+    return Instantiate(prefabToSpawn, transform.position, Quaternion.identity);
+    // transform.position is the Vector3 of current GameObject
+    // Quaternion.identity means no rotation
+}
+```
+
 ## Artificial Intelligence and Slingshots

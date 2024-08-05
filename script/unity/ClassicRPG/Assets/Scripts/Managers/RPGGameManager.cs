@@ -5,6 +5,7 @@ using UnityEngine;
 public class RPGGameManager : MonoBehaviour
 {
     public static RPGGameManager sharedInstance = null;
+    public SpawnPoint playerSpawnPoint;
 
     void Awake()
     {
@@ -32,6 +33,14 @@ public class RPGGameManager : MonoBehaviour
 
     public void SetupScene()
     {
+        SpawnPlayer();
+    }
 
+    public void SpawnPlayer()
+    {
+        if (playerSpawnPoint != null)
+        {
+            GameObject player = playerSpawnPoint.SpawnObject();
+        }
     }
 }
