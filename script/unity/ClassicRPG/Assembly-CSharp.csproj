@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\ScriptableObjects\Consumable.cs" />
+    <Compile Include="Assets\Scripts\MonoBehaviours\SpawnPoint.cs" />
     <Compile Include="Assets\Scripts\Managers\RPGGameManager.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviours\Player.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviours\Slot.cs" />
@@ -67,7 +68,6 @@
     <Compile Include="Assets\Scripts\MonoBehaviours\Inventory\Inventory.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\HitPoints.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviours\Character.cs" />
-    <Compile Include="Assets\Scripts\MonoBehaviours\SpawnPoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

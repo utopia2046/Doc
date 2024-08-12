@@ -5,8 +5,7 @@ public class SpawnPoint : MonoBehaviour
     public GameObject prefabToSpawn;
     public float repeatInterval;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         if (repeatInterval > 0)
         {
@@ -14,17 +13,12 @@ public class SpawnPoint : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public GameObject SpawnObject()
     {
         if (prefabToSpawn != null)
         {
-            return Instantiate(prefabToSpawn, transform.position, Quaternion.identity); // Instantiate(prefab, position, rotation)
+            // Instantiate(prefab, position, rotation)
+            return Instantiate(prefabToSpawn, transform.position, Quaternion.identity);
         }
 
         return null;
