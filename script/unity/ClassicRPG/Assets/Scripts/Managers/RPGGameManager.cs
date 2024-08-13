@@ -5,6 +5,7 @@ using UnityEngine;
 public class RPGGameManager : MonoBehaviour
 {
     public static RPGGameManager sharedInstance = null;
+    public RPGCameraManager cameraManager;
     public SpawnPoint playerSpawnPoint;
 
     void Awake()
@@ -34,6 +35,7 @@ public class RPGGameManager : MonoBehaviour
         if (playerSpawnPoint != null)
         {
             GameObject player = playerSpawnPoint.SpawnObject();
+            cameraManager.virtualCamera.Follow = player.transform;
         }
     }
 }

@@ -60,7 +60,7 @@ Cinamachine Virtual Camera
 
 1. Install Cinemachine using Package Manager.
 2. Create Object -> Cinemachine -> 2D Camera, which creates a virtual camera object and add CinemachineBrain component to Main Camera.
-3. Drag Player object on CM vcam `Follow`, the vcam will follow player movement.
+3. Drag Player object on CM vcam `Follow`, the vcam will follow player movement. To set `Follow` property programmatically, use code like `virtualCamera.Follow = player.transform;`.
 4. Setting `Dead Zone Width` and Height on CM vcam, the map won't scroll until player reach dead zone border.
 5. To set map border, on CM vcam, add Extension -> Cinemachine Confiner -> Bounding Sape 2D -> add a Polygon Collider to Layer_Ground and attach it here.
 
@@ -146,5 +146,13 @@ if (prefabToSpawn != null)
     // Quaternion.identity means no rotation
 }
 ```
+
+### Get Certain GameObject in Script
+
+1. Create a public property in `MonoBehaviour` script, and drag the target GameObject instance in Inspector.
+2. To visit the GameObject current script attached to, use `gameObject` in `MonoBehaviour`.
+3. Use static `GameObject.FindWithTag` method.
+
+To get a component that attached to a certain GameObject, use `gameObject.GetComponent<{ComponentType}>`.
 
 ## Artificial Intelligence and Slingshots
