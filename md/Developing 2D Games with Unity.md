@@ -104,6 +104,13 @@ void OnTriggerEnter2D(Collider2D collision)
 - Inherit from `ScriptableObject` class instead of `MonoBebaviour`, can't be attached to `GameObjects`
 - Create reference from inside Unity scripts that inherit from `MonoBehaviour`
 
+For example:
+
+1. Create a `HitPoints` Scriptable Objects class with a public member called `value`, then create an instance from it also called `HitPoints`;
+2. Add `HitPoints hitPoints` property in both `Player` and `HealthBar` GameObject, then attach both properties to the same `HitPoint` instance, the 2 objects will share the same hitPoints value.
+
+Also, we could create `Consumable` GameObject with a `Item` Scriptable Objects instance slot, the `Item` type and other properties like stackable could be shared between collectable coin, heart, player (on collision), and inventory game objects.
+
 ## Health and Inventory
 
 The order in which objects appear in the hierarchy view is the order in which they’ll be rendered. the top-most objects in the hierarchy will be rendered first and the bottom last, resulting in the top-most objects appearing in the background.

@@ -2,7 +2,6 @@ using UnityEngine;
 
 public abstract class Character : MonoBehaviour
 {
-    public HitPoints hitPoints;
     public float maxHitPoints;
     public float startingHitPoints;
 
@@ -13,4 +12,13 @@ public abstract class Character : MonoBehaviour
     }
 
     public CharacterCategory characterCategory;
+
+    // This method will be called when the character's HP reach 0
+    public virtual void KillCharacter()
+    {
+        Destroy(gameObject);
+    }
+
+    //public abstract void ResetCharacter();
+    //public abstract IEnumerator DamageCharacter(int damage, float interval);
 }

@@ -10,6 +10,8 @@ public class Player : Character
     public HealthBar healthBarPrefab;
     HealthBar healthBar;
 
+    public HitPoints hitPoints;
+
     // Start is called before the first frame update
     void Start()
     {

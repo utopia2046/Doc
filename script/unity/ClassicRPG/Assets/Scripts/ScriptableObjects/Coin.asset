@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f190178b2f69d3f4c8e6a0eb20d628ef, type: 3}
-  m_Name: Item
+  m_Name: Coin
   m_EditorClassIdentifier: 
   objectName: coin
   sprite: {fileID: 2017687234, guid: 49f3d88774f1eb541b79311e09870426, type: 3}
