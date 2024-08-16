@@ -65,11 +65,11 @@
     <Compile Include="Assets\Scripts\ScriptableObjects\Item.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviours\HealthBar.cs" />
     <Compile Include="Assets\Scripts\RoundCameraPos.cs" />
+    <Compile Include="Assets\Scripts\MonoBehaviours\Enemy.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviours\MovementController.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviours\Inventory\Inventory.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\HitPoints.cs" />
     <Compile Include="Assets\Scripts\MonoBehaviours\Character.cs" />
-    <Compile Include="Assets\Scripts\MonoBehaviours\Enemy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

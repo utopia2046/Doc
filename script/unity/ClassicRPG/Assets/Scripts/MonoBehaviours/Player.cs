@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : Character
@@ -12,19 +11,48 @@ public class Player : Character
 
     public HitPoints hitPoints;
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        inventory = Instantiate(inventoryPrefab);
-        hitPoints.value = startingHitPoints;
-        healthBar = Instantiate(healthBarPrefab);
-        healthBar.character = this;
+        ResetCharacter();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void ResetCharacter()
     {
+        inventory = Instantiate(inventoryPrefab);
+        healthBar = Instantiate(healthBarPrefab);
+        healthBar.character = this;
 
+        hitPoints.value = startingHitPoints;
+    }
+
+    public override void KillCharacter()
+    {
+        base.KillCharacter();
+        Destroy(healthBar.gameObject);
+        Destroy(inventory.gameObject);
+    }
+
+    public override IEnumerator DamageCharacter(int damage, float interval)
+    {
+        while (true)
+        {
+            hitPoints.value = hitPoints.value - damage;
+
+            if (hitPoints.value <= float.Epsilon)
+            {
+                KillCharacter();
+                break;
+            }
+
+            if (interval > float.Epsilon)
+            {
+                yield return new WaitForSeconds(interval);
+            }
+            else
+            {
+                break;
+            }
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)

@@ -159,7 +159,35 @@ if (prefabToSpawn != null)
 1. Create a public property in `MonoBehaviour` script, and drag the target GameObject instance in Inspector.
 2. To visit the GameObject current script attached to, use `gameObject` in `MonoBehaviour`.
 3. Use static `GameObject.FindWithTag` method.
+4. To get a GameObject that we hit using Collider. use built-in method `OnCollisionEnter2D(Collision2D collision)`, and call `collision.gameObject.CompareTag("TargetTag")` to get target GameObject with certain tag.
+
+``` csharp
+void OnCollisionEnter2D(Collision2D collision)
+{
+    if (collision.gameObject.CompareTag("Player"))
+    {
+        // ...
+    }
+}
+```
 
 To get a component that attached to a certain GameObject, use `gameObject.GetComponent<{ComponentType}>`.
+
+Unity will force a method to be called within single frame, for long ngrunning methods that are intended to execute over the course of multiple frames are often implemented as **Coroutines**.
+
+``` csharp
+// Define a Coroutine
+public IEnumerator RunEveryThreeSeconds()
+{
+    while (true)
+    {
+        print("I will print every three seconds.");
+        yield return new WaitForSeconds(3.0f);
+    }
+}
+
+// call the Coroutine
+StartCoroutine(RunEveryThreeSeconds());
+```
 
 ## Artificial Intelligence and Slingshots

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public abstract class Character : MonoBehaviour
@@ -19,6 +20,6 @@ public abstract class Character : MonoBehaviour
         Destroy(gameObject);
     }
 
-    //public abstract void ResetCharacter();
-    //public abstract IEnumerator DamageCharacter(int damage, float interval);
+    public abstract void ResetCharacter();
+    public abstract IEnumerator DamageCharacter(int damage, float interval);
 }

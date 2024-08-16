@@ -168,3 +168,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9036af042937e894eb13cb427bb63c5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHitPoints: 2
+  startingHitPoints: 2
+  characterCategory: 1
+  hitPoints: 2
+  damageStrength: 1
