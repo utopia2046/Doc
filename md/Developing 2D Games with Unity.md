@@ -191,3 +191,17 @@ StartCoroutine(RunEveryThreeSeconds());
 ```
 
 ## Artificial Intelligence and Slingshots
+
+To measure distance of 2 points, use `Vector3.sqrMagnitude` method like:
+
+``` csharp
+float remainingDistance = (transform.position - endPosition).sqrMagnitude;
+```
+
+To move a GameObject, we need to have RigidBody2D component attached on it, and move the GameObject like:
+
+``` csharp
+// Vector3.MoveTowards(currentPosition, targetPosition, distanceToMoveInFrame)
+Vector3 newPosition = Vector3.MoveTowards(rigidBodyToMove.position, endPosition, speed * Time.deltaTime);
+rigidBodyToMove.MovePosition(newPosition);
+```

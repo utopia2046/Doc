@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 2367637930024689540}
   - component: {fileID: 2367637930024689543}
   - component: {fileID: -3416622189282071397}
+  - component: {fileID: 8440013317792781262}
+  - component: {fileID: 6681509952600662827}
   m_Layer: 10
   m_Name: EnemyObject
   m_TagString: Enemy
@@ -171,5 +173,36 @@ MonoBehaviour:
   maxHitPoints: 2
   startingHitPoints: 2
   characterCategory: 1
-  hitPoints: 2
   damageStrength: 1
+--- !u!58 &8440013317792781262
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2367637930024689536}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
+--- !u!114 &6681509952600662827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2367637930024689536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5888ce837881f44a8836682d7737ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pursuitSpeed: 1.4
+  wanderSpeed: 0.8
+  directionChangeInterval: 3
+  followPlayer: 1
