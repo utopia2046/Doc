@@ -31,7 +31,10 @@ public class Wander : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         currentSpeed = wanderSpeed;
+
+        circleCollider = GetComponent<CircleCollider2D>();
         rb2d = GetComponent<Rigidbody2D>();
+
         StartCoroutine(WanderRoutine());
     }
 
@@ -96,6 +99,57 @@ public class Wander : MonoBehaviour
 
         // enemy has reached endPosition and waiting for new direction selection
         animator.SetBool("isWalking", false);
-
     }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && followPlayer)
+        {
+            currentSpeed = pursuitSpeed;
+
+            // Set this variable so the Move coroutine can use it to follow the player.
+            targetTransform = collision.gameObject.transform;
+
+            if (moveCoroutine != null)
+            {
+                StopCoroutine(moveCoroutine);
+            }
+            // At this point, endPosition is now player object's transform, ie: will now move towards the player
+            moveCoroutine = StartCoroutine(Move(rb2d, currentSpeed));
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            animator.SetBool("isWalking", false);
+            currentSpeed = wanderSpeed;
+
+            if (moveCoroutine != null)
+            {
+                StopCoroutine(moveCoroutine);
+            }
+
+            // Since we no longer have a target to follow, set this to null
+            targetTransform = null;
+        }
+    }
+
+    #region Debugging
+    void OnDrawGizmos()
+    {
+        if (circleCollider != null)
+        {
+            Gizmos.DrawWireSphere(transform.position, circleCollider.radius);
+        }
+    }
+
+    void Update()
+    {
+        // target line
+        Debug.DrawLine(rb2d.position, endPosition, Color.red);
+    }
+    #endregion
+
 }
