@@ -205,3 +205,11 @@ To move a GameObject, we need to have RigidBody2D component attached on it, and 
 Vector3 newPosition = Vector3.MoveTowards(rigidBodyToMove.position, endPosition, speed * Time.deltaTime);
 rigidBodyToMove.MovePosition(newPosition);
 ```
+
+### Object Pooling
+
+Instantiating and Destroying objects `Destroy(gameObject)` in Unity is more performance intensive than simply activating and deactivating `gameObject.SetActive(false)`. We can use a technique called **Object Pooling** to maintain good performance.
+
+1. Pre-instantiate multiple copies of an object for the scene ahead of time, de-activate them, and add them to an object pool.
+2. When the scene requires an object, loop through the object pool, return the first inactive object found, and activate it.
+3. When the scene is finished using the object, place it inactive, and return it to the object pool to be re-used by the scene in the future.
