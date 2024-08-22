@@ -213,3 +213,12 @@ Instantiating and Destroying objects `Destroy(gameObject)` in Unity is more perf
 1. Pre-instantiate multiple copies of an object for the scene ahead of time, de-activate them, and add them to an object pool.
 2. When the scene requires an object, loop through the object pool, return the first inactive object found, and activate it.
 3. When the scene is finished using the object, place it inactive, and return it to the object pool to be re-used by the scene in the future.
+
+``` csharp
+// check gameObject active
+if (gameObject.activeSelf == false)
+{
+    // set gameObject active
+    gameObject.SetActive(true);
+}
+```
