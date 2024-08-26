@@ -8,6 +8,9 @@ public class Weapon : MonoBehaviour
     static List<GameObject> ammoPool;
     public int poolSize;
 
+    public float weaponVelocity;
+    bool isFiring;
+
     void Awake()
     {
         // object pool
@@ -50,7 +53,16 @@ public class Weapon : MonoBehaviour
 
     void FireAmmo()
     {
-        // TODO: implementation
+        // Mouse uses Screen Space (Camera visible scope), we need to convert it to World Space (entire map in scene)
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        GameObject ammo = SpawnAmmo(transform.position);
+
+        if (ammo != null)
+        {
+            Arc arcScript = ammo.GetComponent<Arc>();
+            float travelDuration = 1.0f / weaponVelocity;
+            StartCoroutine(arcScript.TravelArc(mousePosition, travelDuration));
+        }
     }
 
     void OnDestroy()
