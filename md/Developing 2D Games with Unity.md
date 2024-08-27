@@ -247,3 +247,45 @@ public IEnumerator TravelArc(Vector3 destination, float duration)
     gameObject.SetActive(false);
 }
 ```
+
+### Blend Trees
+
+Blend Trees can be used to smoothly blend multiple animations into one smooth animation, such as walking and gradually begins to run, or firing an arm during running. A Blend Tree is controlled by variables that are configured in the Unity Editor and set in code.
+
+Create a Blend Tree
+
+1. Right-click in the Animator window and select: `Create State` -> `from New Blend Tree`.
+2. Select the created Blend Node and change its name in the Inspector to: "Walk Tree".
+3. Double-click the Walk Tree node to view the Blend Tree Graph.
+4. Select the Blend Tree node and change the `Blend Type` in the Inspector to: `2D Simple Diectional`.
+5. Select the Blend Tree node, right-click, and select: `Add Motion`.
+6. In the Inspector, click the dot next to the Motion we just added to open the `Select Motion` selector.
+7. With the Select Motion selector open, select the player-walk-east animation clip.
+8. Add three more motions and add the following animation clips: player-walk-south, player-walkwest, and player-walk-north.
+9. Click the `Base Layer` button to go back to the base Animator view.
+10. Create these three Animation Parameters:
+    - isWalking of type: Bool
+    - xDir of type: Float
+    - yDir of type: Float
+11. With the Blend Tree selected, select the xDir and yDir parameters from the dropdown in the Inspector.
+12. Set the X and Y positions for the motions accordingly. For example, the player-walk-south motion positions should be set to (0, -1)
+13. In script, set animator parameters to affect the animation state machine.
+
+    ``` csharp
+    // 1
+    movement.x = Input.GetAxisRaw("Horizontal");
+    movement.y = Input.GetAxisRaw("Vertical");
+    // 2
+    animator.SetBool("isWalking", true);
+    // 3
+    animator.SetFloat("xDir", movement.x);
+    animator.SetFloat("yDir", movement.y);
+    ```
+
+14. Select each one of the four child nodes of the blend tree and if it is not checked by default, check the `Loop Time` property.
+15. Right-click on the Idle State node in the Animator and select: `Make Transition`. Connect the transition to the Walking Blend Tree. Select the transition and use the following settings:
+    - Has Exit Time: unchecked
+    - Fixed Duration: unchecked
+    - Transition Duration: 0
+16. Create a Condition using the `isWalking` variable we created. Set it to: `true`.
+17. Create another transition between the Walking Blend Tree and the Idle state. Select the transition and use the similar settings as earlier.
