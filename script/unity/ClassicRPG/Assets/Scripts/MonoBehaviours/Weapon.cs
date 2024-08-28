@@ -11,6 +11,22 @@ public class Weapon : MonoBehaviour
     public float weaponVelocity;
     bool isFiring;
 
+    Camera localCamera;
+
+    [HideInInspector]
+    public Animator animator;
+
+    float positiveSlope;
+    float negativeSlope;
+
+    enum Quadrant
+    {
+        East,
+        South,
+        West,
+        North
+    }
+
     void Awake()
     {
         // object pool
@@ -27,15 +43,133 @@ public class Weapon : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+        isFiring = false;
+        localCamera = Camera.main; // Grab and save a reference to the local Camera
+
+        Vector2 lowerLeft = localCamera.ScreenToWorldPoint(new Vector2(0, 0));
+        Vector2 upperRight = localCamera.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+        Vector2 upperLeft = localCamera.ScreenToWorldPoint(new Vector2(0, Screen.height));
+        Vector2 lowerRight = localCamera.ScreenToWorldPoint(new Vector2(Screen.width, 0));
+
+        positiveSlope = GetSlope(lowerLeft, upperRight);
+        negativeSlope = GetSlope(upperLeft, lowerRight);
+    }
+
     void Update()
     {
         // check in every frame if user has clicked
         if (Input.GetMouseButtonDown(0))
         {
+            isFiring = true;
             FireAmmo();
+        }
+
+        UpdateState();
+    }
+
+    #region Direction
+    void UpdateState()
+    {
+        if (isFiring)
+        {
+            Vector2 quadrantVector;
+            Quadrant quadEnum = GetQuadrant(); // determine which direction should the player be facing
+
+            switch (quadEnum)
+            {
+                case Quadrant.East:
+                    quadrantVector = new Vector2(1.0f, 0.0f);
+                    break;
+                case Quadrant.South:
+                    quadrantVector = new Vector2(0.0f, -1.0f);
+                    break;
+                case Quadrant.West:
+                    quadrantVector = new Vector2(-1.0f, 0.0f);
+                    break;
+                case Quadrant.North:
+                    quadrantVector = new Vector2(0.0f, 1.0f);
+                    break;
+                default:
+                    quadrantVector = new Vector2(0.0f, 0.0f);
+                    break;
+            }
+
+            animator.SetBool("isFiring", true);
+            animator.SetFloat("fireXDir", quadrantVector.x);
+            animator.SetFloat("fireYDir", quadrantVector.y);
+
+            isFiring = false;
+        }
+        else
+        {
+            animator.SetBool("isFiring", false);
         }
     }
 
+    Quadrant GetQuadrant()
+    {
+        Vector2 mousePosition = Input.mousePosition;
+        Vector2 playerPosition = transform.position;
+
+        bool higherThanPositiveSlopeLine = HigherThanPositiveSlopeLine(Input.mousePosition);
+        bool higherThanNegativeSlopeLine = HigherThanNegativeSlopeLine(Input.mousePosition);
+
+        if (!higherThanPositiveSlopeLine && higherThanNegativeSlopeLine)
+        {
+            return Quadrant.East;
+        }
+        else if (!higherThanPositiveSlopeLine && !higherThanNegativeSlopeLine)
+        {
+            return Quadrant.South;
+        }
+        else if (higherThanPositiveSlopeLine && !higherThanNegativeSlopeLine)
+        {
+            return Quadrant.West;
+        }
+        else
+        {
+            return Quadrant.North;
+        }
+    }
+
+    float GetSlope(Vector2 pointOne, Vector2 pointTwo)
+    {
+        return (pointTwo.y - pointOne.y) / (pointTwo.x - pointOne.x);
+    }
+
+    bool HigherThanPositiveSlopeLine(Vector2 inputPosition)
+    {
+        Vector2 playerPosition = gameObject.transform.position;
+        Vector2 mousePosition = localCamera.ScreenToWorldPoint(inputPosition);
+
+        // solve for b
+        float yIntercept = playerPosition.y - (positiveSlope * playerPosition.x);
+
+        // solve for b
+        float inputIntercept = mousePosition.y - (positiveSlope * mousePosition.x);
+
+        return inputIntercept > yIntercept;
+    }
+
+    bool HigherThanNegativeSlopeLine(Vector2 inputPosition)
+    {
+        Vector2 playerPosition = gameObject.transform.position;
+        Vector2 mousePosition = localCamera.ScreenToWorldPoint(inputPosition);
+
+        // solve for b
+        float yIntercept = playerPosition.y - (negativeSlope * playerPosition.x);
+
+        // solve for b
+        float inputIntercept = mousePosition.y - (negativeSlope * mousePosition.x);
+
+        return inputIntercept > yIntercept;
+    }
+    #endregion Direction
+
+    #region Ammo
     GameObject SpawnAmmo(Vector3 location)
     {
         foreach (GameObject ammo in ammoPool)
@@ -69,4 +203,5 @@ public class Weapon : MonoBehaviour
     {
         ammoPool = null;
     }
+    #endregion Ammo
 }
