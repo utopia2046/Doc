@@ -36,6 +36,8 @@ public class Player : Character
     {
         while (true)
         {
+            StartCoroutine(FlickerCharacter());
+
             hitPoints.value = hitPoints.value - damage;
 
             if (hitPoints.value <= float.Epsilon)
