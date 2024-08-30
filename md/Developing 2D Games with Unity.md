@@ -2,6 +2,13 @@
 
 Source code and Assets: <https://github.com/Apress/Devel-2D-Games-Unity>
 
+Resources:
+
+- <https://gamedev.stackexchange.com>
+- <https://forum.unity.com>
+- <https://answers.unity.com>
+- <https://globalgamejam.org>
+
 ## Foundation
 
 Sprite Tool - Pixel Dude Maker: <https://0x72.itch.io/pixeldudesmaker>

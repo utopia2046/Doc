@@ -38,4 +38,12 @@ public class RPGGameManager : MonoBehaviour
             cameraManager.virtualCamera.Follow = player.transform;
         }
     }
+
+    void Update()
+    {
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
+        }
+    }
 }
