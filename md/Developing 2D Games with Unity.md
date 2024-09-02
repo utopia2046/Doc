@@ -9,6 +9,12 @@ Resources:
 - <https://answers.unity.com>
 - <https://globalgamejam.org>
 
+External Tools:
+
+- Graphics creation: Blender, GIMP
+- Sound Effects: Audacity
+- Music: MuseScore
+
 ## Foundation
 
 Sprite Tool - Pixel Dude Maker: <https://0x72.itch.io/pixeldudesmaker>
