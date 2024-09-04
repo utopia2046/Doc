@@ -265,7 +265,7 @@ public IEnumerator TravelArc(Vector3 destination, float duration)
 
 Blend Trees can be used to smoothly blend multiple animations into one smooth animation, such as walking and gradually begins to run, or firing an arm during running. A Blend Tree is controlled by variables that are configured in the Unity Editor and set in code.
 
-Create a Blend Tree
+#### Create a Blend Tree
 
 1. Right-click in the Animator window and select: `Create State` -> `from New Blend Tree`.
 2. Select the created Blend Node and change its name in the Inspector to: "Walk Tree".
@@ -302,3 +302,9 @@ Create a Blend Tree
     - Transition Duration: 0
 16. Create a Condition using the `isWalking` variable we created. Set it to: `true`.
 17. Create another transition between the Walking Blend Tree and the Idle state. Select the transition and use the similar settings as earlier.
+
+### Bouncing with built-in component
+
+1. Add `Rigid Body 2D` and `Circle Collider 2D` (or other colliders) to the moving object.
+2. In Project, click Add -> 2D -> Physics Material 2D, then name it as `Bounce`.
+3. Drag the `Bounce` material into `Circle Collider 2D` -> `Material`.
