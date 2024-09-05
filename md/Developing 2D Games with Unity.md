@@ -305,6 +305,9 @@ Blend Trees can be used to smoothly blend multiple animations into one smooth an
 
 ### Bouncing with built-in component
 
-1. Add `Rigid Body 2D` and `Circle Collider 2D` (or other colliders) to the moving object.
-2. In Project, click Add -> 2D -> Physics Material 2D, then name it as `Bounce`.
-3. Drag the `Bounce` material into `Circle Collider 2D` -> `Material`.
+1. Add `Rigid Body 2D` and `Circle Collider 2D` (or other colliders) to the moving object (e.g. a ball).
+2. In Project, click Add -> 2D -> Physics Material 2D, then name it as `Bounce`, and change the `Bounciness` property to a value between 0 (no bounce) and 1 (full bounce).
+3. Drag the `Bounce` material into the ball object's `Circle Collider 2D` -> `Material` property.
+4. Add `Box Collider 2D` to the ground object (or wall or any other obstacles).
+
+Make sure you have `Gravity` in `Project Settings` -> `Physics 2D`. When the moving object hits the obstacle, it will now bounce back.
