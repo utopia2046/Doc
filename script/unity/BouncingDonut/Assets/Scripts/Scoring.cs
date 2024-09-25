@@ -20,7 +20,19 @@ public class Scoring : MonoBehaviour
 
     private void OnGUI()
     {
+        // Draw Score on Top Left corner
         GUI.skin.box.fontSize = fontSize;
         GUI.Box(scoreRect, prefix + gameScore.ToString());
+        // Draw Game Over
+        if (GameState.state == GameState.gameOver)
+        {
+            GUI.skin.box.fontSize = 60;
+            GUI.Box(new Rect(
+                Screen.width / 2 - 200,
+                Screen.height / 2 - 40,
+                400,
+                80),
+            GameState.inBox ? "Success" : "Fail");
+        }
     }
 }

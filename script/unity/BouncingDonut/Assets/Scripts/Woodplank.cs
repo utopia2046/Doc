@@ -4,20 +4,18 @@ using UnityEngine;
 
 public class Woodplank : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey("w"))
+        if (GameState.state != GameState.gamePlay)
+        {
+            return;
+        }
+
+        if (Input.GetKey("w") || Input.GetKey("up"))
         {
             transform.Translate(0, 5 * Time.deltaTime, 0);
         }
-        else if (Input.GetKey("s"))
+        else if (Input.GetKey("s") || Input.GetKey("down"))
         {
             transform.Translate(0, -5 * Time.deltaTime, 0);
         }
