@@ -26,13 +26,27 @@ public class Scoring : MonoBehaviour
         // Draw Game Over
         if (GameState.state == GameState.gameOver)
         {
-            GUI.skin.box.fontSize = 60;
-            GUI.Box(new Rect(
-                Screen.width / 2 - 200,
+            GUIStyle fontStyle = new GUIStyle();
+            fontStyle.fontSize = fontSize;
+            fontStyle.normal.textColor = Color.white;
+            string text = GameState.inBox ? "Success" : "Fail";
+            //GUI.skin.box.fontSize = 36;
+            //GUI.Box(new Rect(
+            //    Screen.width / 2 - 200,
+            //    Screen.height / 2 - 40,
+            //    400,
+            //    80),
+            //GameState.inBox ? "Success" : "Fail");
+            if (GUI.Button(new Rect(
+                Screen.width / 2 - 50,
                 Screen.height / 2 - 40,
-                400,
-                80),
-            GameState.inBox ? "Success" : "Fail");
+                100,
+                40),
+                text,
+                fontStyle))
+            {
+                GameState.state = GameState.gamePlay;
+            }
         }
     }
 }

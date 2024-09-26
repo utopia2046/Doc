@@ -57,10 +57,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\TitleMenu.cs" />
+    <Compile Include="Assets\Scripts\GameState.cs" />
     <Compile Include="Assets\Scripts\Scoring.cs" />
     <Compile Include="Assets\Scripts\Donut.cs" />
     <Compile Include="Assets\Scripts\Woodplank.cs" />
-    <Compile Include="Assets\Scripts\GameState.cs" />
+    <Compile Include="Assets\Scripts\Restart.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

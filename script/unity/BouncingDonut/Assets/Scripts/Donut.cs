@@ -49,6 +49,7 @@ public class Donut : MonoBehaviour
                     GameState.state = GameState.gameOver;
                     GameState.inBox = false;
                     Debug.Log("Fail");
+                    gameObject.SetActive(false);
                     break;
             }
         }
