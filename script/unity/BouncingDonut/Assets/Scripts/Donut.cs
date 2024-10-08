@@ -5,19 +5,32 @@ using UnityEngine;
 public class Donut : MonoBehaviour
 {
     public Rigidbody2D rb;
+    //float levelCompleteTimer;
 
     void Start()
     {
+        //levelCompleteTimer = 5.0f;
         rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
-        if (GameState.state == GameState.gameOver)
+        if (GameState.state == GameState.GAMEOVER)
         {
             Debug.Log("Game Over");
             rb.velocity = Vector2.zero;
         }
+        /*
+        else if (GameState.state == GameState.LEVELCOMPLETE)
+        {
+            rb.velocity = Vector2.zero;
+            levelCompleteTimer -= Time.deltaTime;
+            if (levelCompleteTimer < 0.0f)
+            {
+                GameState.state = GameState.GAMEOVER;
+            }
+        }
+        */
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -46,7 +59,7 @@ public class Donut : MonoBehaviour
                     break;
                 case "Floor":
                     Scoring.gameScore = 0;
-                    GameState.state = GameState.gameOver;
+                    GameState.state = GameState.GAMEOVER;
                     GameState.inBox = false;
                     Debug.Log("Fail");
                     gameObject.SetActive(false);
@@ -63,7 +76,7 @@ public class Donut : MonoBehaviour
         Debug.Log("End WaitFor5Secs Coroutine: " + Time.time);
         if (GameState.inBox)
         {
-            GameState.state = GameState.gameOver;
+            GameState.state = GameState.LEVELCOMPLETE;
             Debug.Log("Success");
         }
     }

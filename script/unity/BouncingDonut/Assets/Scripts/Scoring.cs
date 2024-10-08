@@ -24,7 +24,7 @@ public class Scoring : MonoBehaviour
         GUI.skin.box.fontSize = fontSize;
         GUI.Box(scoreRect, prefix + gameScore.ToString());
         // Draw Game Over
-        if (GameState.state == GameState.gameOver)
+        if (GameState.state == GameState.GAMEOVER || GameState.state == GameState.LEVELCOMPLETE)
         {
             GUIStyle fontStyle = new GUIStyle();
             fontStyle.fontSize = fontSize;
@@ -45,7 +45,7 @@ public class Scoring : MonoBehaviour
                 text,
                 fontStyle))
             {
-                GameState.state = GameState.gamePlay;
+                GameState.state = GameState.PLAYING;
             }
         }
     }

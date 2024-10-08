@@ -28,7 +28,7 @@ public class Restart : MonoBehaviour
         Debug.Log("Restart clicked");
         if (!GameState.inBox)
         {
-            GameState.state = GameState.gamePlay;
+            GameState.state = GameState.PLAYING;
             GameState.inBox = false;
             Scoring.gameScore = 0;
             GenerateNewDonut();

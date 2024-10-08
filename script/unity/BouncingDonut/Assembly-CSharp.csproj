@@ -62,6 +62,7 @@
     <Compile Include="Assets\Scripts\Donut.cs" />
     <Compile Include="Assets\Scripts\Woodplank.cs" />
     <Compile Include="Assets\Scripts\Restart.cs" />
+    <Compile Include="Assets\Scripts\NextLevel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

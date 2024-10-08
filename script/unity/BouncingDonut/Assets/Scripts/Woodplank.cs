@@ -6,7 +6,7 @@ public class Woodplank : MonoBehaviour
 {
     void Update()
     {
-        if (GameState.state != GameState.gamePlay)
+        if (GameState.state != GameState.PLAYING)
         {
             return;
         }
