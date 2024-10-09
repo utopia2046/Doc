@@ -311,3 +311,19 @@ Blend Trees can be used to smoothly blend multiple animations into one smooth an
 4. Add `Box Collider 2D` to the ground object (or wall or any other obstacles).
 
 Make sure you have `Gravity` in `Project Settings` -> `Physics 2D`. When the moving object hits the obstacle, it will now bounce back.
+
+### Preserve Object between Scenes
+
+You can load a new scene using `SceneManager`, but to preserve objects, such as game state between scenes, use `DontDestroyOnLoad` on the object to be reserved.
+
+``` csharp
+// load new scene
+using UnityEngine.SceneManagement;
+SceneManager.LoadScene("Scenes/Level 2");
+
+// on the obejct to be reserved
+private void Awake()
+{
+    DontDestroyOnLoad(gameObject);
+}
+```

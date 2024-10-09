@@ -10,8 +10,14 @@ public class GameState : MonoBehaviour
     public const int LEVELCOMPLETE = 3;
     public static bool inBox = false;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start()
     {
         state = PLAYING;
+        inBox = false;
     }
 }
