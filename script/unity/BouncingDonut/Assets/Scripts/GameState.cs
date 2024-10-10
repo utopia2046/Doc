@@ -9,6 +9,7 @@ public class GameState : MonoBehaviour
     public const int GAMEOVER = 2;
     public const int LEVELCOMPLETE = 3;
     public static bool inBox = false;
+    public static int level = 1;
 
     private void Awake()
     {

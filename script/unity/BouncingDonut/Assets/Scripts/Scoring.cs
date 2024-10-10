@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class Scoring : MonoBehaviour
 {
-    public int fontSize = 30;
-    public Rect scoreRect = new Rect(20, 20, 200, 50);
-    public string prefix = "Score: ";
+    const int fontSize = 30;
     public static int gameScore = 0;
 
     private void Awake()
@@ -26,7 +24,10 @@ public class Scoring : MonoBehaviour
     {
         // Draw Score on Top Left corner
         GUI.skin.box.fontSize = fontSize;
-        GUI.Box(scoreRect, prefix + gameScore.ToString());
+        Rect scoreRect = new Rect(20, 20, 360, 50);
+        string levelText = "Level: " + GameState.level.ToString();
+        string scoreText = "Score: " + gameScore.ToString();
+        GUI.Box(scoreRect, levelText + " " + scoreText);
         // Draw Game Over
         if (GameState.state == GameState.GAMEOVER || GameState.state == GameState.LEVELCOMPLETE)
         {

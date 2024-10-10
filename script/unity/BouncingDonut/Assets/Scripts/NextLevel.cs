@@ -27,7 +27,8 @@ public class NextLevel : MonoBehaviour
 
     void OnMouseDown()
     {
-        Debug.Log("Next Level clicked");
+        Debug.Log("Load next level name = " + NextLevelName + "; GameState.level = " + GameState.level);
         SceneManager.LoadScene(NextLevelName);
+        GameState.level++;
     }
 }
