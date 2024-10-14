@@ -8,6 +8,8 @@ Resources:
 - <https://forum.unity.com>
 - <https://answers.unity.com>
 - <https://globalgamejam.org>
+- <https://freesound.org>
+- <https://bigsoundbank.com/>
 
 External Tools:
 
