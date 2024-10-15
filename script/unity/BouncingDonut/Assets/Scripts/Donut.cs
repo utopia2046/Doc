@@ -5,12 +5,14 @@ using UnityEngine;
 public class Donut : MonoBehaviour
 {
     public Rigidbody2D rb;
+    AudioSource boing;
     //float levelCompleteTimer;
 
     void Start()
     {
         //levelCompleteTimer = 5.0f;
         rb = GetComponent<Rigidbody2D>();
+        boing = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -44,10 +46,12 @@ public class Donut : MonoBehaviour
                 case "WoodPlank":
                     Scoring.gameScore += 10;
                     GameState.inBox = false;
+                    boing.Play();
                     break;
                 case "Sphere":
                     Scoring.gameScore += 50;
                     GameState.inBox = false;
+                    boing.Play();
                     break;
                 case "DonutBox":
                     Scoring.gameScore += 100;
@@ -56,6 +60,7 @@ public class Donut : MonoBehaviour
                         // start 5s counting down when donut first hit goal
                         StartCoroutine(WaitFor5Secs());
                     }
+                    boing.Play();
                     break;
                 case "Floor":
                     Scoring.gameScore = 0;
