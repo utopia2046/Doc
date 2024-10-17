@@ -10,6 +10,7 @@ Resources:
 - <https://globalgamejam.org>
 - <https://freesound.org>
 - <https://bigsoundbank.com/>
+- <https://pixabay.com/>
 
 External Tools:
 
