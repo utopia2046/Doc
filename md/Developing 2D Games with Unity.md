@@ -145,6 +145,8 @@ The order in which objects appear in the hierarchy view is the order in which th
 
 | Tips: `Horizontal Layout Group` component will automatically arrange for all its subviews to be placed alongside each other horizontally.
 
+| Tips: Fix TMP Text not shown, at right top of the Material, `Create Material Preset` using shader `TextMeshPro/Distance Field`, make sure `Color` -> `Alpha` is not 0, then assign it to the text's `Material Preset`.
+
 ## Characters, Coroutines, and Spawn Points
 
 Instead of using `Update` method in `MonoBehaviour` class, we could also use `InvokeRepeating` method to repeat regularly.
@@ -330,3 +332,4 @@ private void Awake()
     DontDestroyOnLoad(gameObject);
 }
 ```
+
