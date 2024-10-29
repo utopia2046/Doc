@@ -333,3 +333,6 @@ private void Awake()
 }
 ```
 
+### Event Handling using built-in function
+
+When a UI element is only for enable/disable some GameObject, there is no need to attach script, just drag the target GameObject in event handler slot, and select `GameObject.SetActive` as function.
