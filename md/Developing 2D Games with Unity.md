@@ -335,4 +335,14 @@ private void Awake()
 
 ### Event Handling using built-in function
 
-When a UI element is only for enable/disable some GameObject, there is no need to attach script, just drag the target GameObject in event handler slot, and select `GameObject.SetActive` as function.
+When a UI element is only for enable/disable some GameObject, there is no need to attach script, just drag the target GameObject in event handler slot, and select `GameObject.SetActive` as function. Other similar built-in functions includes:
+
+- GameObject
+  - SendMessage
+  - SendMessageUpwards
+  - BroadcastMessage
+- RectTransform
+  - LookAt
+  - SendMessage
+  - SetParent
+  - SetSiblingIndex
