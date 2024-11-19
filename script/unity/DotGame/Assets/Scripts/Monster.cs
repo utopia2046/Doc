@@ -10,15 +10,14 @@ public class Monster : MonoBehaviour
     protected Directions direction;
     protected Vector2 dirVector;
 
-    void Start()
+    public void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void FixedUpdate()
+    public void FixedUpdate()
     {
         dirVector = Movement.GetDirectionVector(direction);
         rb.velocity = dirVector.normalized * speed;
-        animator.SetFloat("Speed", rb.velocity.magnitude);
     }
 }

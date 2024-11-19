@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Robot : Monster
 {
-    void Start()
+    new void Start()
     {
+        base.Start();
+
         direction = Directions.Up;
         animator.Play("Robot_MoveUp");
     }
 
-    void FixedUpdate()
+    new void FixedUpdate()
     {
-        dirVector = Movement.GetDirectionVector(direction);
-        rb.velocity = dirVector.normalized * speed;
+        base.FixedUpdate();
+
         animator.SetFloat("Speed", rb.velocity.magnitude);
     }
 
