@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Eye : MonoBehaviour
+public class Eye : Monster
 {
-    // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
-        
+        base.Start();
+
+        direction = Directions.Up;
+        animator.Play("Eye_Move");
     }
 
-    // Update is called once per frame
-    void Update()
+    new void FixedUpdate()
     {
-        
+        base.FixedUpdate();
+
+        animator.SetFloat("Speed", rb.velocity.magnitude);
+    }
+
+    new void OnCollisionEnter2D(Collision2D collision)
+    {
+        base.OnCollisionEnter2D(collision);
     }
 }

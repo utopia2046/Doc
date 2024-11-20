@@ -19,31 +19,24 @@ public class Robot : Monster
         animator.SetFloat("Speed", rb.velocity.magnitude);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    new void OnCollisionEnter2D(Collision2D collision)
     {
-        // retreat back a little to avoid stuck after turning
-        Vector2 newPosition = new Vector2(
-            transform.position.x - dirVector.x * 0.1f,
-            transform.position.y - dirVector.y * 0.1f);
-        rb.MovePosition(newPosition);
-        // on collision, turn clockwise and switch animation
+        base.OnCollisionEnter2D(collision);
+
+        // show animation depends on moving direction
         switch (direction)
         {
             case Directions.Up:
-                direction = Directions.Right;
-                animator.Play("Robot_MoveRight");
+                animator.Play("Robot_MoveUp");
                 break;
             case Directions.Right:
-                direction = Directions.Down;
-                animator.Play("Robot_MoveDown");
+                animator.Play("Robot_MoveRight");
                 break;
             case Directions.Down:
-                direction = Directions.Left;
-                animator.Play("Robot_MoveLeft");
+                animator.Play("Robot_MoveDown");
                 break;
             case Directions.Left:
-                direction = Directions.Up;
-                animator.Play("Robot_MoveUp");
+                animator.Play("Robot_MoveLeft");
                 break;
         }
     }
