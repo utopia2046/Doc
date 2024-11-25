@@ -27,4 +27,11 @@ public class Movement
         return new Vector2(0.0f, 1.0f);
     }
 
+    public static Vector2 RetreatALittle(Vector2 currentPosition, Vector2 dirVector)
+    {
+        Vector2 newPosition = new Vector2(
+            currentPosition.x - dirVector.x * 0.1f,
+            currentPosition.y - dirVector.y * 0.1f);
+        return newPosition;
+    }
 }

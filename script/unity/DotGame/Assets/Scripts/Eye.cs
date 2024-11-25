@@ -15,8 +15,6 @@ public class Eye : Monster
     new void FixedUpdate()
     {
         base.FixedUpdate();
-
-        animator.SetFloat("Speed", rb.velocity.magnitude);
     }
 
     new void OnCollisionEnter2D(Collision2D collision)

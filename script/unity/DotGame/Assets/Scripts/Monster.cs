@@ -24,9 +24,7 @@ public class Monster : MonoBehaviour
     public void OnCollisionEnter2D(Collision2D collision)
     {
         // retreat back a little to avoid stuck after turning
-        Vector2 newPosition = new Vector2(
-            transform.position.x - dirVector.x * 0.1f,
-            transform.position.y - dirVector.y * 0.1f);
+        Vector2 newPosition = Movement.RetreatALittle(transform.position, dirVector);
         rb.MovePosition(newPosition);
 
         // on collision, turn clockwise and switch animation
