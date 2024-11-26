@@ -12,8 +12,14 @@ public class Arrow : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        direction = Directions.Up;
-        rb.MoveRotation(90.0f);
+        // direction = Directions.Up;
+        // rb.MoveRotation(90.0f);
+        Debug.Log("Arrow.speed = " + speed + "; Arrow.direction = " + direction);
+    }
+
+    public void SetDirection(Directions dir)
+    {
+        this.direction = dir;
     }
 
     private void FixedUpdate()
@@ -25,7 +31,7 @@ public class Arrow : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // Ignore if hit player
-        if (collision.gameObject.tag == "Player")
+        if ((collision.gameObject.tag == "Player") || (collision.gameObject.tag == "Arrow"))
         {
             Physics2D.IgnoreCollision(collision.collider, gameObject.GetComponent<Collider2D>());
             return;
