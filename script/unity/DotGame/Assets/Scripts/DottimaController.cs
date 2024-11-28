@@ -12,6 +12,7 @@ public class DottimaController : MonoBehaviour
     private Directions direction;
     private float zRot;
     private Arrow arrow;
+    private GameObject bomb = null;
 
     void Start()
     {
@@ -52,6 +53,15 @@ public class DottimaController : MonoBehaviour
         // on space bar hitting, shot an arrow
         if (Input.GetKeyDown("space"))
         {
+            // drop bomb
+            if (bomb != null)
+            {
+                bomb.GetComponent<Bomb>().Use();
+                bomb.transform.SetParent(null);
+                bomb = null;
+                return;
+            }
+
             // arrow direction is player's moving direction
             switch (direction)
             {
@@ -82,6 +92,20 @@ public class DottimaController : MonoBehaviour
             {
                 ar.GetComponent<Arrow>().speed += speed;
             }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if ((collision.gameObject.tag == "Bomb") && (bomb == null))
+        {
+            bomb = collision.gameObject;
+            bomb.transform.SetParent(gameObject.transform);
+            bomb.transform.localPosition = new Vector3(-0.2f, 0.2f, -1.0f);
+            Physics2D.IgnoreCollision(
+                collision.collider,
+                gameObject.GetComponent<Collider2D>()
+            );
         }
     }
 }
