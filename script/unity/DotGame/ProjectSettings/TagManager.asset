@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Arrow
   - Bomb
+  - Enemy
+  - Explode
   layers:
   - Default
   - TransparentFX

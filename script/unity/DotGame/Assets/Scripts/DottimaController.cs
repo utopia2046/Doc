@@ -38,7 +38,7 @@ public class DottimaController : MonoBehaviour
         // get player's moving direction
         if (x != 0 || y != 0)
         {
-            Debug.Log("x = " + x + "; y = " + y);
+            //Debug.Log("x = " + x + "; y = " + y);
             if (Math.Abs(x) > Math.Abs(y))
             {
                 direction = (x < 0) ? Directions.Left : Directions.Right;
@@ -47,7 +47,7 @@ public class DottimaController : MonoBehaviour
             {
                 direction = (y > 0) ? Directions.Up : Directions.Down;
             }
-            Debug.Log("Direction: " + direction);
+            //Debug.Log("Direction: " + direction);
         }
 
         // on space bar hitting, shot an arrow
@@ -56,6 +56,7 @@ public class DottimaController : MonoBehaviour
             // drop bomb
             if (bomb != null)
             {
+                Debug.Log("Drop a bomb");
                 bomb.GetComponent<Bomb>().Use();
                 bomb.transform.SetParent(null);
                 bomb = null;
