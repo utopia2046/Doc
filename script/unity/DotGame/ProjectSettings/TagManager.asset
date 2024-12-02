@@ -8,6 +8,8 @@ TagManager:
   - Bomb
   - Enemy
   - Explode
+  - Robot
+  - Eye
   layers:
   - Default
   - TransparentFX

@@ -37,9 +37,18 @@ public class Arrow : MonoBehaviour
             return;
         }
 
-        Vector2 newPosition = Movement.RetreatALittle(transform.position, dirVector);
-        rb.MovePosition(newPosition);
+        if (collision.gameObject.tag == "Eye")
+        {
+            collision.gameObject.SetActive(false);
+            //Destroy(collision.gameObject);
+        }
 
-        speed = 0f;
+        //Destroy(gameObject);
+        gameObject.SetActive(false);
+
+        //Vector2 newPosition = Movement.RetreatALittle(transform.position, dirVector);
+        //rb.MovePosition(newPosition);
+
+        //speed = 0f;
     }
 }
