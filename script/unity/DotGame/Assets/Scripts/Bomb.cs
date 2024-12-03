@@ -6,6 +6,7 @@ public class Bomb : MonoBehaviour
 {
     private bool inUse = false;
     private float fuseTimer;
+    private ParticleSystem sparks;
     public GameObject explode;
     public float fuseLength = 1.0f;
     public float explosiveRadius = 3.0f;
@@ -15,6 +16,8 @@ public class Bomb : MonoBehaviour
     {
         inUse = false;
         fuseTimer = fuseLength;
+        sparks = GetComponentInChildren<ParticleSystem>();
+        sparks.Stop();
     }
 
     // Update is called once per frame
@@ -22,6 +25,10 @@ public class Bomb : MonoBehaviour
     {
         if (inUse)
         {
+            if (sparks.isStopped)
+            {
+                sparks.Play();
+            }
             explode.SetActive(true);
             fuseTimer -= Time.deltaTime;
             if (fuseTimer <= 0.0f)
