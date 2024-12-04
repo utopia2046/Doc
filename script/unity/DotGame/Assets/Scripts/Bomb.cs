@@ -6,18 +6,26 @@ public class Bomb : MonoBehaviour
 {
     private bool inUse = false;
     private float fuseTimer;
-    private ParticleSystem sparks;
+    public ParticleSystem sparks;
+    public ParticleSystem explosion;
     public GameObject explode;
     public float fuseLength = 1.0f;
-    public float explosiveRadius = 3.0f;
+    public float explosiveRadius = 1.5f;
 
     // Start is called before the first frame update
     void Start()
     {
         inUse = false;
         fuseTimer = fuseLength;
-        sparks = GetComponentInChildren<ParticleSystem>();
+        //sparks = GetComponentInChildren<ParticleSystem>();
+        //comparray = GetComponentsInChildren<ParticleSystem>();
+        //foreach (ParticleSystem p in comparray)
+        //{
+        //    if (p.gameObject.name == "Explosion") explosion = p;
+        //    if (p.gameObject.name == "Sparks") sparks = p;
+        //}
         sparks.Stop();
+        explosion.Stop();
     }
 
     // Update is called once per frame
@@ -34,6 +42,8 @@ public class Bomb : MonoBehaviour
             if (fuseTimer <= 0.0f)
             {
                 Debug.Log("Boom!");
+                explosion.transform.SetParent(null);
+                explosion.Play();
                 DamageNearbyObjects(gameObject.transform);
                 // Destroy(gameObject);
                 gameObject.SetActive(false);

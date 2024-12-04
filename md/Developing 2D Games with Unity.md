@@ -347,3 +347,6 @@ When a UI element is only for enable/disable some GameObject, there is no need t
   - SendMessage
   - SetParent
   - SetSiblingIndex
+
+| Tips: Destroy Particle System after its animation finished
+No code needed, just select `Stop Action` to be `Destroy` or `Disable`, job done!
