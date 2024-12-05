@@ -108,5 +108,14 @@ public class DottimaController : MonoBehaviour
                 gameObject.GetComponent<Collider2D>()
             );
         }
+        else if ((collision.gameObject.name == "Robot") || (collision.gameObject.name == "Eye"))
+        {
+            Scoring.lives--;
+            if (Scoring.lives <= 0)
+            {
+                GameState.state = GameState.GAMEOVER;
+            }
+            gameObject.transform.position = new Vector3(-4.0f, 0f, 0f);
+        }
     }
 }
