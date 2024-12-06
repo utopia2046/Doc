@@ -39,7 +39,7 @@ public class Scoring : MonoBehaviour
                 text,
                 fontStyle))
             {
-                GameState.state = GameState.PLAYING;
+                //GameState.state = GameState.PLAYING;
             }
         }
     }

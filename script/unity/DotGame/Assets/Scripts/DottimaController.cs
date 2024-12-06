@@ -13,6 +13,7 @@ public class DottimaController : MonoBehaviour
     private float zRot;
     private Arrow arrow;
     private GameObject bomb = null;
+    private float deathTimer = 1.0f;
 
     void Start()
     {
@@ -34,6 +35,20 @@ public class DottimaController : MonoBehaviour
         float x, y;
         x = rb.velocity.x;
         y = rb.velocity.y;
+
+        if (GameState.state == GameState.GAMEOVER) // && (deathTimer > 0))
+        {
+            Debug.Log("Dead Dottima");
+            float shrink = 1.0f - 2.0f * Time.deltaTime;
+            float rotSpeed = -400.0f * Time.deltaTime;
+            rb.rotation += rotSpeed;
+            transform.localScale = new Vector3(
+                transform.localScale.x * shrink,
+                transform.localScale.y * shrink,
+                transform.localScale.z);
+            deathTimer -= Time.deltaTime;
+            return;
+        }
 
         // get player's moving direction
         if (x != 0 || y != 0)
@@ -111,9 +126,12 @@ public class DottimaController : MonoBehaviour
         else if ((collision.gameObject.name == "Robot") || (collision.gameObject.name == "Eye"))
         {
             Scoring.lives--;
+            Debug.Log("Loose a life, remaining lives: " + Scoring.lives);
             if (Scoring.lives <= 0)
             {
                 GameState.state = GameState.GAMEOVER;
+                Debug.Log("Game over");
+                return;
             }
             gameObject.transform.position = new Vector3(-4.0f, 0f, 0f);
         }
