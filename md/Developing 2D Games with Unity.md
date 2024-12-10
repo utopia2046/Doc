@@ -1,5 +1,28 @@
 # Developing 2D Games with Unity, Independent Game Programming with C#, by Jared Halpern
 
+[TOC]
+
+- [Developing 2D Games with Unity, Independent Game Programming with C#, by Jared Halpern](#developing-2d-games-with-unity-independent-game-programming-with-c-by-jared-halpern)
+  - [Foundation](#foundation)
+  - [World Building](#world-building)
+  - [Interactive Items](#interactive-items)
+    - [Layer-based Collision Detection](#layer-based-collision-detection)
+    - [Scriptable Objects](#scriptable-objects)
+  - [Health and Inventory](#health-and-inventory)
+    - [Masked Image](#masked-image)
+    - [Customized Fonts](#customized-fonts)
+  - [Characters, Coroutines, and Spawn Points](#characters-coroutines-and-spawn-points)
+    - [Get Certain GameObject in Script](#get-certain-gameobject-in-script)
+  - [Artificial Intelligence and Slingshots](#artificial-intelligence-and-slingshots)
+    - [Object Pooling](#object-pooling)
+    - [Blend Trees](#blend-trees)
+      - [Create a Blend Tree](#create-a-blend-tree)
+    - [Bouncing with built-in component](#bouncing-with-built-in-component)
+    - [Preserve Object between Scenes](#preserve-object-between-scenes)
+    - [Event Handling using built-in function](#event-handling-using-built-in-function)
+
+---
+
 Source code and Assets: <https://github.com/Apress/Devel-2D-Games-Unity>
 
 Resources:

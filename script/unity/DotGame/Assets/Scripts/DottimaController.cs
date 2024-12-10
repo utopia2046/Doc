@@ -2,12 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DottimaController : MonoBehaviour
 {
     public float speed;
+    public Vector3 initLocation;
     public GameObject shot;
     public Animator animator;
+    public float levelCompleteTimer = 2.0f;
     private Rigidbody2D rb;
     private Directions direction;
     private float zRot;
@@ -32,6 +35,19 @@ public class DottimaController : MonoBehaviour
 
     private void Update()
     {
+        if (GameState.state == GameState.LEVELCOMPLETE)
+        {
+            rb.velocity = Vector3.zero;
+            levelCompleteTimer -= Time.deltaTime;
+            if (levelCompleteTimer < 0.0f)
+            {
+                GameState.level++;
+                Debug.Log("Loading scene #" + GameState.level.ToString());
+                SceneManager.LoadScene(GameState.level);
+            }
+            return;
+        }
+
         float x, y;
         x = rb.velocity.x;
         y = rb.velocity.y;
@@ -130,10 +146,21 @@ public class DottimaController : MonoBehaviour
             if (Scoring.lives <= 0)
             {
                 GameState.state = GameState.GAMEOVER;
+                GameState.stateText = "Game Over";
                 Debug.Log("Game over");
                 return;
             }
-            gameObject.transform.position = new Vector3(-4.0f, 0f, 0f);
+            gameObject.transform.position = initLocation;
+        }
+        else if (collision.gameObject.tag == "Exit")
+        {
+            GameState.state = GameState.LEVELCOMPLETE;
+            GameState.stateText = "Level Complete";
+        }
+        else if (collision.gameObject.name == "Blockade")
+        {
+            GameState.state = GameState.GAMECOMPLETE;
+            GameState.stateText = "THE END";
         }
     }
 }

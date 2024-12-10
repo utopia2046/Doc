@@ -25,12 +25,12 @@ public class Scoring : MonoBehaviour
         GUI.Box(scoreRect, levelText + " " + scoreText + " " + livesText);
 
         // Draw Game Over
-        if (GameState.state == GameState.GAMEOVER || GameState.state == GameState.LEVELCOMPLETE)
+        if (GameState.state == GameState.GAMEOVER || GameState.state == GameState.LEVELCOMPLETE || GameState.state == GameState.GAMECOMPLETE)
         {
             GUIStyle fontStyle = new GUIStyle();
             fontStyle.fontSize = fontSize;
             fontStyle.normal.textColor = Color.white;
-            string text = "Game Over";
+            string text = GameState.stateText;
             if (GUI.Button(new Rect(
                 Screen.width / 2 - 50,
                 Screen.height / 2 - 40,

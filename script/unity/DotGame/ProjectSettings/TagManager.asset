@@ -10,6 +10,7 @@ TagManager:
   - Explode
   - Robot
   - Eye
+  - Exit
   layers:
   - Default
   - TransparentFX
