@@ -11,6 +11,8 @@ TagManager:
   - Robot
   - Eye
   - Exit
+  - Blockade
+  - Item
   layers:
   - Default
   - TransparentFX

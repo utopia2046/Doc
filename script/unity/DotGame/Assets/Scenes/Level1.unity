@@ -353,7 +353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2572932750175397713, guid: 53cef8b910e4b42488530797888b4e5e, type: 3}
       propertyPath: m_TagString
-      value: Robot
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 2572932750175397715, guid: 53cef8b910e4b42488530797888b4e5e, type: 3}
       propertyPath: m_RootOrder

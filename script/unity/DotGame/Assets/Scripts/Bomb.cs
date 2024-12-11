@@ -64,10 +64,20 @@ public class Bomb : MonoBehaviour
         for (int i = 0; i < colliders.Length; i++)
         {
             GameObject obj = colliders[i].gameObject;
-            if ((obj.tag == "Eye") || (obj.tag == "Robot") || (obj.tag == "Enemy"))
+            if (obj.tag == "Enemy")
             {
                 //Destroy(colliders[i].gameObject);
                 colliders[i].gameObject.SetActive(false);
+                if (obj.name == "Eye")
+                {
+                    Debug.Log("Kill an eye");
+                    Scoring.gameScore += 50;
+                }
+                if (obj.name == "Robot")
+                {
+                    Debug.Log("Kill a robot");
+                    Scoring.gameScore += 100;
+                }
             }
         }
     }

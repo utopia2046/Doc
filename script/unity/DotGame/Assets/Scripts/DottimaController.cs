@@ -129,38 +129,43 @@ public class DottimaController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if ((collision.gameObject.tag == "Bomb") && (bomb == null))
+        string tag = collision.gameObject.tag;
+
+        switch (tag)
         {
-            bomb = collision.gameObject;
-            bomb.transform.SetParent(gameObject.transform);
-            bomb.transform.localPosition = new Vector3(-0.2f, 0.2f, -1.0f);
-            Physics2D.IgnoreCollision(
-                collision.collider,
-                gameObject.GetComponent<Collider2D>()
-            );
-        }
-        else if ((collision.gameObject.name == "Robot") || (collision.gameObject.name == "Eye"))
-        {
-            Scoring.lives--;
-            Debug.Log("Loose a life, remaining lives: " + Scoring.lives);
-            if (Scoring.lives <= 0)
-            {
-                GameState.state = GameState.GAMEOVER;
-                GameState.stateText = "Game Over";
-                Debug.Log("Game over");
-                return;
-            }
-            gameObject.transform.position = initLocation;
-        }
-        else if (collision.gameObject.tag == "Exit")
-        {
-            GameState.state = GameState.LEVELCOMPLETE;
-            GameState.stateText = "Level Complete";
-        }
-        else if (collision.gameObject.name == "Blockade")
-        {
-            GameState.state = GameState.GAMECOMPLETE;
-            GameState.stateText = "THE END";
+            case "Bomb":
+                if (bomb == null)
+                {
+                    Debug.Log("Pick up bomb");
+                    bomb = collision.gameObject;
+                    bomb.transform.SetParent(gameObject.transform);
+                    bomb.transform.localPosition = new Vector3(-0.2f, 0.2f, -1.0f);
+                    Physics2D.IgnoreCollision(
+                        collision.collider,
+                        gameObject.GetComponent<Collider2D>()
+                    );
+                }
+                break;
+            case "Enemy":
+                Scoring.lives--;
+                Debug.Log("Loose a life, remaining lives: " + Scoring.lives);
+                if (Scoring.lives <= 0)
+                {
+                    GameState.state = GameState.GAMEOVER;
+                    GameState.stateText = "Game Over";
+                    Debug.Log("Game over");
+                    return;
+                }
+                gameObject.transform.position = initLocation;
+                break;
+            case "Exit":
+                GameState.state = GameState.LEVELCOMPLETE;
+                GameState.stateText = "Level Complete";
+                break;
+            case "Blockade":
+                GameState.state = GameState.GAMECOMPLETE;
+                GameState.stateText = "THE END";
+                break;
         }
     }
 }

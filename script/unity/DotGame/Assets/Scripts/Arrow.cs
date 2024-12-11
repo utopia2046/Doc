@@ -37,18 +37,17 @@ public class Arrow : MonoBehaviour
             return;
         }
 
-        if (collision.gameObject.tag == "Eye")
+        // kill eye
+        if (collision.gameObject.name == "Eye")
         {
+            Debug.Log("Kill an eye");
+            Scoring.gameScore += 50;
             collision.gameObject.SetActive(false);
             //Destroy(collision.gameObject);
         }
 
+        // disable arrow
         //Destroy(gameObject);
         gameObject.SetActive(false);
-
-        //Vector2 newPosition = Movement.RetreatALittle(transform.position, dirVector);
-        //rb.MovePosition(newPosition);
-
-        //speed = 0f;
     }
 }
