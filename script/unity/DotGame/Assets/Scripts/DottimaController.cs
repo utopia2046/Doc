@@ -26,6 +26,11 @@ public class DottimaController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameState.state != GameState.PLAYING)
+        {
+            return;
+        }
+
         Vector2 moveInput = new Vector2(
             Input.GetAxisRaw("Horizontal"),
             Input.GetAxisRaw("Vertical"));
@@ -43,6 +48,7 @@ public class DottimaController : MonoBehaviour
             {
                 GameState.level++;
                 Debug.Log("Loading scene #" + GameState.level.ToString());
+                GameState.state = GameState.PLAYING;
                 SceneManager.LoadScene(GameState.level);
             }
             return;
@@ -57,6 +63,7 @@ public class DottimaController : MonoBehaviour
             Debug.Log("Dead Dottima");
             float shrink = 1.0f - 2.0f * Time.deltaTime;
             float rotSpeed = -400.0f * Time.deltaTime;
+            rb.velocity = Vector2.zero;
             rb.rotation += rotSpeed;
             transform.localScale = new Vector3(
                 transform.localScale.x * shrink,
@@ -147,13 +154,16 @@ public class DottimaController : MonoBehaviour
                 }
                 break;
             case "Enemy":
+                Debug.Log("Hit an enemy");
                 Scoring.lives--;
+                Scoring.gameScore -= 100;
                 Debug.Log("Loose a life, remaining lives: " + Scoring.lives);
                 if (Scoring.lives <= 0)
                 {
+                    Debug.Log("Game over");
                     GameState.state = GameState.GAMEOVER;
                     GameState.stateText = "Game Over";
-                    Debug.Log("Game over");
+                    Scoring.gameScore = 0;
                     return;
                 }
                 gameObject.transform.position = initLocation;
@@ -161,10 +171,12 @@ public class DottimaController : MonoBehaviour
             case "Exit":
                 GameState.state = GameState.LEVELCOMPLETE;
                 GameState.stateText = "Level Complete";
+                Scoring.gameScore += 500;
                 break;
             case "Blockade":
                 GameState.state = GameState.GAMECOMPLETE;
                 GameState.stateText = "THE END";
+                Scoring.gameScore += 1000;
                 break;
         }
     }

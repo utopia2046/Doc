@@ -10,6 +10,9 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         Debug.Log("Loading scene: " + FirstSceneName);
+        Scoring.gameScore = 0;
+        Scoring.lives = 3;
+        GameState.state = GameState.PLAYING;
         SceneManager.LoadScene(FirstSceneName); // or LoadScene(1), which uses scene index set in build settings
     }
 

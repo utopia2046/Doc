@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Scoring : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class Scoring : MonoBehaviour
         GUI.Box(scoreRect, levelText + " " + scoreText + " " + livesText);
 
         // Draw Game Over
-        if (GameState.state == GameState.GAMEOVER || GameState.state == GameState.LEVELCOMPLETE || GameState.state == GameState.GAMECOMPLETE)
+        if (GameState.state != GameState.PLAYING)
         {
             GUIStyle fontStyle = new GUIStyle();
             fontStyle.fontSize = fontSize;
@@ -39,7 +40,16 @@ public class Scoring : MonoBehaviour
                 text,
                 fontStyle))
             {
-                //GameState.state = GameState.PLAYING;
+                if (GameState.state == GameState.GAMEOVER ||
+                    GameState.state == GameState.GAMECOMPLETE)
+                {
+                    Debug.Log("Reload from start menu");
+                    Scoring.lives = 3;
+                    Scoring.gameScore = 0;
+                    GameState.level = 1;
+                    GameState.state = GameState.PLAYING;
+                    SceneManager.LoadScene(0);
+                }
             }
         }
     }
