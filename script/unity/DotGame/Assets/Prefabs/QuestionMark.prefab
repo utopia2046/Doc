@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3314782426005858705}
   - component: {fileID: 3314782426005858707}
   - component: {fileID: 3314782426005858708}
+  - component: {fileID: 1457187239055851252}
   m_Layer: 0
   m_Name: QuestionMark
   m_TagString: Item
@@ -133,3 +134,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1457187239055851252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3314782426005858704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4355681f607d0264c8b3625b8b111633, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
