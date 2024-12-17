@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Monster.cs" />
     <Compile Include="Assets\Scripts\Bomb.cs" />
+    <Compile Include="Assets\Scripts\QuestionMark.cs" />
     <Compile Include="Assets\Scripts\Eye.cs" />
     <Compile Include="Assets\Scripts\GameState.cs" />
     <Compile Include="Assets\Scripts\Robot.cs" />
@@ -67,7 +68,6 @@
     <Compile Include="Assets\Scripts\SettingsMenu.cs" />
     <Compile Include="Assets\Scripts\DottimaController.cs" />
     <Compile Include="Assets\Scripts\Arrow.cs" />
-    <Compile Include="Assets\Scripts\QuestionMark.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
