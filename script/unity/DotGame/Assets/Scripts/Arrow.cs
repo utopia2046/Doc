@@ -8,13 +8,19 @@ public class Arrow : MonoBehaviour
     private Directions direction;
     private Vector2 dirVector;
     private Rigidbody2D rb;
+    AudioSource whoosh;
+    //AudioSource bounce;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         // direction = Directions.Up;
         // rb.MoveRotation(90.0f);
-        Debug.Log("Arrow.speed = " + speed + "; Arrow.direction = " + direction);
+        // Debug.Log("Arrow.speed = " + speed + "; Arrow.direction = " + direction);
+        //AudioSource[] audios = GetComponents<AudioSource>();
+        whoosh = GetComponent<AudioSource>();//audios[0];
+        //bounce = audios[1];
+        whoosh.Play();
     }
 
     public void SetDirection(Directions dir)
@@ -48,6 +54,7 @@ public class Arrow : MonoBehaviour
 
         // disable arrow
         //Destroy(gameObject);
+        //bounce.Play();
         gameObject.SetActive(false);
     }
 }
