@@ -48,7 +48,10 @@ public class Arrow : MonoBehaviour
         {
             Debug.Log("Kill an eye");
             Scoring.gameScore += 50;
-            collision.gameObject.SetActive(false);
+            var eye = collision.gameObject.GetComponent<Eye>();
+            eye.isDying = true;
+            eye.Die(collision.gameObject);
+            //collision.gameObject.SetActive(false);
             //Destroy(collision.gameObject);
         }
 

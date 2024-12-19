@@ -6,19 +6,43 @@ public class Monster : MonoBehaviour
 {
     public float speed;
     public Animator animator;
+
     protected Rigidbody2D rb;
     protected Directions direction;
     protected Vector2 dirVector;
 
+    private float deathTimer;
+    public bool isDying;
+
     public void Start()
     {
+        deathTimer = 1.0f;
+        isDying = false;
         rb = GetComponent<Rigidbody2D>();
     }
 
     public void FixedUpdate()
     {
+        if (isDying)
+        {
+            rb.velocity = Vector3.zero;
+            return;
+        }
+
         dirVector = Movement.GetDirectionVector(direction);
         rb.velocity = dirVector.normalized * speed;
+    }
+
+    public void Update()
+    {
+        if (isDying)
+        {
+            deathTimer -= Time.deltaTime;
+        }
+        if (deathTimer < 0.0f)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
@@ -42,6 +66,16 @@ public class Monster : MonoBehaviour
             case Directions.Left:
                 direction = Directions.Up;
                 break;
+        }
+    }
+
+    public void Die(GameObject obj)
+    {
+        AudioSource sound = obj.GetComponent<AudioSource>();
+        Debug.Log(obj.name + " starts dying");
+        if (sound != null)
+        {
+            sound.Play();
         }
     }
 }
