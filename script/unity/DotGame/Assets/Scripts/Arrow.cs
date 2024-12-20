@@ -50,7 +50,17 @@ public class Arrow : MonoBehaviour
             Scoring.gameScore += 50;
             var eye = collision.gameObject.GetComponent<Eye>();
             eye.isDying = true;
-            eye.Die(collision.gameObject);
+            eye.PlaySound(collision.gameObject);
+            //collision.gameObject.SetActive(false);
+            //Destroy(collision.gameObject);
+        }
+
+        // hit robot, it grunts but won't die
+        if (collision.gameObject.name == "Robot")
+        {
+            Debug.Log("Hit a robot");
+            var robot = collision.gameObject.GetComponent<Robot>();
+            robot.PlaySound(collision.gameObject);
             //collision.gameObject.SetActive(false);
             //Destroy(collision.gameObject);
         }

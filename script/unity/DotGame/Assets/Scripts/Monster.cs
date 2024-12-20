@@ -69,10 +69,10 @@ public class Monster : MonoBehaviour
         }
     }
 
-    public void Die(GameObject obj)
+    public void PlaySound(GameObject obj)
     {
         AudioSource sound = obj.GetComponent<AudioSource>();
-        Debug.Log(obj.name + " starts dying");
+        Debug.Log(obj.name + " starts screaming");
         if (sound != null)
         {
             sound.Play();
