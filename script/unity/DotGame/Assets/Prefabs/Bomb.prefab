@@ -5099,6 +5099,7 @@ MonoBehaviour:
   explode: {fileID: 5867659559021998374}
   fuseLength: 2
   explosiveRadius: 3
+  explodeSound: {fileID: 8300000, guid: a15b08042b38e1e4f98b15537d278ba7, type: 3}
 --- !u!1 &5867659559021998374
 GameObject:
   m_ObjectHideFlags: 0

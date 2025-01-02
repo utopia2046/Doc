@@ -11,6 +11,7 @@ public class Bomb : MonoBehaviour
     public GameObject explode;
     public float fuseLength = 1.0f;
     public float explosiveRadius = 1.5f;
+    public AudioClip explodeSound;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +43,7 @@ public class Bomb : MonoBehaviour
             if (fuseTimer <= 0.0f)
             {
                 Debug.Log("Boom!");
+                AudioSource.PlayClipAtPoint(explodeSound, Camera.main.transform.position);
                 explosion.transform.SetParent(null);
                 explosion.Play();
                 DamageNearbyObjects(gameObject.transform);

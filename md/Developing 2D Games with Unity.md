@@ -373,3 +373,44 @@ When a UI element is only for enable/disable some GameObject, there is no need t
 
 | Tips: Destroy Particle System after its animation finished
 No code needed, just select `Stop Action` to be `Destroy` or `Disable`, job done!
+
+| Tips: Different ways to play sound effect
+
+Method A:
+
+1. Add `AudioSource` component to the `GameObject` that should make the sound, select the sound clip, uncheck `Play on awake`;
+2. Decalre and init the `AudioSource` in `Start`;
+3. In the event handling method, such as `Update` (on key events handling) or `OnCollisionEnter2D`, call `Play` method on the `AudioSource` component;
+
+Notice that if soon after `Play` method called, the parent `GameObject` is distroyed or disabled, the sound will not play. We should add a **timer** or **co-routine** to avoid the `GameObject` destroyed before sound play done.
+
+``` csharp
+// in GameObject MonoBehaviour class
+private AudioSource sound;
+
+void Start() {
+    sound = GetComponent<AudioSource>();
+    ...
+}
+
+void Update() {
+    if (Input.GetKeyDown("space")) {
+        sound.Play();
+        ...
+    }
+}
+```
+
+Method B:
+
+1. Add `AudioClip` property in the `MonoBehaviour` script, and drag the sound clip on this property in Editor;
+2. Call `AudioSource.PlayClipAtPoint` to play the sound;
+
+``` csharp
+public AudioClip clip;
+
+void Update() {
+    //... condition check
+    AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position); // use default AudioListener on main camera
+}
+```
