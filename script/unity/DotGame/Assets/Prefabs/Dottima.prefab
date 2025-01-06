@@ -101,7 +101,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  initLocation: {x: 0, y: 0, z: 0}
+  shot: {fileID: 0}
   animator: {fileID: 8414658170858784187}
+  levelCompleteTimer: 2
+  yike: {fileID: 8300000, guid: a398a735986805d4f86c2cf2be342490, type: 3}
+  gameOver: {fileID: 8300000, guid: 2a84e6e0f7729d24795777184ad4c181, type: 3}
+  gameComplete: {fileID: 8300000, guid: f87e8a4d9f012e64580840ae1068df10, type: 3}
+  levelComplete: {fileID: 8300000, guid: 0452a449965e7e0418937446c9074dba, type: 3}
+  findExit: {fileID: 8300000, guid: 14eaf867516886042ac331b1291692ea, type: 3}
 --- !u!50 &8414658170858784132
 Rigidbody2D:
   serializedVersion: 4

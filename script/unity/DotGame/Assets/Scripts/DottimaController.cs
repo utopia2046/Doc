@@ -11,6 +11,12 @@ public class DottimaController : MonoBehaviour
     public GameObject shot;
     public Animator animator;
     public float levelCompleteTimer = 2.0f;
+    public AudioClip yike;
+    public AudioClip gameOver;
+    public AudioClip gameComplete;
+    public AudioClip levelComplete;
+    public AudioClip findExit;
+
     private Rigidbody2D rb;
     private Directions direction;
     private float zRot;
@@ -22,6 +28,7 @@ public class DottimaController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         direction = Directions.Up;
+        AudioSource.PlayClipAtPoint(findExit, Camera.main.transform.position);
     }
 
     private void FixedUpdate()
@@ -61,6 +68,7 @@ public class DottimaController : MonoBehaviour
         if (GameState.state == GameState.GAMEOVER) // && (deathTimer > 0))
         {
             Debug.Log("Dead Dottima");
+            AudioSource.PlayClipAtPoint(gameOver, Camera.main.transform.position);
             float shrink = 1.0f - 2.0f * Time.deltaTime;
             float rotSpeed = -400.0f * Time.deltaTime;
             rb.velocity = Vector2.zero;
@@ -158,6 +166,7 @@ public class DottimaController : MonoBehaviour
                 Scoring.lives--;
                 Scoring.gameScore -= 100;
                 Debug.Log("Loose a life, remaining lives: " + Scoring.lives);
+                AudioSource.PlayClipAtPoint(yike, Camera.main.transform.position);
                 if (Scoring.lives <= 0)
                 {
                     Debug.Log("Game over");
@@ -172,11 +181,13 @@ public class DottimaController : MonoBehaviour
                 GameState.state = GameState.LEVELCOMPLETE;
                 GameState.stateText = "Level Complete";
                 Scoring.gameScore += 500;
+                AudioSource.PlayClipAtPoint(levelComplete, Camera.main.transform.position);
                 break;
             case "Blockade":
                 GameState.state = GameState.GAMECOMPLETE;
                 GameState.stateText = "THE END";
                 Scoring.gameScore += 1000;
+                AudioSource.PlayClipAtPoint(gameComplete, Camera.main.transform.position);
                 break;
         }
     }
