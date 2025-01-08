@@ -20,6 +20,11 @@
     - [Bouncing with built-in component](#bouncing-with-built-in-component)
     - [Preserve Object between Scenes](#preserve-object-between-scenes)
     - [Event Handling using built-in function](#event-handling-using-built-in-function)
+  - [Game Development Checklist](#game-development-checklist)
+    - [Before You Start Development](#before-you-start-development)
+    - [During Development](#during-development)
+    - [Marketing](#marketing)
+    - [Before Release](#before-release)
 
 ---
 
@@ -414,3 +419,50 @@ void Update() {
     AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position); // use default AudioListener on main camera
 }
 ```
+
+## Game Development Checklist
+
+### Before You Start Development
+
+- Are you excited about the game? If not, toss it and do something else.
+- Are you doing this for the money? If so, do something else if you can afford to.
+- Do you have an excellent, original concept?
+- Does it all make sense?
+- What are some competing games? Did you play them? Did you at least look at videos of them?
+
+### During Development
+
+- Is it fun?
+- Do you enjoy playing it yourself?
+- If it’s not fun, what’s your excuse? Don’t be afraid to kill the project if it’s not fun.
+- Are the controls responsive? If not, make them responsive ASAP. The controls should feel good all by themselves even when you’re just moving a character around or driving a vehicle for no reason, for example.
+- Is the learning curve OK? This needs to be tested.
+- What rewards are you giving the player?
+- Good UI. Make the UI experience fast and easy to understand. Does gameplay start ASAP?
+- If you have cut scenes, make them skippable. Not everyone cares about the story, especially if they’re playing the game a third time.
+- Do you have a schedule?
+- What are your platforms? For example: PC first, then Mac, then mobile.
+- What is the audio plan for the game? Do you have speech, music, and sound effects?
+
+### Marketing
+
+- How are you promoting this project?
+- When and how are you making GIFs?
+- Do you have a domain and a website for the game?
+- Do you have a twitter account?
+- Facebook account?
+- Trailer?
+- Playable demo?
+- Do you have cheat-codes? If so, what are they and what do they do?
+- Who are the testers during development? Before release?
+
+### Before Release
+
+- Does the game use the new title everywhere, or do you have the working title in there someplace?
+- Do you have a copyright notice?
+- Trademarks?
+- Did you put in a credits screen?
+- Do you have accurate names in the credits?
+- Did you check all licenses and observe all associated terms?
+- Are the credits easily accessible, even for players who didn’t finish the game?
+- Is the website operational?
