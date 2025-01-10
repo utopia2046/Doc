@@ -28,6 +28,25 @@ Source Code: <https://github.com/Apress/beginning-game-ai-unity>
 - transmit their genetic traits to offspring by mating
 - learn by experience
 
+### Move and Turn
+
+movement vector like this:
+
+`myObject.transform.Translate(0, 0, speed * Time.deltaTime);`
+
+and turn the object to face the target position:
+
+`this.transform.LookAt(positionToLookAt);`
+
+There are two very popular techniques to implement linear interpolation to rotate an object:
+
+- `Lerp` (Linear intERPolation)
+- `Slerp` (Spherical Linear intERPolation)
+
+For example, use slerp to calculate rotation:
+
+`Quaternion.Slerp(startingRotation, goalRotation, rotationSpeed);`
+
 ## Paths and Waypoints
 
 ## Navigation

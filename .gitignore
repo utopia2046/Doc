@@ -36,16 +36,6 @@ packages/
 *.unityproj
 *.unitypackage
 *.apk
-script/unity/Mini2DRPG/.plastic/
-script/unity/Mini2DRPG/Library/
-script/unity/Mini2DRPG/Logs/
-script/unity/Mini2DRPG/UserSettings/
-script/unity/Mini2DRPG/Temp/
-script/unity/BasicRPS/Library/
-script/unity/BasicRPS/Logs/
-script/unity/BasicRPS/UserSettings/
-script/unity/BasicRPS/Temp/
-script/unity/BasicRPS/build/
 script/unity/MemoryCards/Library/
 script/unity/MemoryCards/Logs/
 script/unity/MemoryCards/UserSettings/
@@ -75,3 +65,7 @@ script/unity/DotGame/Library/
 script/unity/DotGame/Logs/
 script/unity/DotGame/UserSettings/
 script/unity/DotGame/Temp/
+script/unity/Agents/Library/
+script/unity/Agents/Logs/
+script/unity/Agents/UserSettings/
+script/unity/Agents/Temp/
