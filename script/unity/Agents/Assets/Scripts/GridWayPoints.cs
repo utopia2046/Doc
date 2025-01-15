@@ -42,7 +42,10 @@ public class GridWayPoints : MonoBehaviour
             {
                 grid[i, j].Waypoint = Instantiate(
                     prefabWaypoint,
-                    new Vector3(i * spacing, this.transform.position.y, j * spacing),
+                    new Vector3(
+                        i * spacing,
+                        0.1f, //this.transform.position.y,
+                        j * spacing),
                     Quaternion.identity);
 
                 if (!grid[i, j].Walkable)
@@ -51,7 +54,7 @@ public class GridWayPoints : MonoBehaviour
                 }
                 else
                 {
-                    grid[i, j].Neighbors = getAdjacentNodes(grid, i, j);
+                    grid[i, j].Neighbors = Node.GetAdjacentNodes(grid, i, j);
                 }
             }
         }
@@ -68,6 +71,50 @@ public class GridWayPoints : MonoBehaviour
             startNode.Waypoint.transform.position.z);
     }
 
+    void LateUpdate()
+    {
+        // calculate the shortest path when the return key is pressed
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            this.transform.position = new Vector3(
+                startNode.Waypoint.transform.position.x,
+                this.transform.position.y,
+                startNode.Waypoint.transform.position.z);
+            curNode = 0;
+            path = Node.BFS(startNode, endNode);
+        }
+
+        // if there's no path, do nothing
+        if (path.Count == 0) return;
+
+        // set the goal position
+        goal = new Vector3(
+            path[curNode].Waypoint.transform.position.x,
+            this.transform.position.y,
+            path[curNode].Waypoint.transform.position.z);
+
+        // set the direction
+        Vector3 direction = goal - this.transform.position;
+
+        // move toward the goal or increase the counter to set another goal in the next iteration
+        if (direction.magnitude > accuracy)
+        {
+            this.transform.rotation = Quaternion.Slerp(
+                this.transform.rotation,
+                Quaternion.LookRotation(direction),
+                Time.deltaTime * rotSpeed);
+            this.transform.Translate(0, 0, speed * Time.deltaTime);
+        }
+        else
+        {
+            if (curNode < path.Count - 1)
+            {
+                curNode++;
+            }
+        }
+    }
+
+    /*
     void LateUpdate()
     {
         // calculate the shortest path when the return key is pressed
@@ -111,80 +158,5 @@ public class GridWayPoints : MonoBehaviour
             }
         }
     }
-
-    List<Node> getAdjacentNodes(Node[,] m, int i, int j)
-    {
-        List<Node> l = new List<Node>();
-
-        // node up
-        if ((i - 1 >= 0) && (m[i - 1, j].Walkable))
-        {
-            l.Add(m[i - 1, j]);
-        }
-
-        // node down
-        if ((i + 1 < m.GetLength(0)) && (m[i + 1, j].Walkable))
-        {
-            l.Add(m[i + 1, j]);
-        }
-
-        // node left
-        if ((j - 1 >= 0) && (m[i, j - 1].Walkable))
-        {
-            l.Add(m[i, j - 1]);
-        }
-
-        // node right
-        if ((j + 1 < m.GetLength(1)) && (m[i, j + 1].Walkable))
-        {
-            l.Add(m[i, j + 1]);
-        }
-
-        return l;
-    }
-}
-
-public class Node
-{
-    private int depth;
-    private bool walkable;
-
-    private GameObject waypoint = new GameObject();
-    private List<Node> neighbors = new List<Node>();
-
-    public int Depth { get => depth; set => depth = value; }
-    public bool Walkable { get => walkable; set => walkable = value; }
-
-    public GameObject Waypoint { get => waypoint; set => waypoint = value; }
-    public List<Node> Neighbors { get => neighbors; set => neighbors = value; }
-
-    public Node()
-    {
-        this.depth = -1;
-        this.walkable = true;
-    }
-
-    public Node(bool walkable)
-    {
-        this.depth = -1;
-        this.walkable = walkable;
-    }
-
-    public override bool Equals(System.Object obj)
-    {
-        if (obj == null) return false;
-
-        Node n = obj as Node;
-        if ((System.Object)n == null)
-        {
-            return false;
-        }
-        if (this.waypoint.transform.position.x == n.Waypoint.transform.position.x &&
-            this.waypoint.transform.position.z == n.Waypoint.transform.position.z)
-        {
-            return true;
-        }
-
-        return false;
-    }
+    */
 }

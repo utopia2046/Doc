@@ -59,6 +59,7 @@
     <Compile Include="Assets\Scripts\Move.cs" />
     <Compile Include="Assets\Scripts\WalkWayPoints.cs" />
     <Compile Include="Assets\Scripts\GridWayPoints.cs" />
+    <Compile Include="Assets\Scripts\Node.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
