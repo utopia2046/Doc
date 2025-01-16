@@ -98,4 +98,16 @@ public class WalkWayPoints : MonoBehaviour
 
 ## Navigation
 
+Broad-First & Depth-First Search (BFS & DFS)
+
+Unweighted & Weighted Graph
+
+Unity implements weighted graphs for navigation using a solution that’s widely appreciated and used in the game industry: the Navigation Mesh `NavMesh`.
+
+A Navigation Mesh `NavMesh` is a collection of **convex polygons** that mark the walkable areas on surfaces in a 3D space. Much like WayPoints, NavMeshes are represented internally as graphs so that graph algorithms can be used to solve pathfinding problems.
+
+In Unity Editor, select parent of all floor and walls, select `Navigation Static` in Inspector. This will tell Unity to consider the parent GameObject and all its children as static objects, part of the navigable 3D space. The consequence of this setting is that, when a NavMesh will be baked, Unity will consider all the 3D objects marked as `Navigation Static` and decide if they are walkable or reachable.
+
+Open navigation panel: `Window` -> `AI` -> `Navigation`, select `Bake` tab, confirm the agent size and click `Bake` to see the mesh
+
 ## Behaviors
