@@ -102,12 +102,23 @@ Broad-First & Depth-First Search (BFS & DFS)
 
 Unweighted & Weighted Graph
 
-Unity implements weighted graphs for navigation using a solution that’s widely appreciated and used in the game industry: the Navigation Mesh `NavMesh`.
+### NavMesh
 
-A Navigation Mesh `NavMesh` is a collection of **convex polygons** that mark the walkable areas on surfaces in a 3D space. Much like WayPoints, NavMeshes are represented internally as graphs so that graph algorithms can be used to solve pathfinding problems.
+A Navigation Mesh `NavMesh` is a collection of **convex polygons** that mark the walkable areas on surfaces in a 3D space. Much like `WayPoint`s, `NavMeshe`s are represented internally as graphs so that graph algorithms can be used to solve pathfinding problems.
 
 In Unity Editor, select parent of all floor and walls, select `Navigation Static` in Inspector. This will tell Unity to consider the parent GameObject and all its children as static objects, part of the navigable 3D space. The consequence of this setting is that, when a NavMesh will be baked, Unity will consider all the 3D objects marked as `Navigation Static` and decide if they are walkable or reachable.
 
 Open navigation panel: `Window` -> `AI` -> `Navigation`, select `Bake` tab, confirm the agent size and click `Bake` to see the mesh
+
+To specify which areas are walkable for an agent, select your agent,and in the Inspector, look for the Area Mask drop-down.
+
+References:
+
+- <https://docs.unity.cn/cn/2020.3/Manual/class-NavMeshAgent.html>
+- <https://docs.unity3d.com/cn/2021.3/Manual/nav-CreateOffMeshLink.html>
+- <https://docs.unity3d.com/2022.1/Documentation/Manual/nav-Overview.html>
+- <https://blog.csdn.net/pq8888168/article/details/103011923>
+- <https://blog.csdn.net/weixin_43147385/article/details/126600960>
+- <https://blog.csdn.net/HC9861/article/details/79242379>
 
 ## Behaviors
