@@ -60,6 +60,7 @@
     <Compile Include="Assets\Scripts\WalkWayPoints.cs" />
     <Compile Include="Assets\Scripts\GridWayPoints.cs" />
     <Compile Include="Assets\Scripts\Node.cs" />
+    <Compile Include="Assets\Scripts\AgentController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
