@@ -121,4 +121,29 @@ References:
 - <https://blog.csdn.net/weixin_43147385/article/details/126600960>
 - <https://blog.csdn.net/HC9861/article/details/79242379>
 
+Example Code: Navigation to Mouse Clicked Point
+
+``` csharp
+void Update()
+{
+    if (Input.GetMouseButtonDown(0))
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(
+            Camera.main.ScreenPointToRay(Input.mousePosition),
+            out hit,
+            100))
+        {
+            // tell NavMesh to calculate the best path to the mouse clicked position
+            this.GetComponent<UnityEngine.AI.NavMeshAgent>().SetDestination(hit.point);
+        }
+    }
+}
+```
+
 ## Behaviors
+
+Finite-State Machine (FSM): one of the earliest and easiest (and still used) ways to represent and manage simple AI behaviors.
+
+Field of view (FOV): the extent of the visible world that is visible at any given moment.
+
