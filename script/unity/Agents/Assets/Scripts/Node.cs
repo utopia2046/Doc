@@ -46,6 +46,11 @@ public class Node
         return false;
     }
 
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
+
     public static List<Node> GetAdjacentNodes(Node[,] m, int i, int j)
     {
         List<Node> l = new List<Node>();

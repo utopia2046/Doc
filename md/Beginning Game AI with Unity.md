@@ -147,3 +147,22 @@ Finite-State Machine (FSM): one of the earliest and easiest (and still used) way
 
 Field of view (FOV): the extent of the visible world that is visible at any given moment.
 
+``` csharp
+// A general logic of NPC chasing player using NavMeshAgent path finding
+void Chase(Transform player)
+{
+    this.GetComponent<UnityEngine.AI.NavMeshAgent>().Stop();
+    this.GetComponent<UnityEngine.AI.NavMeshAgent>().ResetPath();
+
+    Vector3 direction = player.position - this.transform.position;
+    this.transform.rotation = Quaternion.Slerp(
+        this.transform.rotation,
+        Quaternion.LookRotation(direction),
+        Time.deltaTime * this.chasingRotSpeed);
+
+    if (direction.magnitude > this.chasingAccuracy)
+    {
+        this.transform.Translate(0, 0, Time.deltaTime * this.chasingSpeed);
+    }
+}
+```
