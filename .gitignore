@@ -69,3 +69,7 @@ script/unity/Agents/Library/
 script/unity/Agents/Logs/
 script/unity/Agents/UserSettings/
 script/unity/Agents/Temp/
+script/unity/TankFight/Library/
+script/unity/TankFight/Logs/
+script/unity/TankFight/UserSettings/
+script/unity/TankFight/Temp/
