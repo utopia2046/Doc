@@ -1,8 +1,37 @@
-# ChatGPT Prompt Engingeering for Developers Learning Notes
+# Prompt Engingeering Learning Notes
+
+- [Prompt Engingeering Learning Notes](#prompt-engingeering-learning-notes)
+  - [ChatGPT Prompt Engingeering for Developers](#chatgpt-prompt-engingeering-for-developers)
+  - [Guidelines](#guidelines)
+    - [Principle 1: Write clear and specific instructions](#principle-1-write-clear-and-specific-instructions)
+    - [Principle 2: Give the model time to think](#principle-2-give-the-model-time-to-think)
+  - [Iterative](#iterative)
+  - [Summarizing](#summarizing)
+  - [Inferring](#inferring)
+  - [Transforming](#transforming)
+  - [Expanding](#expanding)
+  - [Chatbot](#chatbot)
+  - [Prompts for Research](#prompts-for-research)
+    - [Data Analysis](#data-analysis)
+    - [Research review](#research-review)
+    - [ChatGPT limitations](#chatgpt-limitations)
+  - [DeepSeek 使用技巧](#deepseek-使用技巧)
+  - [做图](#做图)
+  - [推理模型 vs. 通用模型](#推理模型-vs-通用模型)
+    - [推理模型](#推理模型)
+    - [通用模型](#通用模型)
+    - [关键原则](#关键原则)
+    - [不同需求类型的适配策略](#不同需求类型的适配策略)
+  - [提示语工程](#提示语工程)
+    - [基本结构](#基本结构)
+    - [提示语基本元素分类](#提示语基本元素分类)
+    - [策略](#策略)
+    - [常用模型](#常用模型)
+  - [进阶使用](#进阶使用)
+
+## ChatGPT Prompt Engingeering for Developers
 
 [Course link on DeepLearning.AI](https://learn.deeplearning.ai/chatgpt-prompt-eng/)
-
-## Introduction
 
 Target: As a developer, using API calls to LLM To quickly build software applications, rather than using current web interface (articles like 30 prompts everyone has to know)
 
@@ -589,9 +618,9 @@ Ref: <https://machinelearningmastery.com/advanced-techniques-for-research-with-c
   - 雷达图
   - 组合图表
 
-### 推理模型 vs. 通用模型
+## 推理模型 vs. 通用模型
 
-#### 推理模型
+### 推理模型
 
 - 优势领域: 数学推导、逻辑分析、代码生成、复杂问题拆解
 - 劣势领域: 发散性任务（如诗歌创作）
@@ -600,7 +629,7 @@ Ref: <https://machinelearningmastery.com/advanced-techniques-for-research-with-c
 - 提示语更简洁，只需明确任务目标和需求（因其已内化推理逻辑）
 - 无需逐步指导，模型自动生成结构化推理过程（若强行拆解步骤，反而可能限制其能力）
 
-#### 通用模型
+### 通用模型
 
 - 优势领域: 文本生成、创意写作、多轮对话、开放性问答
 - 劣势领域: 需要严格逻辑链的任务（如数学证明）
@@ -609,7 +638,7 @@ Ref: <https://machinelearningmastery.com/advanced-techniques-for-research-with-c
 - 需显式引导推理步骤（如通过CoT提示），否则可能跳过关键逻辑
 - 依赖提示语补偿能力短板（如要求分步思考、提供示例）
 
-#### 关键原则
+### 关键原则
 
 1. 模型选择: 优先根据任务类型而非模型热度选择（如数学任务选推理模型，创意任务选通用模型）
 2. 提示语设计
@@ -642,9 +671,9 @@ Ref: <https://machinelearningmastery.com/advanced-techniques-for-research-with-c
    - 推理模型: 自主优化步骤，兼顾效率与正确性
    - 通用模型: 严格按指令执行，无自主优化
 
-### 提示语工程
+## 提示语工程
 
-#### 基本结构
+### 基本结构
 
 - 指令(Instruction)：这是提示语的核心， 明确告诉AI你希望它执行什么任务。
 - 上下文(Context)：为AI提供背景信息， 帮助它更准确地理解和执行任务。
@@ -788,7 +817,7 @@ ALIGN框架
 请开始创作， 确保A和B的声音清晰可辨， 且整体形成一个连贯的叙事。
 ```
 
-### 进阶使用
+## 进阶使用
 
 - 知识获取
   - 让AI列出关键概念清单
