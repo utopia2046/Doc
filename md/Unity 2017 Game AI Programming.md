@@ -43,6 +43,56 @@ private void ApplyAvoidance(ref Vector3 direction)
 }
 ```
 
+### NavMesh
+
+1. Set all floors, walls, obstacles etc. to be `Navigation Static` (top right on Inspector);
+2. Open `Window -> AI -> Navigation` panel to bake NavMesh;
+3. Add `NavMeshAgent` component on player or NPC that need to move to certain target position using NavMesh;
+4. Add `MonoBehavior` script that respond to user input like mouse click;
+
+``` cs
+private NavMeshAgent[] navAgents;
+public Transform targetMarker; // select target object in Editor
+
+private void Start()
+{
+    // find all GameObjects with NavMeshAgent on it
+    navAgents = FindObjectsOfType(typeof(NavMeshAgent)) as NavMeshAgent[];
+}
+
+private void Update()
+{
+    if(Input.GetMouseButtonDown(0))
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hitInfo;
+
+        if (Physics.Raycast(ray.origin, ray.direction, out hitInfo))
+        {
+            Vector3 targetPosition = hitInfo.point;
+            UpdateTargets(targetPosition);
+            targetMarker.position = targetPosition;
+        }
+    }
+}
+
+// set destination for all NavMeshAgents
+private void UpdateTargets(Vector3 targetPosition)
+{
+    foreach(NavMeshAgent agent in navAgents)
+    {
+        agent.destination = targetPosition;
+    }
+}
+```
+
+Add OffMeshLink
+
+1. Add GameObject for jump start point and end point;
+2. On one of the platform, add `OffMeshLink` component, select `Start` and `End`;
+3. Set `Cost Override` to be positive and `Activated` as true, now the agent will be able to jump from start to end;
+4. If necessary, set `Bidirectional`;
+
 ## Flocks and Crowds dynamics
 
 It is better to represent the entire crowd as an entity rather than trying to model each individual as its own agent. Each individual in the group only really needs to know where the group is heading and what their nearest neighbor is up to in order to function as part of the system.
