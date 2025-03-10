@@ -97,6 +97,14 @@ Add OffMeshLink
 
 It is better to represent the entire crowd as an entity rather than trying to model each individual as its own agent. Each individual in the group only really needs to know where the group is heading and what their nearest neighbor is up to in order to function as part of the system.
 
+### Reynolds algorithm
+
+Three basic concepts that define how a flock works
+
+- Separation: This means maintaining a distance with other neighbors in the flock to avoid collision.
+- Alignment: This means to moving in the same direction as the flock, and with the same velocity.
+- Cohesion: This means maintaining a maximum distance from the flock's center.
+
 ## Behavior Trees
 
 Behavior trees are a collection of nodes organized in a hierarchical order, in which nodes are connected to parents rather than states connected to each other, resembling branches on a tree, hence the name.

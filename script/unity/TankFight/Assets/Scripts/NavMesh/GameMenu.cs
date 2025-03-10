@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameMenu : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public class GameMenu : MonoBehaviour
         GUILayout.FlexibleSpace();
         if (GUILayout.Button("Back", GUILayout.Width(200.0f)))
         {
-            Application.LoadLevel("Menu");
+            //Application.LoadLevel("Menu");
+            SceneManager.LoadScene("Menu");
         }
         GUILayout.EndVertical();
         GUILayout.EndArea();
