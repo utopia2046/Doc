@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TargetMovement : MonoBehaviour 
+public class TargetMovement : MonoBehaviour
 {
     [SerializeField]
     private Vector3 bounds;
@@ -14,23 +14,23 @@ public class TargetMovement : MonoBehaviour
     private Vector3 initialPosition;
     private Vector3 nextMovementPoint;
     private Vector3 targetPosition;
-		
-	private void Awake() 
+
+    private void Awake()
     {
         initialPosition = transform.position;
         CalculateNextMovementPoint();
-	}
+    }
 
-	private void Update () 
+    private void Update()
     {
         transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(nextMovementPoint - transform.position), turnSpeed * Time.deltaTime);
 
-        if(Vector3.Distance(nextMovementPoint, transform.position) <= targetPointTolerance) 
+        if (Vector3.Distance(nextMovementPoint, transform.position) <= targetPointTolerance)
         {
             CalculateNextMovementPoint();
         }
-	}
+    }
 
     private void CalculateNextMovementPoint()
     {
@@ -40,6 +40,6 @@ public class TargetMovement : MonoBehaviour
         targetPosition.x = posX;
         targetPosition.y = posY;
         targetPosition.z = posZ;
-        nextMovementPoint = initialPosition + targetPosition; 
+        nextMovementPoint = initialPosition + targetPosition;
     }
 }

@@ -5,7 +5,7 @@ public class FlockController : MonoBehaviour
 {
     // The number of boids in the flock
     [SerializeField]
-	private int flockSize = 20;
+    private int flockSize = 20;
 
     // Speed modifer for the boid movement
     [SerializeField]
@@ -13,23 +13,23 @@ public class FlockController : MonoBehaviour
 
     // Weight modifier for alignment value's contributionto the flocking direction.
     [SerializeField]
-	private float alignmentWeight = 1;
+    private float alignmentWeight = 1;
 
     // Weight modifier for cohesion value's contributionto the flocking direction.
     [SerializeField]
-	private float cohesionWeight = 1;
+    private float cohesionWeight = 1;
 
     // Weight modifier for separation value's contributionto the flocking direction.
     [SerializeField]
-	private float separationWeight = 1;
+    private float separationWeight = 1;
 
     // Weight modifier for the target's contributionto the flocking direction.
     [SerializeField]
     private float followWeight = 5;
-	
+
     [Header("Boid Data")]
     [SerializeField]
-	private Boid prefab;
+    private Boid prefab;
     [SerializeField]
     private float spawnRadius = 3.0f;
     private Vector3 spawnLocation = Vector3.zero;
@@ -37,12 +37,12 @@ public class FlockController : MonoBehaviour
     [Header("Target Data")]
     [SerializeField]
     public Transform target;
-	
+
     //used to calculate the average center of the entire flock. Used in calculating cohesion.
-	private Vector3 flockCenter;
+    private Vector3 flockCenter;
 
     //Used to calculate the entire flock's direction. Used in calculating alignment.
-	private Vector3 flockDirection;
+    private Vector3 flockDirection;
 
     //The direction to the flocking target.
     private Vector3 targetDirection;
@@ -52,22 +52,22 @@ public class FlockController : MonoBehaviour
 
     public List<Boid> flockList = new List<Boid>();
 
-    public float SpeedModifier { get { return speedModifier; }}
+    public float SpeedModifier { get { return speedModifier; } }
 
-	private void Awake()
-	{
-        flockList = new List<Boid>(flockSize);     
-		for (int i = 0; i < flockSize; i++)
-		{
+    private void Awake()
+    {
+        flockList = new List<Boid>(flockSize);
+        for (int i = 0; i < flockSize; i++)
+        {
             //To avoid weird artifacts, we try to spawn the boids within radius rather than in the same position.
             spawnLocation = Random.insideUnitSphere * spawnRadius + transform.position;
-			Boid boid = Instantiate(prefab, spawnLocation, transform.rotation) as Boid;
+            Boid boid = Instantiate(prefab, spawnLocation, transform.rotation) as Boid;
 
             boid.transform.parent = transform;
             boid.FlockController = this;
             flockList.Add(boid);
-		}
-	}
+        }
+    }
 
     public Vector3 Flock(Boid boid, Vector3 boidPosition, Vector3 boidDirection)
     {
@@ -76,11 +76,11 @@ public class FlockController : MonoBehaviour
         targetDirection = Vector3.zero;
         separation = Vector3.zero;
 
-        for (int i = 0; i < flockList.Count; ++i) 
+        for (int i = 0; i < flockList.Count; ++i)
         {
             Boid neighbor = flockList[i];
             //Check only against neighbors.
-            if (neighbor != boid) 
+            if (neighbor != boid)
             {
                 //Aggregate the direction of all the boids.
                 flockDirection += neighbor.Direction;
