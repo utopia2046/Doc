@@ -114,4 +114,29 @@ Behavior trees are a collection of nodes organized in a hierarchical order, in w
 - Parallel tasks
 - Decorators
 
+A node will always return one of the following states:
+
+1. Success
+2. Failure
+3. Running, validity not determined, in waiting status (until asynchronous checking finishes)
+
+Composite nodes: node with one or more children.
+
+- Sequence (AND): any of the children at any step of the sequence return false, the sequence itself will report a failure.
+- Selectors (OR): If any one of the children nodes returns true, the selector returns true immediately, without evaluating any more children.
+
+Decorator node: exactly one child only, takes the state returned by the child and evaluates the response based on its own parameters.
+
+- Inverter (NOT): takes the opposite of the state returned by its child.
+- Repeater (while): repeats the evaluation of the child a specified (or infinite) number of times until it evaluates as either TRUE or FALSE.
+- Limiter: limits the number of times a node will be evaluated to avoid getting an agent stuck in an awkward infinite behavior loop.
+- (debugging and testing) Fake state: always evaluates true or false.
+- (debugging and testing) Breakpoint.
+
+Behavior Trees in Unity Asset Store
+
+- Behave by Angry Ant
+- Behavior Machine
+- Behavior Designer
+
 ## Fuzzy Logic
