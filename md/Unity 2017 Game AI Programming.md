@@ -140,3 +140,34 @@ Behavior Trees in Unity Asset Store
 - Behavior Designer
 
 ## Fuzzy Logic
+
+### Membership Function
+
+It allow us to determine how true a statement is, using logical chunks of information raw values.
+
+Example: determine the **degree of membership** to a set. Three states are evaluated to determine how true each one is, and which is the most true
+
+- Player is in a critical condition
+- Player is hurt
+- Player is health
+
+| Tips: each statement evaluation function could be specified as an `AnimationCurve` and set in Editor. More info: <http://docs.unity3d.com/ScriptReference/AnimationCurve.html>
+
+``` csharp
+// statement evaluatation code
+public void EvaluateStatements()
+{
+    if (string.IsNullOrEmpty(healthInput.text))
+    {
+        return;
+    }
+    float inputValue = float.Parse(healthInput.text);
+
+    healthyValue = healthy.Evaluate(inputValue);
+    hurtValue = hurt.Evaluate(inputValue);
+    criticalValue = critical.Evaluate(inputValue);
+
+    SetLabels();
+}
+```
+
