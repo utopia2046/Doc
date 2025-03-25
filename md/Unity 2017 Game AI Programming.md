@@ -171,3 +171,23 @@ public void EvaluateStatements()
 }
 ```
 
+You could predefine these rules or have some degree of randomness determine the limits, and every single agent would behave uniquely and respond to things in their own way.
+
+We could also build a behavior tree using fuzzy logic to evaluate each node. We end up with a very flexible, powerful, and nuanced AI system by combining these two concepts.
+
+### Fuzzy logic controller
+
+| Tips: In MonoScript, each public property will be editable in Inspector. Also, there are more options:
+
+1. Add `Header` attribute to group properties in Inspector;
+2. Use `SerializeField` attribute for complex types properties;
+
+``` csharp
+[Header("Morality Gradient")]
+[SerializeField]
+private AnimationCurve good;
+[SerializeField]
+private AnimationCurve neutral;
+[SerializeField]
+private AnimationCurve evil;
+```
