@@ -9,6 +9,62 @@ Source Code: <https://github.com/PacktPublishing/Unity-2017-Game-AI-Programming-
 - Rules: This component is used to trigger a state transition (player on sight, close enough to attack, and lost/killed player)
 - Events: This is the component that will trigger to check the rules (guard's visible area, distance to the player, and so on)
 
+In Unity, state machine could be implemented using `Animator`, although there is no animation needed.
+
+For each state in Animator state machine, a script inherited from `StateMachineBehaviour` could be attached. This script could contain override event handlers like:
+
+- `OnStateEnter`
+- `OnStateUpdate`
+- `OnStateExit`
+
+``` csharp
+// Tower object has an Animator with a boolean parameter TankInRange to determine if the player is in tower's shoot range,
+// and state LockOn has below script attached
+public class LockedOnState : StateMachineBehaviour
+{
+    GameObject player;
+    Tower tower;
+
+    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        player = GameObject.FindWithTag("Player");
+        tower = animator.gameObject.GetComponent<Tower>();
+        tower.LockedOn = true;
+    }
+
+    //OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        animator.gameObject.transform.LookAt(player.transform);
+    }
+
+    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        animator.gameObject.transform.rotation = Quaternion.identity;
+        tower.LockedOn = false;
+    }
+}
+
+// Also, in Tower's MonoScript, the collider event will set the animator parameter and trigger state change
+public class Tower : MonoBehaviour {
+    ...
+    private void OnTriggerEnter(Collider other) {
+        if (other.tag == "Player") {
+            animator.SetBool("TankInRange", true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if (other.tag == "Player") {
+            animator.SetBool("TankInRange", false);
+        }
+    }
+    ...
+}
+```
+
 ## Implementing Sensors
 
 ## Path Finding
