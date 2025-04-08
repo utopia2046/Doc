@@ -1,5 +1,20 @@
 # Unity 2017 Game AI Programming (Third Edition) Reading Notes
 
+[TOC]
+
+- [Unity 2017 Game AI Programming (Third Edition) Reading Notes](#unity-2017-game-ai-programming-third-edition-reading-notes)
+  - [Finite State Machines](#finite-state-machines)
+  - [Implementing Sensors](#implementing-sensors)
+  - [Path Finding](#path-finding)
+    - [Use Layer for Obstacles Avoidance](#use-layer-for-obstacles-avoidance)
+    - [NavMesh](#navmesh)
+  - [Flocks and Crowds dynamics](#flocks-and-crowds-dynamics)
+    - [Reynolds algorithm](#reynolds-algorithm)
+  - [Behavior Trees](#behavior-trees)
+  - [Fuzzy Logic](#fuzzy-logic)
+    - [Membership Function](#membership-function)
+    - [Fuzzy logic controller](#fuzzy-logic-controller)
+
 Source Code: <https://github.com/PacktPublishing/Unity-2017-Game-AI-Programming-Third-Edition>
 
 ## Finite State Machines
