@@ -73,3 +73,7 @@ script/unity/TankFight/Library/
 script/unity/TankFight/Logs/
 script/unity/TankFight/UserSettings/
 script/unity/TankFight/Temp/
+script/unity/AI2D/Library/
+script/unity/AI2D/Logs/
+script/unity/AI2D/UserSettings/
+script/unity/AI2D/Temp/
