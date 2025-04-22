@@ -161,4 +161,39 @@ void Update ()
 }
 ```
 
-## Utility-based Fucntions
+## Theta `A*` algorithm
+
+For each node near current node (begin with starting point), calculate:
+
+- G value, distance from the starting point
+- H value, distance from the ending point
+- F = G + H
+
+Get the node with smallest F value, which means the shortest path, then move current position to this node. Repeat F value calculation until we get to the ending point
+
+When there are obstacles in the path, we'll explore each node with lowest F, they won't all be on shortest path, so the calculation amount is high, that's why `A*` algorithm is CPU consuming.
+
+``` psuedo code
+OPEN // the set of nodes to be evaluated
+CLOSED // the set of nodes already evaluated
+
+Add the start node to OPEN
+
+loop
+    current = node in OPEN with the lowest f_cost
+    remove current from OPEN
+    add current to CLOSED
+
+    if current is the target node // path has been found
+        return
+
+    foreach neighbor of the current node
+        if neighbor is not traversable or neighbor is in CLOSED
+        skip to the next neighbor
+
+if new path to neighbor is shorter OR neighbor is not in OPEN
+    set f_cost of neighbor
+    set parent of neighbor to current
+    if neighbor is not in OPEN
+        add neighbor to OPEN
+```
