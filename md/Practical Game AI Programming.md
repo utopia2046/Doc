@@ -197,3 +197,15 @@ if new path to neighbor is shorter OR neighbor is not in OPEN
     if neighbor is not in OPEN
         add neighbor to OPEN
 ```
+
+## Crowd Interactions
+
+Congestion maps vs. Direction Maps
+
+DMs use averagecrowd motion over time to encourage agents to move with the crowd. Because of this, many of the oscillations present in the congestion map approach are smoothly resolved.Conversely, this temporal smoothing prevents DMs from quickly and accurately reacting to changes in the environment and crowd behavior. Both congestion maps and DMs apply the aggregate crowd movement information to the path planning process in much the sameway; however, congestion maps handle agents of varying size and shape, while DMstraditionally assume homogeneity.
+
+DMs使用平均时间上的人群移动来鼓励代理与人群一起移动。因此，拥挤地图方法中存在的许多振荡被平滑地解决了。相反，这种时间平滑防止了 DMs 快速准确地对环境和人群行为的变化做出反应。拥挤地图和 DMs 都在很大程度上将人群移动信息应用于路径规划过程；但是，拥挤地图处理不同大小和形状的代理，而 DMs 传统上假设同质性。
+
+Congestion mapsweight movement penalties proportional to the density of the crowd. Without takingdensity into account, DMs display overly pessimistic pathfinding behavior, where agents are encouraged to path around sparse groups of agents blocking the ideal path.
+
+拥挤地图的权重移动惩罚与人群的密度成正比。不考虑密度，DM 表现出过于悲观的路径搜索行为，其中代理被鼓励绕过稀疏的代理组，这些代理组阻塞了理想路径。
