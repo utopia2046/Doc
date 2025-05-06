@@ -209,3 +209,12 @@ DMs使用平均时间上的人群移动来鼓励代理与人群一起移动。�
 Congestion mapsweight movement penalties proportional to the density of the crowd. Without takingdensity into account, DMs display overly pessimistic pathfinding behavior, where agents are encouraged to path around sparse groups of agents blocking the ideal path.
 
 拥挤地图的权重移动惩罚与人群的密度成正比。不考虑密度，DM 表现出过于悲观的路径搜索行为，其中代理被鼓励绕过稀疏的代理组，这些代理组阻塞了理想路径。
+
+## Opponent actions
+
+Strategies to make the NPC smarter:
+
+1. Having two extra Colliders on each character is to help the other characters identify whether they are looking at the back or front side of the character.
+2. Adding a stretched trigger collider in front of the character representing the observation range.
+3. Add a parameter called `dangerMeter`, that will help determine whether the situation that our AI character is facing has a higher or lower risk to be attacked.
+4. Divide the map into different zones and assign a level of risk that each zones has.
