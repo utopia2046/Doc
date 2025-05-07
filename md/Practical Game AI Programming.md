@@ -218,3 +218,68 @@ Strategies to make the NPC smarter:
 2. Adding a stretched trigger collider in front of the character representing the observation range.
 3. Add a parameter called `dangerMeter`, that will help determine whether the situation that our AI character is facing has a higher or lower risk to be attacked.
 4. Divide the map into different zones and assign a level of risk that each zones has.
+5. Using Sphere Collider (or other kind of Collider) as Trigger Zone, if player enter the zone, instantiate an enemy instace (`OnTriggerEnter`). And when player leave the zone, destroy the instace (`OnTriggerExist`);
+6. Use Layer Mask option so that our Raycast can identify what is inside of the character field of view, e.g. Obstacles, Targets, etc.
+7. Visualize character view scope in Unity Editor Mode;
+
+``` csharp
+using UnityEngine;
+using System.Collections;
+using UnityEditor;
+
+[CustomEditor (typeof (FieldOfView))]
+public class FieldOfViewEditor : Editor {
+    void OnSceneGUI() {
+        FieldOfView fow = (FieldOfView)target;
+        Handles.color = color.white;
+        Handles.DrawWireArc(fow.transform.position, Vector3.up, Vector3.forward, 360, fow.viewRadius);
+        Vector3 viewAngleA = fow.DirFromAngle(-fow.viewAngle/2, false);
+        Handles.DrawLine(fow.transform.position, fow.transform.position + viewAngleA * fow.viewRadius);
+        Handles.DrawLine(fow.transform.position, fow.transform.position + viewAngleB * fow.viewRadius);
+    }
+}
+
+// FieldOfView.cs
+public class FieldOfView {
+    public float viewRadius;
+    [Range(0,360)]
+    public float viewAngle;
+    public LayerMask targetMask;
+    public LayerMask obstacleMask;
+    public List<Transform> visibleTargets = new List<Transform>();
+
+    void FindVisibleTargets () {
+        visibleTargets.Clear ();
+        Collider[] targetInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
+
+        for (int i = 0; i < targetsInViewRadius.Length; i++)
+        {
+            Transform target = targetInViewRadius [i].transform;
+            Vector3 dirToTarget = (target.position - transform.position).normalized;
+            if (Vector3.Angle (transform.forward, dirToTarget) < viewAngle / 2) {
+                float dstToTarget = Vector3.Distance (transform.position, target.position);
+                if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask)) {
+                    visibleTargets.Add(target);
+                }
+            }
+        }
+    }
+
+    public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal) {
+        if (!angleIsGlobal) {
+            angleInDegrees += transform.eulerAngles.y;
+        }
+        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
+    }
+
+    // draw fov in game mode using multiple radius lines, adjust `meshResolution` in Editor to adjust lines number
+    void DrawFieldOfView() {
+        int stepCount = Mathf.RoundToInt(viewAngle * meshResolution);
+        float stepAngleSize = viewAngle / stepCount;
+        for (int i = 0; i <= stepCount; i++) {
+            float angle = transform.eulerAngles.y - viewAngle / 2 + stepAngleSize * i;
+            Debug.DrawLine(transform.position, transform.position + DirFromAngle(angle, true) * viewRadius, Color.red);
+        }
+    }
+}
+```
